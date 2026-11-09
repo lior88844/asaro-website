@@ -177,8 +177,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .intro__grid > .intro__art{grid-column:1;justify-self:end;align-self:center;height:clamp(170px,19vw,290px);aspect-ratio:178/254}
 .intro__grid > .intro__art{position:relative;z-index:2}
 .intro__art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.intro__layer{position:absolute;inset:0;width:100%;height:100%;-webkit-clip-path:inset(100% 0 0 0);clip-path:inset(100% 0 0 0)}
-.intro__stem{fill:none;stroke:var(--tan);stroke-width:2;stroke-linecap:round}
+.intro__art path{fill:var(--tan);fill-opacity:0;stroke:var(--tan);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
 .intro p.big{font-size:clamp(30px,4.2vw,62px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
 .intro p.big em{font-style:normal;color:var(--tan)}
 .intro p.sub{margin-top:28px;color:var(--muted);max-width:52ch}
@@ -539,9 +538,7 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   <section class="intro" id="intro" data-nav="dark">
     <div class="wrap intro__grid">
       <div class="intro__art" id="introArt" aria-hidden="true">
-        <svg viewBox="392 -12 178 254" focusable="false"><path class="intro__stem" d="M409,229 C413,196 419,165 428,136 C438,104 452,58 469,4"/></svg>
-        <img class="intro__layer intro__wheat" src="assets/intro-wheat.svg" alt="" width="178" height="254">
-        <img class="intro__layer intro__a" src="assets/intro-a.svg" alt="" width="178" height="254">
+        <svg id="introSvg" viewBox="392 -12 178 254" focusable="false"></svg>
       </div>
       <div>
         <p class="big reveal">Our journey at <span class="w"><span><img class="wheat-a" src="assets/a-wheat-cream.svg" alt="" width="154" height="230"><span class="sr-only">A</span>saro</span></span> Bakery &amp; Cafe is built on <em>passion, community,</em> and a love for great food.</p>
@@ -1008,31 +1005,43 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 })();
 </script>
 <script>
-/* ── Intro drawing: a stem draws itself, the logo's wheat grows up over it,
-      then the A's right stroke rises to finish the logo's wheat A ── */
+/* ── Intro drawing: one continuous line traces the logo's wheat A — up the stalk,
+      through the leaves and grains, finishing on the A's stroke — then it fills in ── */
 (() => {
-  const art = document.getElementById('introArt');
-  if (!art) return;
-  const stem = art.querySelector('.intro__stem'), wheat = art.querySelector('.intro__wheat'), aImg = art.querySelector('.intro__a');
+  const art = document.getElementById('introArt'), svg = document.getElementById('introSvg');
+  if (!art || !svg) return;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const L = stem.getTotalLength(), clamp = v => Math.max(0, Math.min(1, v));
-  stem.style.strokeDasharray = `${L} ${L}`;
-  const clip = (el, topPct) => { const v = `inset(${topPct.toFixed(2)}% 0 0 0)`; el.style.webkitClipPath = v; el.style.clipPath = v; };
+  const clamp = v => Math.max(0, Math.min(1, v));
+  let parts = [], total = 0;
   const update = () => {
+    if (!parts.length) return;
     const r = art.getBoundingClientRect(), vh = innerHeight;
     const start = vh * .95, end = vh * .42 - r.height / 2;          // starts as it enters, finished near mid-screen
     const p = calm ? 1 : clamp((start - r.top) / Math.max(1, start - end));
-    const draw = clamp(p / .45), rise = clamp((p - .3) / .45), aIn = clamp((p - .68) / .32);
-    stem.style.strokeDashoffset = L * (1 - draw);
-    stem.style.opacity = 1 - rise * .9;
-    clip(wheat, (1 - rise) * 100);                                   // wheat grows up from its base
-    clip(aImg, (1 - (1 - Math.pow(1 - aIn, 3))) * 74.5);             // A stroke rises from the baseline (74.5% down the box)
+    const pen = clamp(p / .82) * total;                              // how far along the single line the pen has travelled
+    const fill = clamp((p - .78) / .22);
+    parts.forEach(s => {
+      const k = clamp((pen - s.at) / s.len);
+      s.el.style.strokeDashoffset = s.len * (1 - k);
+      s.el.style.fillOpacity = fill;
+    });
   };
+  fetch('assets/intro-wheat-a.svg').then(r => r.text()).then(txt => {
+    const g = new DOMParser().parseFromString(txt, 'image/svg+xml').querySelector('g');
+    if (!g) return;
+    svg.append(document.importNode(g, true));
+    const els = [...svg.querySelectorAll('path')];
+    const aStroke = els.pop();                                       // the A's right stroke is drawn last
+    // climb the wheat from its base upward, so the line reads as one stroke growing up the stalk
+    els.sort((x, y) => y.getBoundingClientRect().bottom - x.getBoundingClientRect().bottom);
+    els.push(aStroke);
+    let at = 0;
+    parts = els.map(el => { const len = el.getTotalLength(); el.style.strokeDasharray = `${len} ${len}`; const s = { el, len, at }; at += len; return s; });
+    total = at; update();
+  }).catch(() => {});
   let tick = false;
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { update(); tick = false; }); } }, { passive: true });
   addEventListener('resize', update);
-  addEventListener('load', update);
-  update();
 })();
 </script>
 </body>
