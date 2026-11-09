@@ -53,7 +53,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
-.label{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--tan)}
 h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1;letter-spacing:-.005em}
 /* display serif for the voice of the brand; Jost carries everything else */
 .intro p.big,.family b,.mi h4,.mnav__list,.order p,.info p,.info a,.visit__lede,.insta__bio{font-family:var(--serif);font-weight:700}
@@ -172,10 +171,11 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .intro{padding:clamp(90px,14vw,190px) 0 clamp(80px,11vw,150px)}
 .intro__grid{display:grid;grid-template-columns:1fr 3fr;gap:40px}
+.intro__grid > div{grid-column:2}
 .intro p.big{font-size:clamp(30px,4.2vw,62px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
 .intro p.big em{font-style:normal;color:var(--tan)}
 .intro p.sub{margin-top:28px;color:var(--muted);max-width:52ch}
-@media (max-width:760px){.intro__grid{grid-template-columns:1fr;gap:22px}}
+@media (max-width:760px){.intro__grid{grid-template-columns:1fr;gap:22px}.intro__grid > div{grid-column:auto}}
 
 /* ───────── STORY ───────── */
 .story{padding-bottom:clamp(90px,12vw,170px)}
@@ -183,7 +183,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .story__photos{position:sticky;top:110px;padding-bottom:18%}
 .story__photos .p1{width:78%;aspect-ratio:2/3;object-fit:cover;border-radius:6px}
 .story__photos .p2{position:absolute;right:0;bottom:0;width:48%;aspect-ratio:2/3;object-fit:cover;border-radius:6px;border:8px solid var(--bg)}
-.story h2{margin:22px 0 34px}
+.story h2{margin:0 0 34px}
 .story__text p{color:var(--cream-2);max-width:58ch}
 .story__text p + p{margin-top:1.1em}
 .family{margin:34px 0;display:grid;grid-template-columns:1fr 1fr;border-block:1px solid var(--line)}
@@ -196,7 +196,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 /* ───────── CAFE GALLERY (rail) ───────── */
 .cafe{padding:clamp(90px,12vw,160px) 0}
 .cafe__head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:clamp(36px,5vw,60px)}
-.cafe__head h2{margin-top:22px}
+.cafe__head h2{margin-top:0}
 .cafe__head p{color:var(--cream-2);max-width:44ch;margin-top:20px}
 .rail-btns{display:flex;gap:10px}
 .rail-btns button{width:54px;height:54px;border-radius:50%;border:1px solid var(--tan);background:none;color:var(--tan);cursor:pointer;display:grid;place-items:center;transition:background .3s,color .3s}
@@ -216,9 +216,8 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 
 /* ───────── MENU ───────── */
 .menu{color:var(--paper);padding:clamp(20px,3vw,40px) 0 clamp(90px,12vw,170px)}
-.menu .label{color:var(--tan)}
 .menu__head{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(44px,6vw,80px)}
-.menu__head h2{margin-top:22px}
+.menu__head h2{margin-top:0}
 .menu__head p{color:rgba(244,239,231,.75);max-width:46ch}
 .menu__head .actions{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
 .menu .btn--line:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
@@ -239,7 +238,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .fullmenu{margin-top:clamp(56px,7vw,100px);padding-top:clamp(40px,5vw,64px);border-top:1px solid var(--line)}
 .fullmenu__head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 40px;margin-bottom:clamp(30px,4vw,48px)}
 .fullmenu h3{font-size:clamp(32px,3.6vw,52px)}
-.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{display:flex;flex-wrap:nowrap;gap:8px}
 .tab{background:none;border:1px solid rgba(201,177,147,.45);color:var(--tan);padding:11px 20px;border-radius:999px;font:inherit;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
 .tab:hover{border-color:var(--tan);color:var(--paper)}
 .tab[aria-selected="true"]{background:var(--tan);border-color:var(--tan);color:var(--ink)}
@@ -276,17 +275,17 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .hiring__card{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;border:1px solid var(--line)}
 .hiring__card img{width:100%;height:100%;object-fit:cover;min-height:340px}
 .hiring__body{padding:clamp(32px,5vw,72px)}
-.hiring h2{font-size:clamp(36px,4.6vw,68px);margin:22px 0 22px}
+.hiring h2{font-size:clamp(36px,4.6vw,68px);margin:0 0 22px}
 .hiring h2 em{font-style:normal;color:var(--tan)}
 .hiring p{color:var(--cream-2);max-width:44ch}
-.roles{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:20px 0 34px}
+.roles{display:flex;flex-wrap:nowrap;gap:10px;list-style:none;margin:20px 0 34px}
 .roles li{padding:10px 18px;border-radius:999px;border:1px solid var(--line);font-size:12px;letter-spacing:.18em;text-transform:uppercase;background:transparent}
 @media (max-width:860px){.hiring__card{grid-template-columns:1fr}.hiring__card img{min-height:0;aspect-ratio:3/2}}
 
 /* ───────── INSTAGRAM ───────── */
 .insta{padding:clamp(20px,4vw,40px) 0 clamp(90px,12vw,160px)}
 .insta__head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px 40px;margin-bottom:clamp(32px,4vw,52px)}
-.insta__head h2{margin-top:22px}
+.insta__head h2{margin-top:0}
 .insta__head h2 a{transition:color .3s}
 .insta__head h2 a:hover{color:var(--tan)}
 .insta__bio{color:var(--cream-2);max-width:40ch;margin-top:18px}
@@ -303,16 +302,15 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 
 /* ───────── VISIT ───────── */
 .visit{color:var(--paper);padding:clamp(90px,12vw,170px) 0}
-.visit .label{color:var(--tan)}
 .visit__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px)}
-.visit h2{margin:22px 0 24px}
+.visit h2{margin:0 0 24px}
 .visit__lede{max-width:46ch;margin-bottom:40px;color:var(--cream-2)}
 .info{display:grid;grid-template-columns:1fr 1fr;gap:34px 30px;border-top:1px solid var(--line);padding-top:30px}
 .info h3{font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px;color:var(--muted)}
 .info p,.info a{font-size:clamp(19px,1.5vw,22px);line-height:1.4}
 .info a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--ease)}
 .info a:hover{background-size:100% 1px}
-.visit .actions{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px}
+.visit .actions{margin-top:40px;display:flex;flex-wrap:nowrap;gap:12px}
 .visit__media{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.2vw,16px)}
 .visit__media img{width:100%;height:100%;object-fit:cover;border-radius:16px;aspect-ratio:3/4}
 .map{position:relative;border-radius:16px;overflow:hidden;background:var(--oak-2)}
@@ -338,7 +336,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
   .story__grid{gap:30px}
   .story__photos{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0;max-width:none}
   .story__photos .p1,.story__photos .p2{position:static;width:100%;aspect-ratio:3/4;border:0;border-radius:8px}
-  .story h2{margin:12px 0 18px}
+  .story h2{margin:0 0 18px}
   .family{margin:24px 0}
   .family div{padding:16px 14px 16px 0}
   .family div + div{padding-left:14px}
@@ -346,37 +344,33 @@ h2{font-size:clamp(44px,6.4vw,96px)}
   .family p{font-size:13.5px}
   .cafe{padding:60px 0}
   .cafe__head{margin-bottom:24px;align-items:center}
-  .cafe__head h2{margin-top:10px}
+  .cafe__head h2{margin-top:0}
   .rail-btns button{width:44px;height:44px}
   .rail figure{width:68vw}
   .rail-progress{margin-top:18px}
   .menu{padding:8px 0 60px}
   .menu__head{gap:18px;margin-bottom:28px}
-  .menu__head h2{margin-top:10px}
+  .menu__head h2{margin-top:0}
   .menu__head .actions{margin-top:20px}
   .fullmenu{margin-top:44px;padding-top:32px}
   .fullmenu__head{margin-bottom:24px}
-  .tabs{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px}
-  .tab{text-align:center;padding:12px 8px;font-size:11px;letter-spacing:.16em}
   .mlist{gap:24px}
   .order{margin-top:36px;padding:20px;gap:14px}
   .hiring{padding:60px 0}
   .hiring__body{padding:24px 20px 28px}
-  .hiring h2{margin:12px 0 14px}
-  .roles{margin:16px 0 22px;gap:8px}
-  .roles li{padding:8px 14px;font-size:11px}
+  .hiring h2{margin:0 0 14px}
+  .roles{margin:16px 0 22px}
   .insta{padding:0 0 60px}
   .insta__head{margin-bottom:22px;gap:16px}
-  .insta__head h2{margin-top:10px}
+  .insta__head h2{margin-top:0}
   .insta__bio{margin-top:10px}
   .visit{padding:60px 0}
   .visit__grid{gap:28px}
-  .visit h2{margin:10px 0 14px}
+  .visit h2{margin:0 0 14px}
   .visit__lede{margin-bottom:26px}
   .info{grid-template-columns:1fr 1fr;gap:20px 16px;padding-top:22px}
   .info p,.info a{font-size:16.5px;overflow-wrap:anywhere}
-  .visit .actions{margin-top:26px;gap:8px}
-  .visit .actions .btn{padding:13px 18px;font-size:11.5px}
+  .visit .actions{margin-top:26px}
   .visit__media{grid-template-columns:1fr 1fr;gap:10px}
   .visit__media img,.map{aspect-ratio:3/4;border-radius:10px}
   .footer{padding:48px 0 24px}
@@ -385,15 +379,27 @@ h2{font-size:clamp(44px,6.4vw,96px)}
   .footer__bottom nav{gap:16px}
 }
 
+/* ───────── ONE-LINE PILL ROWS: never wrap; sizes follow the row's width ───────── */
+.hiring__body,.visit__grid > div:first-child,.fullmenu__head{container-type:inline-size}
+.roles,.visit .actions,.tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.roles::-webkit-scrollbar,.visit .actions::-webkit-scrollbar,.tabs::-webkit-scrollbar{display:none}
+.roles li,.visit .actions .btn,.tab{flex:0 0 auto;white-space:nowrap}
+.roles{gap:clamp(5px,1.6cqi,10px)}
+.roles li{font-size:clamp(9px,2.75cqi,12px);letter-spacing:.12em;padding:clamp(7px,1.8cqi,10px) clamp(9px,2.6cqi,18px)}
+.visit .actions{gap:clamp(6px,1.8cqi,12px)}
+.visit .actions .btn{font-size:clamp(10px,2.9cqi,13px);letter-spacing:.14em;padding:clamp(11px,2.6cqi,15px) clamp(12px,3.4cqi,26px);gap:clamp(6px,1.6cqi,12px)}
+@media (max-width:760px){
+  .tabs{display:flex;width:100%;gap:6px}
+  .tab{flex:1 1 auto;font-size:clamp(9.5px,2.9cqi,12px);letter-spacing:.12em;padding:12px 6px}
+  .hero__addr{margin-left:0;text-align:left;flex-basis:100%}
+}
+
 /* ───────── REVEAL ───────── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 /* paragraphs come into focus */
 p.reveal,.family.reveal,.info.reveal,.order.reveal{filter:blur(5px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1.1s var(--ease)}
 p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
-/* labels settle their letter-spacing */
-.label.reveal{letter-spacing:.55em;transition:opacity 1s var(--ease),transform 1s var(--ease),letter-spacing 1.4s var(--ease)}
-.label.reveal.in{letter-spacing:.24em}
 /* headings rise word by word from behind a mask */
 .reveal.split,.reveal.soft{opacity:1;transform:none;filter:none}
 .split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
@@ -491,7 +497,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   <!-- INTRO -->
   <section class="intro" id="intro" data-nav="dark">
     <div class="wrap intro__grid">
-      <span class="label reveal">Asaro</span>
       <div>
         <p class="big reveal">Our journey at <span class="w"><span><i class="wheat-a" aria-hidden="true"></i><span class="sr-only">A</span>saro</span></span> Bakery &amp; Cafe is built on <em>passion, community,</em> and a love for great food.</p>
       </div>
@@ -506,7 +511,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
         <img class="p2" src="assets/shoot/ab-44.jpg" alt="A barista in an Asaro apron pouring latte art" loading="lazy">
       </div>
       <div class="story__text">
-        <span class="label reveal">About</span>
         <h2 class="reveal">Our Story</h2>
         <p class="reveal">Tzion and Jessica Barsheshet began their culinary adventure over 30 years ago in Israel, owning multiple restaurants, bars, and pubs. Asaro Bakery and Cafe is the continuation of their journey, but this time, it is accompanied by their children, Timna and Jason.</p>
         <div class="family reveal">
@@ -523,7 +527,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   <section class="cafe" id="cafe" data-nav="dark" aria-label="Photos of the cafe">
     <div class="wrap cafe__head">
       <div>
-        <span class="label reveal">1629 Cambridge St</span>
         <h2 class="reveal">The Cafe</h2>
       </div>
       <div class="rail-btns reveal">
@@ -552,7 +555,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     <div class="wrap">
       <div class="menu__head">
         <div>
-          <span class="label reveal">Menu</span>
           <h2 class="reveal">Our Menu</h2>
         </div>
         <div class="reveal" data-d="1">
@@ -663,7 +665,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
       <div class="hiring__card reveal">
         <img src="assets/shoot/s3-16.jpg" alt="An Asaro baker smiling by the oven" loading="lazy" style="object-position:50% 30%">
         <div class="hiring__body">
-          <span class="label">We're hiring!</span>
           <h2>Come, be part of the <em>Asaro family.</em></h2>
           <p>Experience is important, but not a must. We value enthusiasm, great attitude, and excitement of being part of a small team! We’re looking for:</p>
           <ul class="roles">
@@ -680,7 +681,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     <div class="wrap">
       <div class="insta__head">
         <div>
-          <span class="label reveal">Instagram</span>
           <h2 class="reveal"><a href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener">@asarocafe</a></h2>
           <p class="insta__bio reveal">Family-run, small-batch bakery near Harvard Square.</p>
         </div>
@@ -707,7 +707,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   <section class="visit" id="visit" data-nav="dark">
     <div class="wrap visit__grid">
       <div>
-        <span class="label reveal">Contact</span>
         <h2 class="reveal">Visit us</h2>
         <p class="visit__lede reveal">We’d love to hear from you! Whether you have a question about our coffee, need assistance with an order, or just want to share your feedback, we’re here for you.</p>
         <div class="info reveal">
