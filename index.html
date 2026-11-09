@@ -145,7 +145,8 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .hero__logo{width:min(760px,86vw);height:auto;opacity:0;transform:translateY(24px);animation:up 1.2s .15s var(--ease) forwards}
 @keyframes up{to{opacity:1;transform:none}}
 .hero__bar{margin-top:clamp(28px,5vh,52px);padding-top:20px;border-top:1px solid rgba(244,239,231,.25);display:flex;flex-wrap:wrap;gap:14px 40px;align-items:center;justify-content:space-between;font-size:13px;letter-spacing:.18em;text-transform:uppercase;opacity:0;animation:fade 1s .7s var(--ease) forwards}
-.hero__bar > div{display:flex;flex-wrap:wrap;gap:12px 36px}
+.hero__addr{margin-left:auto;text-align:right;transition:color .3s}
+.hero__addr:hover{color:var(--tan)}
 @keyframes fade{to{opacity:1}}
 .status{display:inline-flex;align-items:center}
 
@@ -354,10 +355,8 @@ h2{font-size:clamp(44px,6.4vw,96px)}
     <div class="hero__inner wrap">
       <h1><img class="hero__logo" src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" width="760" height="226"></h1>
       <div class="hero__bar">
-        <div>
-          <span class="status" id="status"><span id="statusText">Open 7am – 5pm everyday</span></span>
-          <span>1629 Cambridge St, Cambridge, MA</span>
-        </div>
+        <span class="status" id="status"><span id="statusText">Open 7am – 5pm everyday</span></span>
+        <a class="hero__addr" href="https://maps.google.com/?q=1629+Cambridge+St,+Cambridge,+MA+02138" target="_blank" rel="noopener">1629 Cambridge St, Cambridge, MA</a>
       </div>
     </div>
   </section>
