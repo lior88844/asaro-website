@@ -317,7 +317,17 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 /* ───────── FOOTER ───────── */
 .footer{border-top:1px solid var(--line);padding:clamp(70px,10vw,130px) 0 30px}
 .footer__brand{display:flex;justify-content:center;padding-bottom:clamp(40px,6vw,70px)}
-.footer__brand img{width:min(560px,82%);height:auto}
+.footer__logo{position:relative;width:min(560px,82%)}
+.footer__logo img{width:100%;height:auto}
+.footer__wheat{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.footer__wheat path{fill:var(--paper);fill-opacity:0;stroke:var(--paper);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
+
+/* the scroll-drawn line: one hand-drawn tan stroke behind the content, ending in the logo's wheat */
+.trail{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:0;overflow:visible}
+.trail__path{fill:none;stroke:var(--tan);stroke-opacity:.5;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.trail__tip{fill:var(--tan);opacity:.85;transition:opacity .4s}
+main,.footer{position:relative;z-index:1}
+@media (max-width:760px){.trail__path{stroke-width:1.1;stroke-opacity:.42}}
 .footer__bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;border-top:1px solid var(--line);padding-top:22px;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
 .footer__bottom nav{display:flex;flex-wrap:wrap;gap:22px}
 .footer__bottom a:hover{color:var(--tan)}
@@ -481,6 +491,8 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     <a class="nav__btn" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order Online</a>
   </div>
 </div>
+
+<svg class="trail" id="trail" aria-hidden="true" focusable="false"><path class="trail__path" id="trailPath" d=""/><circle class="trail__tip" id="trailTip" r="2.4" cx="-10" cy="-10"/></svg>
 
 <main id="top">
 
@@ -729,7 +741,7 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 
 <footer class="footer" data-nav="dark">
   <div class="wrap">
-    <div class="footer__brand"><img src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" loading="lazy"></div>
+    <div class="footer__brand"><div class="footer__logo" id="footerLogo"><img src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" loading="lazy" width="1000" height="298"></div></div>
     <div class="footer__bottom">
       <span>© <span id="yr">2026</span> Lior Doron. All rights reserved.</span>
       <nav>
@@ -930,6 +942,119 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   document.querySelectorAll('.reveal').forEach(n => io.observe(n));
 
   document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+<script>
+/* ── The trail: a hand-drawn line that draws itself down the page as you scroll,
+      then completes the wheat stalk of the footer logo. ── */
+(() => {
+  const svg = document.getElementById('trail'), path = document.getElementById('trailPath'), tip = document.getElementById('trailTip');
+  const logo = document.getElementById('footerLogo');
+  if (!svg || !path || !logo) return;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let total = 0, lut = [], wheatPaths = [], ready = false;
+
+  // seeded wobble so the line looks hand-drawn but never jumps between visits
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280 - .5;
+
+  // smooth curve through points (Catmull-Rom → cubic Bézier)
+  const smooth = pts => {
+    let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2, k = 1 / 6;
+      d += ` C${(p1.x + (p2.x - p0.x) * k).toFixed(1)},${(p1.y + (p2.y - p0.y) * k).toFixed(1)} ${(p2.x - (p3.x - p1.x) * k).toFixed(1)},${(p2.y - (p3.y - p1.y) * k).toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+    }
+    return d;
+  };
+
+  // where the stalk starts in the footer logo (logo units: 1000 × 297.9)
+  const stalkBase = () => {
+    const r = logo.getBoundingClientRect();
+    return { x: r.left + r.width * (409 / 1000), y: r.top + scrollY + r.height * (228 / 297.9) };
+  };
+
+  const build = () => {
+    const W = document.documentElement.clientWidth, H = document.documentElement.scrollHeight, sy = scrollY;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.style.height = H + 'px';
+    const wrap = document.querySelector('.wrap'), wr = wrap.getBoundingClientRect();
+    const pad = parseFloat(getComputedStyle(wrap).paddingLeft);
+    const L = Math.max(7, wr.left + pad * .42), R = W - L;
+    const box = el => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      return { top: r.top + sy + parseFloat(cs.paddingTop), bottom: r.bottom + sy - parseFloat(cs.paddingBottom) }; };
+    const hero = document.querySelector('.hero').getBoundingClientRect();
+    const secs = [...document.querySelectorAll('main > section:not(.hero)')].map(box);
+    seed = 7;
+    const pts = [{ x: W * .5, y: hero.bottom + sy + 6 }];
+    let prevBottom = hero.bottom + sy + 6;
+    secs.forEach((s, i) => {
+      const x = i % 2 ? R : L, gap = s.top - prevBottom;
+      // cross the page in the gap between sections
+      pts.push({ x: W * (.5 + rnd() * .2), y: prevBottom + gap * .5 });
+      pts.push({ x: x + rnd() * 6, y: s.top + 4 });
+      // run down the margin beside the section, with a gentle hand-drawn wobble
+      const n = Math.max(1, Math.round((s.bottom - s.top) / 320));
+      for (let k = 1; k <= n; k++) pts.push({ x: x + (k % 2 ? 1 : -1) * (i % 2 ? -1 : 1) * (6 + Math.abs(rnd()) * 10), y: s.top + (s.bottom - s.top) * k / (n + 1) });
+      pts.push({ x: x + rnd() * 6, y: s.bottom - 4 });
+      prevBottom = s.bottom;
+    });
+    // final approach: sweep in under the footer logo and end at the wheat stalk
+    const b = stalkBase();
+    pts.push({ x: W * .5 + (b.x - W * .5) * .4, y: (prevBottom + b.y) / 2 + 30 });
+    pts.push({ x: b.x - 26, y: b.y + 34 });
+    pts.push({ x: b.x, y: b.y });
+    path.setAttribute('d', smooth(pts));
+    total = path.getTotalLength();
+    path.style.strokeDasharray = `${total} ${total}`;
+    // length ↔ height lookup, so the line keeps pace with the scroll
+    lut = []; let maxY = -1;
+    for (let i = 0; i <= 900; i++) { const l = total * i / 900; maxY = Math.max(maxY, path.getPointAtLength(l).y); lut.push([l, maxY]); }
+    ready = true; draw();
+  };
+
+  const lenAt = y => { let lo = 0, hi = lut.length - 1; while (lo < hi) { const m = (lo + hi) >> 1; if (lut[m][1] < y) lo = m + 1; else hi = m; } return lut[lo][0]; };
+  const clamp = v => Math.max(0, Math.min(1, v));
+
+  const draw = () => {
+    if (!ready) return;
+    const H = document.documentElement.scrollHeight, vh = innerHeight, max = Math.max(1, H - vh), sy = Math.min(scrollY, max);
+    // the last stretch of scrolling belongs to the wheat; the line finishes just before it
+    const span = Math.min(220, max * .25), lineEnd = max - span;
+    const s = Math.min(sy, lineEnd), q = s / Math.max(1, lineEnd);
+    const endY = lut[lut.length - 1][1] + 1, base = s + vh * .6, need = Math.max(0, endY - (lineEnd + vh * .6));
+    const target = base + need * clamp((q - .8) / .2);          // pen ~60% down the screen, catching up near the end
+    const len = calm ? total : Math.min(total, lenAt(target));
+    path.style.strokeDashoffset = total - len;
+    const p = path.getPointAtLength(len); tip.setAttribute('cx', p.x); tip.setAttribute('cy', p.y);
+    tip.style.opacity = !calm && len > 4 && len < total - 1 ? .85 : 0;
+    // then the wheat stalk draws itself into the logo, from the base up
+    const tw = calm ? 1 : clamp((sy - lineEnd) / span);
+    wheatPaths.forEach((w, i) => {
+      const local = clamp(tw * 1.3 - i / wheatPaths.length * .3);
+      w.style.strokeDashoffset = 1 - local;
+      w.style.fillOpacity = clamp((local - .5) / .5);
+    });
+  };
+
+  // swap the footer logo for the version without the stalk, and draw the stalk on top
+  fetch('assets/wheat-stalk.svg').then(r => r.text()).then(txt => {
+    const doc = new DOMParser().parseFromString(txt, 'image/svg+xml').documentElement;
+    doc.setAttribute('class', 'footer__wheat'); doc.setAttribute('aria-hidden', 'true');
+    doc.querySelectorAll('path').forEach(pth => pth.setAttribute('pathLength', '1'));
+    const img = logo.querySelector('img');
+    img.src = 'assets/logo-light-nowheat.svg';
+    logo.append(document.importNode(doc, true));
+    wheatPaths = [...logo.querySelectorAll('.footer__wheat path')]
+      .sort((a, b) => b.getBoundingClientRect().bottom - a.getBoundingClientRect().bottom); // grow from the base up
+    draw();
+  }).catch(() => {});
+
+  let tick = false;
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { draw(); tick = false; }); } }, { passive: true });
+  let rt; const rebuild = () => { clearTimeout(rt); rt = setTimeout(build, 120); };
+  new ResizeObserver(rebuild).observe(document.body);
+  addEventListener('load', build);
+  document.fonts && document.fonts.ready.then(build);
+  build();
 })();
 </script>
 </body>
