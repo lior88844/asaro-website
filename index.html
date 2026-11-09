@@ -180,10 +180,10 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .intro__grid{display:grid;grid-template-columns:1fr 3fr;gap:40px}
 .intro__grid > div{grid-column:2;grid-row:1}
 /* the drawing: a hand-drawn stem that turns into the logo's wheat as the intro scrolls in */
-.intro__grid > .intro__art{grid-column:1;justify-self:end;align-self:center;height:clamp(170px,19vw,290px);aspect-ratio:120/254}
+.intro__grid > .intro__art{grid-column:1;justify-self:end;align-self:center;height:clamp(170px,19vw,290px);aspect-ratio:178/254}
 .intro__art svg{width:100%;height:100%;overflow:visible}
 .intro__stem{fill:none;stroke:var(--tan);stroke-width:2;stroke-linecap:round}
-.intro__wheat path{fill:var(--tan)}
+.intro__wheat path,.intro__a path{fill:var(--tan)}
 .intro p.big{font-size:clamp(30px,4.2vw,62px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
 .intro p.big em{font-style:normal;color:var(--tan)}
 .intro p.sub{margin-top:28px;color:var(--muted);max-width:52ch}
@@ -433,6 +433,10 @@ main > section.photo-sec + section{padding-top:calc(var(--section) * .5)}
 /* paragraphs come into focus */
 p.reveal,.family.reveal,.info.reveal,.order.reveal{filter:blur(5px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1.1s var(--ease)}
 p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
+/* headlines: letter by letter, rising 20px and fading in (Zimmerl-style), replaying on each entry */
+.chars .word{display:inline-block;white-space:nowrap}
+.chars .ch{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.25,.46,.45,.94),transform 1s cubic-bezier(.25,.46,.45,.94);transition-delay:calc(var(--i,0) * 50ms)}
+.chars.in .ch{opacity:1;transform:none}
 /* headings rise word by word from behind a mask */
 .reveal.split,.reveal.soft{opacity:1;transform:none;filter:none}
 .split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
@@ -452,7 +456,7 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .hero__img{transform:none}.hero__logo{opacity:1;transform:none}.hero__bar{opacity:1}
   .reveal{opacity:1;transform:none;filter:none!important;letter-spacing:inherit}
-  .split .w > span,.soft .w > span{opacity:1;filter:none;transform:none}
+  .split .w > span,.soft .w > span,.chars .ch{opacity:1;filter:none;transform:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -540,10 +544,14 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   <section class="intro" id="intro" data-nav="dark">
     <div class="wrap intro__grid">
       <div class="intro__art" id="introArt" aria-hidden="true">
-        <svg viewBox="392 -12 120 254" focusable="false">
-          <defs><clipPath id="introGrow"><rect id="introGrowRect" x="380" y="242" width="150" height="0"/></clipPath></defs>
+        <svg viewBox="392 -12 178 254" focusable="false">
+          <defs>
+            <clipPath id="introGrow"><rect id="introGrowRect" x="380" y="242" width="200" height="0"/></clipPath>
+            <clipPath id="introRise"><rect id="introRiseRect" x="460" y="190" width="120" height="0"/></clipPath>
+          </defs>
           <path class="intro__stem" d="M409,229 C413,196 419,165 428,136 C438,104 452,58 469,4"/>
           <g class="intro__wheat" clip-path="url(#introGrow)"></g>
+          <g class="intro__a" clip-path="url(#introRise)"></g>
         </svg>
       </div>
       <div>
@@ -974,7 +982,30 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
       walk(el);
       el.classList.add('reveal', cls);
     };
-    document.querySelectorAll('main h2').forEach(h => split(h, 'split'));
+    // headlines: letters rise 20px and fade in, 50ms apart, replaying each time they enter (as on restaurantzimmerl.at)
+    const chars = el => {
+      let i = 0;
+      el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+      const walk = node => [...node.childNodes].forEach(c => {
+        if (c.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          c.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.append(' '); return; }
+            const word = document.createElement('span'); word.className = 'word'; word.setAttribute('aria-hidden', 'true');
+            [...part].forEach(ch => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; s.style.setProperty('--i', i++); word.append(s); });
+            frag.append(word);
+          });
+          c.replaceWith(frag);
+        } else if (c.nodeType === 1) walk(c);
+      });
+      walk(el);
+      el.classList.add('chars');
+    };
+    const heads = [...document.querySelectorAll('main h2, .fullmenu h3')];
+    heads.forEach(h => { h.classList.remove('reveal'); chars(h); });
+    const hio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in', e.isIntersecting)));
+    heads.forEach(h => hio.observe(h));
     document.querySelectorAll('.intro p.big').forEach(p => split(p, 'soft'));
   }
 
@@ -992,7 +1023,8 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 (() => {
   const art = document.getElementById('introArt');
   if (!art) return;
-  const stem = art.querySelector('.intro__stem'), wheat = art.querySelector('.intro__wheat'), grow = document.getElementById('introGrowRect');
+  const stem = art.querySelector('.intro__stem'), wheat = art.querySelector('.intro__wheat'), aG = art.querySelector('.intro__a');
+  const grow = document.getElementById('introGrowRect'), riseR = document.getElementById('introRiseRect');
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const L = stem.getTotalLength(), H = 254, clamp = v => Math.max(0, Math.min(1, v));
   stem.style.strokeDasharray = `${L} ${L}`;
@@ -1000,17 +1032,23 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     const r = art.getBoundingClientRect(), vh = innerHeight;
     const start = vh * .95, end = vh * .42 - r.height / 2;          // begins as it enters, finishes near the middle of the screen
     const p = calm ? 1 : clamp((start - r.top) / Math.max(1, start - end));
-    const draw = clamp(p / .55), rise = clamp((p - .4) / .6);
+    const draw = clamp(p / .45), rise = clamp((p - .3) / .45), aIn = clamp((p - .68) / .32);
     stem.style.strokeDashoffset = L * (1 - draw);
     stem.style.opacity = 1 - rise * .9;
     grow.setAttribute('y', 242 - H * rise); grow.setAttribute('height', H * rise);
+    // the A's right stroke rises from the baseline to complete the logo's wheat A
+    const aH = 172 * (1 - Math.pow(1 - aIn, 3));
+    riseR.setAttribute('y', 190 - aH); riseR.setAttribute('height', aH);
   };
   // the wheat itself comes straight from the logo artwork
-  fetch('assets/wheat-stalk.svg').then(r => r.text()).then(txt => {
+  fetch('assets/a-wheat.svg').then(r => r.text()).then(txt => {
     const g = new DOMParser().parseFromString(txt, 'image/svg+xml').querySelector('g');
     if (!g) return;
     g.removeAttribute('id'); g.removeAttribute('fill');
-    wheat.append(document.importNode(g, true)); update();
+    // first shape is the A's right stroke; the rest is the wheat
+    const a = g.cloneNode(false), body = g.querySelector('path');
+    a.append(body);
+    wheat.append(document.importNode(g, true)); aG.append(document.importNode(a, true)); update();
   }).catch(() => {});
   let tick = false;
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { update(); tick = false; }); } }, { passive: true });
