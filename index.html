@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
 :root{
@@ -80,11 +80,11 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .nav.is-open,.nav.is-menu{background:transparent}
 .nav[data-on="light"]{color:var(--ink)}
 .nav.is-open{color:var(--paper)}
-.nav__left{display:flex;align-items:flex-start;gap:30px;font-size:17px;letter-spacing:.02em;position:relative}
+.nav__left{display:flex;align-items:flex-start;gap:30px;font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.01em;position:relative}
 .nav__item{position:relative;display:flex;align-items:flex-start;transition:opacity .35s var(--ease)}
 .nav__trigger,.nav__link{background:none;border:0;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:4px 0;white-space:nowrap}
 .nav__trigger svg{width:9px;height:9px;transition:opacity .3s,transform .3s var(--ease)}
-.nav__line{display:block;height:1px;width:0;background:currentColor;margin:15px 0 0 10px;transition:width .5s var(--ease)}
+.nav__line{display:block;height:1px;width:0;background:currentColor;margin:17px 0 0 10px;transition:width .5s var(--ease)}
 .nav__sub{list-style:none;position:absolute;left:100%;top:0;padding-left:14px;display:flex;flex-direction:column;gap:2px;
   opacity:0;visibility:hidden;transform:translateX(-8px);transition:opacity .4s var(--ease),transform .5s var(--ease),visibility 0s .5s}
 .nav__sub a{display:block;padding:4px 0;white-space:nowrap;transition:opacity .25s}
@@ -116,6 +116,13 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .nav__burger span:first-child{top:18px}.nav__burger span:last-child{top:25px}
 .nav.is-menu .nav__burger span:first-child{top:21px;transform:rotate(45deg)}
 .nav.is-menu .nav__burger span:last-child{top:21px;transform:rotate(-45deg)}
+
+/* tilt on hover: menu words slip into italic (Luca-style); the upright width is held so nothing shifts */
+.tilt{display:inline-block;position:relative}
+.tilt::after{content:attr(data-text);display:block;height:0;overflow:hidden;visibility:hidden;font-style:normal;pointer-events:none}
+.nav__trigger:hover .tilt,.nav__trigger:focus-visible .tilt,.nav__item.is-active .nav__trigger .tilt,
+.nav__sub a:hover,.nav__sub a:focus-visible,
+.mnav__list > li > button:hover .tilt,.mnav__list li.is-active > button .tilt,.mnav__list > li > a:hover,.mnav__sub a:hover,.mnav__sub a:focus-visible{font-style:italic}
 
 /* blurred, dimmed page behind an open dropdown */
 .scrim{position:fixed;inset:0;z-index:55;background:rgba(42,30,20,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -436,8 +443,8 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 .soft .w > span{display:inline-block;opacity:0;filter:blur(8px);transform:translateY(.3em);transition:opacity .9s var(--ease),filter .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0) * 30ms)}
 .soft.in .w > span{opacity:1;filter:none;transform:none}
 /* small hover details */
-.footer__bottom a,.nav__sub a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .45s var(--ease),opacity .25s,color .3s}
-.footer__bottom a:hover,.nav__sub a:hover{background-size:100% 1px}
+.footer__bottom a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .45s var(--ease),opacity .25s,color .3s}
+.footer__bottom a:hover{background-size:100% 1px}
 .btn:active,.nav__btn:active{transform:scale(.97)}
 .reveal[data-d="1"]{transition-delay:.1s}.reveal[data-d="2"]{transition-delay:.2s}.reveal[data-d="3"]{transition-delay:.3s}
 
@@ -803,6 +810,14 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     history.replaceState(null, '', id);
   }));
 
+  // ── nav: wrap menu words so they can tilt into italic without shifting ──
+  document.querySelectorAll('.nav__trigger, .mnav__list > li > button').forEach(b => {
+    const txt = [...b.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (!txt) return;
+    const s = document.createElement('span'); s.className = 'tilt'; s.textContent = txt.textContent.trim(); s.dataset.text = s.textContent;
+    txt.replaceWith(s, ' ');
+  });
+  document.querySelectorAll('.nav__sub a, .mnav__sub a, .mnav__list > li > a').forEach(a => { a.classList.add('tilt'); a.dataset.text = a.textContent.trim(); });
   // ── nav ──
   const nav = document.getElementById('nav'), scrim = document.getElementById('scrim');
   const items = [...nav.querySelectorAll('.nav__item')];
