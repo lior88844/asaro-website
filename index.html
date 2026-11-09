@@ -225,6 +225,35 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .order ul{display:flex;flex-wrap:wrap;gap:10px;list-style:none}
 .order li a,.order li span{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid rgba(244,239,231,.22);font-size:12px;letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
 .order li a:hover{background:var(--tan);color:var(--ink);border-color:var(--tan)}
+/* full menu (real text, tabbed) */
+.fullmenu{margin-top:clamp(56px,7vw,100px);padding-top:clamp(40px,5vw,64px);border-top:1px solid var(--line)}
+.fullmenu__head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 40px;margin-bottom:clamp(30px,4vw,48px)}
+.fullmenu h3{font-size:clamp(32px,3.6vw,52px)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{background:none;border:1px solid var(--line);color:var(--cream-2);padding:11px 20px;border-radius:999px;font:inherit;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.tab:hover{border-color:var(--tan);color:var(--paper)}
+.tab[aria-selected="true"]{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.panel{animation:panelIn .6s var(--ease)}
+.panel[hidden]{display:none}
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mlist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:34px clamp(32px,5vw,80px)}
+.mi h4,.di{display:flex;align-items:baseline;gap:12px;font-weight:400}
+.mi h4{font-size:clamp(19px,1.5vw,23px);line-height:1.3}
+.dots{flex:1;min-width:24px;border-bottom:1px dotted rgba(245,239,230,.28);transform:translateY(-.3em)}
+.price{color:var(--tan);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mi p{color:var(--cream-2);font-size:15.5px;line-height:1.55;margin-top:6px;max-width:52ch}
+.mnote{color:var(--muted);font-size:15px;margin:0 0 26px}
+.panel .mnote:last-child{margin:30px 0 0}
+.dcols{display:grid;grid-template-columns:1fr 1fr;gap:20px clamp(32px,5vw,80px)}
+.dhead{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--tan);font-weight:400;margin-bottom:14px}
+.dlist{list-style:none}
+.di{font-size:clamp(17px,1.3vw,19px);padding:9px 0;border-bottom:1px solid var(--line)}
+.di .dots{border-bottom:0}
+.di small{color:var(--muted);font-size:.78em;letter-spacing:.04em;margin-left:6px}
+.fullmenu__foot{margin-top:clamp(36px,5vw,56px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;color:var(--muted);font-size:14px}
+.fullmenu__foot a{color:var(--cream-2);background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;transition:color .3s}
+.fullmenu__foot a:hover{color:var(--tan)}
+@media (max-width:760px){.mlist,.dcols{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1 1 auto;text-align:center;padding:11px 12px}}
 @media (max-width:860px){
   .menu__head{grid-template-columns:1fr}
   .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(160px,46vw,280px)}
@@ -470,7 +499,7 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
         <div class="reveal" data-d="1">
           <p>Start your day with our freshly baked pastries, including buttery croissants, flaky danishes, and our signature sourdough bread. Pair your treat with a cup of our expertly brewed coffee, made from single-origin beans, roasted to perfection.</p>
           <div class="actions">
-            <a class="btn btn--tan" href="https://asarocafe.com/wp-content/uploads/2025/03/Menu.pdf" target="_blank" rel="noopener">View full menu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+            <a class="btn btn--tan" href="#full-menu">View full menu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
             <a class="btn btn--line" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order</a>
           </div>
         </div>
@@ -483,6 +512,83 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
         <figure class="b4 reveal" data-d="1"><img src="assets/shoot/s3-40.jpg" alt="Cheesecake with crumble in an Asaro band" loading="lazy" style="object-position:50% 78%"></figure>
         <figure class="b5 reveal" data-d="2"><img src="assets/AsaroBakery-06.jpg" alt="Kale salad with sourdough on an Asaro placemat" loading="lazy"></figure>
         <figure class="b6 reveal" data-d="3"><img src="assets/Asaro2-34.jpg" alt="Meatball sandwiches on a tray" loading="lazy"></figure>
+      </div>
+
+      <!-- FULL MENU — the real menu as text (from Menu.pdf), so it reads, zooms and searches on any device -->
+      <div class="fullmenu" id="full-menu">
+        <div class="fullmenu__head">
+          <h3 class="reveal">Full menu</h3>
+          <div class="tabs" role="tablist" aria-label="Menu sections">
+            <button class="tab" role="tab" id="t-breakfast" aria-controls="p-breakfast" aria-selected="true">Breakfast</button>
+            <button class="tab" role="tab" id="t-salads" aria-controls="p-salads" aria-selected="false" tabindex="-1">Salads</button>
+            <button class="tab" role="tab" id="t-sandwiches" aria-controls="p-sandwiches" aria-selected="false" tabindex="-1">Sandwiches</button>
+            <button class="tab" role="tab" id="t-drinks" aria-controls="p-drinks" aria-selected="false" tabindex="-1">Drinks</button>
+          </div>
+        </div>
+        <div class="panel" role="tabpanel" id="p-breakfast" aria-labelledby="t-breakfast" tabindex="0">
+          <ul class="mlist">
+            <li class="mi"><h4><span>Not So Classic Breakfast Sandwich</span><span class="dots" aria-hidden="true"></span><span class="price">13.75</span></h4><p>Egg, whipped goat cheese, sundried tomato, caramelized onion, and mixed greens, on housemade challah.</p></li>
+            <li class="mi"><h4><span>Avocado Toast</span><span class="dots" aria-hidden="true"></span><span class="price">14.25</span></h4><p>Avocado, pesto spread, pickled onion, and crumbled feta, on housemade classic sourdough bread.</p></li>
+            <li class="mi"><h4><span>Smoked Salmon</span><span class="dots" aria-hidden="true"></span><span class="price">15.25</span></h4><p>Smoked salmon, pesto cream cheese, hard boiled egg, capers, cucumber, red onion, on a freshly baked challah.</p></li>
+            <li class="mi"><h4><span>Jerusalem Bagel Platter</span><span class="dots" aria-hidden="true"></span><span class="price">16.75</span></h4><p>Housemade Jerusalem bagel, tuna salad, hard boiled egg, hummus drizzled with olive oil, chopped salad, sundried tomato, labane za’atar, and olive oil.</p></li>
+            <li class="mi"><h4><span>Granola Bowl</span><span class="dots" aria-hidden="true"></span><span class="price">13.25</span></h4><p>Housemade granola, greek yogurt, fresh fruit, topped with honey.</p></li>
+          </ul>
+        </div>
+        <div class="panel" role="tabpanel" id="p-salads" aria-labelledby="t-salads" tabindex="0">
+          <p class="mnote">All salads come with a slice of our housemade bread.</p>
+          <ul class="mlist">
+            <li class="mi"><h4><span>Greek Salad</span><span class="dots" aria-hidden="true"></span><span class="price">15.75</span></h4><p>Fresh mixed greens, red onion, kalamata olives, cherry tomatoes, cucumber, shaved feta, drizzled with lemon vinaigrette dressing.</p></li>
+            <li class="mi"><h4><span>Beet Salad</span><span class="dots" aria-hidden="true"></span><span class="price">15.75</span></h4><p>Grilled chicken, beets, roasted zucchini, roasted sweet potato, walnuts, crumbled feta, kale, and mixed greens, drizzled with date vinaigrette.</p></li>
+            <li class="mi"><h4><span>Mediterranean</span><span class="dots" aria-hidden="true"></span><span class="price">15.75</span></h4><p>Chopped tomato, cucumber, red onion, radish, chickpeas and parsley, drizzle of lemon olive oil dressing, topped with labane delights over a bed of mixed greens.</p></li>
+            <li class="mi"><h4><span>Luna</span><span class="dots" aria-hidden="true"></span><span class="price">17.25</span></h4><p>Sliced crispy schnitzel, laid on top of mixed greens, crispy eggplant, chopped beets, pickled onion, crumbled feta, drizzled with date vinaigrette.</p></li>
+          </ul>
+        </div>
+        <div class="panel" role="tabpanel" id="p-sandwiches" aria-labelledby="t-sandwiches" tabindex="0">
+          <ul class="mlist">
+            <li class="mi"><h4><span>Egg Salad Sandwich</span><span class="dots" aria-hidden="true"></span><span class="price">14.75</span></h4><p>Asaro’s egg salad, mixed greens, pickled onion, and garlic aioli dressing, on housemade challah bread.</p></li>
+            <li class="mi"><h4><span>Tuna Salad Sandwich</span><span class="dots" aria-hidden="true"></span><span class="price">14.75</span></h4><p>Asaro’s tuna salad, radish, provolone cheese, mixed greens, and mustard dressing, on our challah bread.</p></li>
+            <li class="mi"><h4><span>Crispy Schnitzel Sandwich</span><span class="dots" aria-hidden="true"></span><span class="price">17.75</span></h4><p>Crispy schnitzel, fried eggplant, housemade matbucha, pickles, and hummus, on housemade challah.</p></li>
+            <li class="mi"><h4><span>Dried Fruit Chicken Thigh Sandwich</span><span class="dots" aria-hidden="true"></span><span class="price">17.75</span></h4><p>Slow cooked chicken thigh with dried apricot, dried plum, dried raisins, garlic aioli, pickled onion, and mixed greens, on housemade challah.</p></li>
+            <li class="mi"><h4><span>Meatball Sandwich</span><span class="dots" aria-hidden="true"></span><span class="price">17.75</span></h4><p>Turkey meatball, sundried tomato paste, caramelized onion, grated parmesan, and mixed greens, on housemade challah.</p></li>
+          </ul>
+        </div>
+        <div class="panel" role="tabpanel" id="p-drinks" aria-labelledby="t-drinks" tabindex="0">
+          <div class="dcols">
+            <div><h4 class="dhead">Hot</h4><ul class="dlist">
+              <li class="di"><span>Drip <small>8oz/12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">3.75/4/4.25</span></li>
+              <li class="di"><span>Espresso</span><span class="dots" aria-hidden="true"></span><span class="price">4</span></li>
+              <li class="di"><span>Macchiato</span><span class="dots" aria-hidden="true"></span><span class="price">4.5</span></li>
+              <li class="di"><span>Cortado</span><span class="dots" aria-hidden="true"></span><span class="price">4.75</span></li>
+              <li class="di"><span>Cappuccino</span><span class="dots" aria-hidden="true"></span><span class="price">5.25</span></li>
+              <li class="di"><span>Latte <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.25/5.75</span></li>
+              <li class="di"><span>Americano <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">4.25/4.5</span></li>
+              <li class="di"><span>Mocha <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.75/6</span></li>
+              <li class="di"><span>Hot chocolate <small>8oz/12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.25/5.75/6.25</span></li>
+              <li class="di"><span>Matcha <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.5/6.5</span></li>
+              <li class="di"><span>Chai latte <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.5/6</span></li>
+              <li class="di"><span>Tea <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">4.25</span></li>
+              <li class="di"><span>Jungle tea <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6.5</span></li>
+            </ul></div>
+            <div><h4 class="dhead">Cold</h4><ul class="dlist">
+              <li class="di"><span>Cold brew <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.25/6.25</span></li>
+              <li class="di"><span>Iced cappuccino</span><span class="dots" aria-hidden="true"></span><span class="price">5.5</span></li>
+              <li class="di"><span>Iced latte <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5.75</span></li>
+              <li class="di"><span>Draft latte <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6/6.75</span></li>
+              <li class="di"><span>Iced chai latte <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6</span></li>
+              <li class="di"><span>Draft chai latte <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6/6.5</span></li>
+              <li class="di"><span>Black &amp; tan <small>12oz/16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6/6.5</span></li>
+              <li class="di"><span>Iced mocha <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6.75</span></li>
+              <li class="di"><span>Iced matcha <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">6.25</span></li>
+              <li class="di"><span>Iced tea <small>16oz</small></span><span class="dots" aria-hidden="true"></span><span class="price">5</span></li>
+              <li class="di"><span>Affogato</span><span class="dots" aria-hidden="true"></span><span class="price">8</span></li>
+            </ul></div>
+          </div>
+          <p class="mnote">Milk options: whole, low fat, oat, almond, pistachio.</p>
+        </div>
+        <div class="fullmenu__foot">
+          <p>Before placing your order, please inform your server if a person in your party has a food allergy.</p>
+          <a href="https://asarocafe.com/wp-content/uploads/2025/03/Menu.pdf" target="_blank" rel="noopener">Download the menu (PDF)</a>
+        </div>
       </div>
 
       <div class="order reveal">
@@ -691,6 +797,26 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
       grid.replaceChildren(...tiles, ...fill.slice(0, Math.max(0, 12 - tiles.length)));
     }).catch(() => {});
   }
+
+  // full menu tabs (ARIA tabs: click, arrow keys, Home/End); without JS every section simply shows
+  const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+  const show = (tab, focus) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t));
+    t.addEventListener('keydown', e => {
+      const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (k === undefined) return;
+      e.preventDefault(); show(tabs[(k + tabs.length) % tabs.length], true);
+    });
+  });
+  if (tabs.length) show(tabs[0]);
 
   // split headings and the intro quote into words for the word-by-word reveal
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {

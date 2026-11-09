@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asaro Brand Colors</title>
+<meta name="description" content="The Asaro Bakery & Cafe color palette, with hex and RGB values, roles and contrast checks.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#120E0B">
+<link rel="preload" href="assets/4820Cycles-Thirtysix.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Cycles";src:url("assets/4820Cycles-Thirtysix.woff2") format("woff2");font-weight:400;font-display:swap}
+:root{
+  --espresso:#120E0B; --cream:#F5EFE6; --tan:#C9B193; --deep-tan:#A58762; --taupe:#A8998A; --oak:#2B2016; --ink:#141210;
+  --line:rgba(245,239,230,.12); --cream-2:rgba(245,239,230,.82);
+  --serif:"Cycles",Georgia,"Times New Roman",serif; --gutter:clamp(16px,4vw,56px); --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--espresso);color:var(--cream);font-family:var(--serif);font-size:clamp(16px,1.1vw,18px);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) var(--gutter)}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;padding-bottom:clamp(32px,5vw,56px);border-bottom:1px solid var(--line)}
+header img{width:min(280px,60vw);height:auto}
+.kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--tan)}
+h1{font-weight:400;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.01em;margin-top:14px}
+.lede{color:var(--cream-2);max-width:56ch;margin-top:clamp(28px,4vw,40px)}
+h2{font-weight:400;font-size:clamp(26px,2.6vw,36px);margin:clamp(56px,7vw,88px) 0 24px}
+
+/* swatches */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:transform .4s var(--ease),border-color .3s}
+.sw:hover{transform:translateY(-3px);border-color:rgba(245,239,230,.3)}
+.chip{height:170px;display:flex;align-items:flex-end;justify-content:space-between;padding:16px 18px;font-size:13px;letter-spacing:.06em}
+.meta{padding:16px 18px 18px}
+.meta b{display:block;font-weight:400;font-size:22px;line-height:1.2}
+.meta code{font-family:inherit;font-size:14px;letter-spacing:.06em;color:var(--cream-2)}
+.meta p{color:var(--taupe);font-size:14.5px;line-height:1.5;margin-top:10px}
+.copied{font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .3s}
+.sw.is-copied .copied{opacity:1}
+
+/* proportion bar */
+.bar{display:flex;height:64px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.bar span{display:block}
+.legend{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:14px;color:var(--taupe);font-size:14px}
+
+/* contrast table */
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
+.sample{display:inline-block;padding:6px 14px;border-radius:8px;font-size:15px}
+.pass{color:var(--tan);white-space:nowrap}
+.tablewrap{overflow-x:auto}
+
+/* type */
+.type{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.type > div{border:1px solid var(--line);border-radius:14px;padding:clamp(22px,3vw,34px)}
+.type .big{font-size:clamp(40px,5vw,64px);line-height:1.05;margin:14px 0}
+.type .logo-type{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;letter-spacing:.12em}
+.type p{color:var(--cream-2);font-size:15px}
+.rules{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px 32px;color:var(--cream-2)}
+.rules li{padding:14px 0;border-bottom:1px solid var(--line)}
+.rules li b{font-weight:400;color:var(--tan)}
+footer{margin-top:clamp(56px,7vw,88px);padding-top:22px;border-top:1px solid var(--line);color:var(--taupe);font-size:12px;letter-spacing:.18em;text-transform:uppercase;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer a:hover{color:var(--tan)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--tan);outline-offset:3px}
+@media (max-width:760px){.type{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <span class="kicker">Brand guide</span>
+      <h1>Color palette</h1>
+    </div>
+    <img src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" width="280" height="83">
+  </header>
+  <p class="lede">Dark and warm, like the café itself: an espresso base, cream for reading, and the Asaro tan for accents. Use one background everywhere, and let photos bring the color. Click any swatch to copy its hex code.</p>
+
+  <h2>Core colors</h2>
+  <div class="grid" id="swatches">
+    <button class="sw" data-hex="#120E0B"><div class="chip" style="background:#120E0B;color:#F5EFE6;box-shadow:inset 0 -1px 0 rgba(245,239,230,.12)"><span>Background</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Espresso</b><code>#120E0B · RGB 18 14 11</code><p>The one background for every page, section and screen.</p></div></button>
+    <button class="sw" data-hex="#F5EFE6"><div class="chip" style="background:#F5EFE6;color:#141210"><span>Text</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Cream</b><code>#F5EFE6 · RGB 245 239 230</code><p>Headings, body text and light buttons. Body copy can use it at 82% opacity.</p></div></button>
+    <button class="sw" data-hex="#C9B193"><div class="chip" style="background:#C9B193;color:#141210"><span>Accent</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Asaro Tan</b><code>#C9B193 · RGB 201 177 147</code><p>The signature color: labels, highlighted words, prices, the Order button.</p></div></button>
+  </div>
+
+  <h2>Supporting colors</h2>
+  <div class="grid">
+    <button class="sw" data-hex="#A58762"><div class="chip" style="background:#A58762;color:#141210"><span>Accent, quiet</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Deep Tan</b><code>#A58762 · RGB 165 135 98</code><p>Small details: dividers in the moving strip, hover states, icons.</p></div></button>
+    <button class="sw" data-hex="#A8998A"><div class="chip" style="background:#A8998A;color:#141210"><span>Secondary text</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Taupe</b><code>#A8998A · RGB 168 153 138</code><p>Small print, notes and captions, like sizes and allergy notes.</p></div></button>
+    <button class="sw" data-hex="#2B2016"><div class="chip" style="background:#2B2016;color:#F5EFE6"><span>Surface</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Oak</b><code>#2B2016 · RGB 43 32 22</code><p>Only behind photos while they load. Never for text or as a section color.</p></div></button>
+    <button class="sw" data-hex="#141210"><div class="chip" style="background:#141210;color:#F5EFE6;box-shadow:inset 0 -1px 0 rgba(245,239,230,.12)"><span>Text on light</span><span class="copied">Copied</span></div>
+      <div class="meta"><b>Ink</b><code>#141210 · RGB 20 18 16</code><p>Text placed on Cream or Tan, like the label inside a tan button.</p></div></button>
+  </div>
+
+  <h2>How much of each</h2>
+  <div class="bar" role="img" aria-label="Espresso about 80 percent, Cream about 12 percent, Asaro Tan about 6 percent, Deep Tan and Taupe about 2 percent">
+    <span style="flex:80;background:#120E0B"></span><span style="flex:12;background:#F5EFE6"></span><span style="flex:6;background:#C9B193"></span><span style="flex:1;background:#A58762"></span><span style="flex:1;background:#A8998A"></span>
+  </div>
+  <div class="legend"><span>Espresso ~80%</span><span>Cream ~12%</span><span>Asaro Tan ~6%</span><span>Deep Tan + Taupe ~2%</span></div>
+
+  <h2>Contrast checks</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Pairing</th><th>Sample</th><th>Ratio</th><th>Use it for</th></tr></thead>
+    <tbody>
+      <tr><td>Cream on Espresso</td><td><span class="sample" style="background:#120E0B;color:#F5EFE6;border:1px solid rgba(245,239,230,.12)">Our Story</span></td><td class="pass">16.8 : 1 · AAA</td><td>All text</td></tr>
+      <tr><td>Asaro Tan on Espresso</td><td><span class="sample" style="background:#120E0B;color:#C9B193;border:1px solid rgba(245,239,230,.12)">15.75</span></td><td class="pass">9.3 : 1 · AAA</td><td>Accents, prices, labels</td></tr>
+      <tr><td>Taupe on Espresso</td><td><span class="sample" style="background:#120E0B;color:#A8998A;border:1px solid rgba(245,239,230,.12)">12oz / 16oz</span></td><td class="pass">6.9 : 1 · AA</td><td>Small print and notes</td></tr>
+      <tr><td>Deep Tan on Espresso</td><td><span class="sample" style="background:#120E0B;color:#A58762;border:1px solid rgba(245,239,230,.12)">✳ Sourdough</span></td><td class="pass">5.7 : 1 · AA</td><td>Details and larger text</td></tr>
+      <tr><td>Ink on Asaro Tan</td><td><span class="sample" style="background:#C9B193;color:#141210">Order</span></td><td class="pass">9.1 : 1 · AAA</td><td>Tan buttons</td></tr>
+      <tr><td>Ink on Cream</td><td><span class="sample" style="background:#F5EFE6;color:#141210">Send us your resume</span></td><td class="pass">16.3 : 1 · AAA</td><td>Cream buttons</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Type that goes with it</h2>
+  <div class="type">
+    <div><span class="kicker">Website text</span><div class="big">Cycles</div><p>Cycles Thirty-Six, for all text on the website. Its license covers web use only, so don't use it for print.</p></div>
+    <div><span class="kicker">Logo lettering</span><div class="big logo-type">ASARO</div><p>Cormorant Garamond Bold, spaced wide (about 0.12em), for anything set next to the logo, like merch and signage.</p></div>
+  </div>
+
+  <h2>A few rules</h2>
+  <ul class="rules">
+    <li><b>One background.</b> Espresso everywhere; separate sections with space and thin cream lines at 12%, not with new colors.</li>
+    <li><b>Tan is for emphasis.</b> One or two tan words per heading at most, so it keeps its pull.</li>
+    <li><b>Photos stay warm.</b> Black-and-white images are toned espresso to cream so they sit in the palette.</li>
+    <li><b>No pure black or pure white.</b> Use Espresso and Cream instead; they keep everything soft and rustic.</li>
+  </ul>
+
+  <footer><span>© <span id="yr">2026</span> Lior Doron</span><a href="./">Back to the website →</a></footer>
+</div>
+<script>
+  document.querySelectorAll('.sw').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.hex); } catch (e) {}
+    b.classList.add('is-copied'); setTimeout(() => b.classList.remove('is-copied'), 1400);
+  }));
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
