@@ -88,8 +88,6 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .nav__sub{list-style:none;position:absolute;left:100%;top:0;padding-left:14px;display:flex;flex-direction:column;gap:2px;
   opacity:0;visibility:hidden;transform:translateX(-8px);transition:opacity .4s var(--ease),transform .5s var(--ease),visibility 0s .5s}
 .nav__sub a{display:block;padding:4px 0;white-space:nowrap;transition:opacity .25s}
-.nav__sub:hover a{opacity:.45}
-.nav__sub a:hover{opacity:1}
 /* one group open: others vanish, line draws out, sub-links slide in */
 .nav.is-open .nav__item:not(.is-active){opacity:0;pointer-events:none}
 .nav__item.is-active .nav__line{width:48px}
