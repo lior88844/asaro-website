@@ -34,6 +34,7 @@
   --sans:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;     /* text: body, labels, buttons */
   --gutter:clamp(16px,4vw,56px);
   --max:1320px;
+  --section:clamp(64px,8.5vw,128px);   /* the one gap between every section */
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -259,9 +260,6 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .di{font-size:clamp(17px,1.3vw,19px);padding:9px 0;border-bottom:1px solid var(--line)}
 .di .dots{border-bottom:0}
 .di small{color:var(--muted);font-size:.78em;letter-spacing:.04em;margin-left:6px}
-.fullmenu__foot{margin-top:clamp(36px,5vw,56px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;color:var(--muted);font-size:14px}
-.fullmenu__foot a{color:var(--cream-2);background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;transition:color .3s}
-.fullmenu__foot a:hover{color:var(--tan)}
 @media (max-width:760px){.mlist,.dcols{grid-template-columns:1fr}}
 @media (max-width:860px){
   .menu__head{grid-template-columns:1fr}
@@ -393,6 +391,11 @@ h2{font-size:clamp(44px,6.4vw,96px)}
   .tab{flex:1 1 auto;font-size:clamp(9.5px,2.9cqi,12px);letter-spacing:.12em;padding:12px 6px}
   .hero__addr{margin-left:0;text-align:left;flex-basis:100%}
 }
+
+/* ───────── SECTION RHYTHM: every section gets the same space above it, so all gaps match ───────── */
+main > section:not(.hero){padding-top:var(--section);padding-bottom:0}
+main > section.visit{padding-bottom:calc(var(--section) / 2)}
+body > footer.footer{padding-top:calc(var(--section) / 2)}   /* divider line sits in the middle of one normal gap */
 
 /* ───────── REVEAL ───────── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
@@ -645,10 +648,6 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
             </ul></div>
           </div>
           <p class="mnote">Milk options: whole, low fat, oat, almond, pistachio.</p>
-        </div>
-        <div class="fullmenu__foot">
-          <p>Before placing your order, please inform your server if a person in your party has a food allergy.</p>
-          <a href="https://asarocafe.com/wp-content/uploads/2025/03/Menu.pdf" target="_blank" rel="noopener">Download the menu (PDF)</a>
         </div>
       </div>
 
