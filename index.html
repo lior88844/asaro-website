@@ -320,11 +320,14 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .footer__logo{position:relative;width:min(560px,82%)}
 .footer__logo img{width:100%;height:auto}
 .footer__wheat{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.footer__wheat path{fill:var(--paper);fill-opacity:0;stroke:var(--paper);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
+.footer__wheat{clip-path:inset(78% 0 0 0)}
+.footer__wheat path{fill:var(--paper)}
 
 /* the scroll-drawn line: one hand-drawn tan stroke behind the content, ending in the logo's wheat */
 .trail{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:0;overflow:visible}
 .trail__path{fill:none;stroke:var(--tan);stroke-opacity:.5;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.trail__stem{fill:none;stroke:var(--tan);stroke-opacity:.55;stroke-width:1.2;stroke-linecap:round}
+.trail__grain{fill:var(--tan);fill-opacity:.62}
 .trail__tip{fill:var(--tan);opacity:.85;transition:opacity .4s}
 main,.footer{position:relative;z-index:1}
 @media (max-width:760px){.trail__path{stroke-width:1.1;stroke-opacity:.42}}
@@ -501,7 +504,7 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   </div>
 </div>
 
-<svg class="trail" id="trail" aria-hidden="true" focusable="false"><path class="trail__path" id="trailPath" d=""/><circle class="trail__tip" id="trailTip" r="2.4" cx="-10" cy="-10"/></svg>
+<svg class="trail" id="trail" aria-hidden="true" focusable="false"><path class="trail__path" id="trailPath" d=""/><g id="trailLeaves"></g><circle class="trail__tip" id="trailTip" r="2.4" cx="-10" cy="-10"/></svg>
 
 <main id="top">
 
@@ -961,7 +964,8 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   const logo = document.getElementById('footerLogo');
   if (!svg || !path || !logo) return;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let total = 0, lut = [], wheatPaths = [], ready = false;
+  let total = 0, lut = [], wheatPaths = [], ready = false, leaves = [], wheatSvg = null;
+  const leafG = document.getElementById('trailLeaves');
 
   // seeded wobble so the line looks hand-drawn but never jumps between visits
   let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280 - .5;
@@ -1017,6 +1021,35 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     // length ↔ height lookup, so the line keeps pace with the scroll
     lut = []; let maxY = -1;
     for (let i = 0; i <= 900; i++) { const l = total * i / 900; maxY = Math.max(maxY, path.getPointAtLength(l).y); lut.push([l, maxY]); }
+    // wheat ears: little sprigs branching off the line on alternating sides —
+    // a short curved stem, then a herringbone of paired grains, ending in a single grain
+    leafG.textContent = ''; leaves = [];
+    const NS = 'http://www.w3.org/2000/svg', small = W < 760, sc = small ? .72 : 1, every = small ? 380 : 520;
+    const ear = side => {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'trail__ear');
+      const stem = document.createElementNS(NS, 'path');
+      stem.setAttribute('d', `M0,0 Q14,${-3 * side} 26,${-2 * side} L66,${-2 * side}`);
+      stem.setAttribute('class', 'trail__stem'); g.append(stem);
+      for (let k = 0; k < 6; k++) {
+        const x = 30 + k * 7.2, r = 4.6 - k * .25;
+        [1, -1].forEach(s => {
+          const e = document.createElementNS(NS, 'ellipse');
+          e.setAttribute('cx', x); e.setAttribute('cy', -2 * side + s * 3.4); e.setAttribute('rx', r); e.setAttribute('ry', r * .46);
+          e.setAttribute('transform', `rotate(${s * -32} ${x} ${-2 * side + s * 3.4})`);
+          e.setAttribute('class', 'trail__grain'); g.append(e);
+        });
+      }
+      const tipG = document.createElementNS(NS, 'ellipse');
+      tipG.setAttribute('cx', 75); tipG.setAttribute('cy', -2 * side); tipG.setAttribute('rx', 4); tipG.setAttribute('ry', 1.9);
+      tipG.setAttribute('class', 'trail__grain'); g.append(tipG);
+      return g;
+    };
+    for (let l = every * .55, k = 0; l < total - 300; l += every, k++) {
+      const a = path.getPointAtLength(l), b = path.getPointAtLength(Math.min(total, l + 2));
+      const side = k % 2 ? 1 : -1, ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI + side * 38;
+      const g = ear(side); leafG.append(g);
+      leaves.push({ el: g, at: l, x: a.x, y: a.y, ang, sc });
+    }
     ready = true; draw();
   };
 
@@ -1037,23 +1070,21 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
     tip.style.opacity = !calm && len > 4 && len < total - 1 ? .85 : 0;
     // then the wheat stalk draws itself into the logo, from the base up
     const tw = calm ? 1 : clamp((sy - lineEnd) / span);
-    wheatPaths.forEach((w, i) => {
-      const local = clamp(tw * 1.3 - i / wheatPaths.length * .3);
-      w.style.strokeDashoffset = 1 - local;
-      w.style.fillOpacity = clamp((local - .5) / .5);
+    leaves.forEach(f => {
+      const g = calm ? 1 : clamp((len - f.at) / 110), e = 1 - Math.pow(1 - g, 3);
+      f.el.setAttribute('transform', `translate(${f.x.toFixed(1)},${f.y.toFixed(1)}) rotate(${f.ang.toFixed(1)}) scale(${(e * f.sc).toFixed(3)})`);
     });
+    if (wheatSvg) wheatSvg.style.clipPath = `inset(${((1 - tw) * 78).toFixed(2)}% 0 0 0)`;   // stalk grows up from its base
   };
 
   // swap the footer logo for the version without the stalk, and draw the stalk on top
   fetch('assets/wheat-stalk.svg').then(r => r.text()).then(txt => {
     const doc = new DOMParser().parseFromString(txt, 'image/svg+xml').documentElement;
     doc.setAttribute('class', 'footer__wheat'); doc.setAttribute('aria-hidden', 'true');
-    doc.querySelectorAll('path').forEach(pth => pth.setAttribute('pathLength', '1'));
     const img = logo.querySelector('img');
     img.src = 'assets/logo-light-nowheat.svg';
     logo.append(document.importNode(doc, true));
-    wheatPaths = [...logo.querySelectorAll('.footer__wheat path')]
-      .sort((a, b) => b.getBoundingClientRect().bottom - a.getBoundingClientRect().bottom); // grow from the base up
+    wheatSvg = logo.querySelector('.footer__wheat');
     draw();
   }).catch(() => {});
 
