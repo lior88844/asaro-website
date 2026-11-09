@@ -275,7 +275,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 /* ───────── HIRING ───────── */
 .hiring{padding:clamp(90px,12vw,170px) 0}
 .hiring__card{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;border:1px solid var(--line)}
-.hiring__card img{width:100%;height:100%;object-fit:cover;min-height:340px}
+.hiring__card img{width:100%;height:100%;object-fit:cover;object-position:30% 45%;min-height:340px;filter:url(#espresso-tone)}
 .hiring__body{padding:clamp(32px,5vw,72px)}
 .hiring h2{font-size:clamp(36px,4.6vw,68px);margin:0 0 22px}
 .hiring h2 em{font-style:normal;color:var(--tan)}
@@ -412,17 +412,12 @@ main > section.photo-sec + section{padding-top:calc(var(--section) * .5)}
 .photo-sec__bg::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,var(--bg) 0%,rgba(42,30,20,.92) 8%,rgba(42,30,20,.78) 20%,rgba(42,30,20,.66) 50%,rgba(42,30,20,.78) 80%,rgba(42,30,20,.92) 92%,var(--bg) 100%)}
 /* hiring: the photo is the backdrop, the text sits on a frosted oak panel */
-.hiring.photo-sec .photo-sec__bg::after{background:linear-gradient(180deg,var(--bg) 0%,rgba(42,30,20,.85) 8%,rgba(42,30,20,.55) 22%,rgba(42,30,20,.38) 50%,rgba(42,30,20,.55) 78%,rgba(42,30,20,.85) 92%,var(--bg) 100%)}
-.hiring.photo-sec .photo-sec__bg img{object-position:30% 40%}
-.hiring.photo-sec .hiring__card{display:block;max-width:600px;margin-left:auto;background:rgba(42,30,20,.72);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);border-color:rgba(245,239,230,.14)}
 .visit.photo-sec .photo-sec__bg::after{background:linear-gradient(180deg,var(--bg) 0%,rgba(42,30,20,.94) 8%,rgba(42,30,20,.84) 22%,rgba(42,30,20,.78) 50%,rgba(42,30,20,.84) 78%,rgba(42,30,20,.94) 92%,var(--bg) 100%)}
 /* visit: map alone beside the details */
 .visit.photo-sec .visit__media{grid-template-columns:1fr}
 .visit.photo-sec .map{min-height:380px;aspect-ratio:auto}
 @media (max-width:760px){
-  .hiring.photo-sec .photo-sec__bg img{object-position:38% 40%}
-  .hiring.photo-sec .hiring__card{margin-top:42vw}
-  .visit.photo-sec .map{min-height:280px}
+      .visit.photo-sec .map{min-height:280px}
 }
 
 /* ───────── REVEAL ───────── */
@@ -703,10 +698,10 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   </section>
 
   <!-- HIRING -->
-  <section class="hiring photo-sec" id="hiring" data-nav="dark">
-    <div class="photo-sec__bg" aria-hidden="true"><img src="assets/shoot/bw-u2.jpg" alt="" loading="lazy"></div>
+  <section class="hiring" id="hiring" data-nav="dark">
     <div class="wrap">
       <div class="hiring__card reveal">
+        <img src="assets/shoot/bw-u2.jpg" alt="An Asaro baker in the apron at work" loading="lazy">
         <div class="hiring__body">
           <h2>Come, be part of the <em>Asaro family.</em></h2>
           <p>Experience is important, but not a must. We value enthusiasm, great attitude, and excitement of being part of a small team! We’re looking for:</p>
