@@ -177,9 +177,10 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .intro__grid > div{grid-column:2;grid-row:1}
 /* the drawing: a hand-drawn stem that turns into the logo's wheat as the intro scrolls in */
 .intro__grid > .intro__art{grid-column:1;justify-self:end;align-self:center;height:clamp(170px,19vw,290px);aspect-ratio:178/254}
-.intro__art svg{width:100%;height:100%;overflow:visible}
+.intro__grid > .intro__art{position:relative;z-index:2}
+.intro__art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.intro__layer{position:absolute;inset:0;width:100%;height:100%;-webkit-clip-path:inset(100% 0 0 0);clip-path:inset(100% 0 0 0)}
 .intro__stem{fill:none;stroke:var(--tan);stroke-width:2;stroke-linecap:round}
-.intro__wheat path,.intro__a path{fill:var(--tan)}
 .intro p.big{font-size:clamp(30px,4.2vw,62px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
 .intro p.big em{font-style:normal;color:var(--tan)}
 .intro p.sub{margin-top:28px;color:var(--muted);max-width:52ch}
@@ -540,15 +541,9 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
   <section class="intro" id="intro" data-nav="dark">
     <div class="wrap intro__grid">
       <div class="intro__art" id="introArt" aria-hidden="true">
-        <svg viewBox="392 -12 178 254" focusable="false">
-          <defs>
-            <clipPath id="introGrow"><rect id="introGrowRect" x="380" y="242" width="200" height="0"/></clipPath>
-            <clipPath id="introRise"><rect id="introRiseRect" x="460" y="190" width="120" height="0"/></clipPath>
-          </defs>
-          <path class="intro__stem" d="M409,229 C413,196 419,165 428,136 C438,104 452,58 469,4"/>
-          <g class="intro__wheat" clip-path="url(#introGrow)"></g>
-          <g class="intro__a" clip-path="url(#introRise)"></g>
-        </svg>
+        <svg viewBox="392 -12 178 254" focusable="false"><path class="intro__stem" d="M409,229 C413,196 419,165 428,136 C438,104 452,58 469,4"/></svg>
+        <img class="intro__layer intro__wheat" src="assets/intro-wheat.svg" alt="" width="178" height="254">
+        <img class="intro__layer intro__a" src="assets/intro-a.svg" alt="" width="178" height="254">
       </div>
       <div>
         <p class="big reveal">Our journey at <span class="w"><span><img class="wheat-a" src="assets/a-wheat-cream.svg" alt="" width="154" height="230"><span class="sr-only">A</span>saro</span></span> Bakery &amp; Cafe is built on <em>passion, community,</em> and a love for great food.</p>
@@ -1015,40 +1010,30 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 })();
 </script>
 <script>
-/* ── Intro drawing: the stem draws itself, then the logo's wheat grows up over it ── */
+/* ── Intro drawing: a stem draws itself, the logo's wheat grows up over it,
+      then the A's right stroke rises to finish the logo's wheat A ── */
 (() => {
   const art = document.getElementById('introArt');
   if (!art) return;
-  const stem = art.querySelector('.intro__stem'), wheat = art.querySelector('.intro__wheat'), aG = art.querySelector('.intro__a');
-  const grow = document.getElementById('introGrowRect'), riseR = document.getElementById('introRiseRect');
+  const stem = art.querySelector('.intro__stem'), wheat = art.querySelector('.intro__wheat'), aImg = art.querySelector('.intro__a');
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const L = stem.getTotalLength(), H = 254, clamp = v => Math.max(0, Math.min(1, v));
+  const L = stem.getTotalLength(), clamp = v => Math.max(0, Math.min(1, v));
   stem.style.strokeDasharray = `${L} ${L}`;
+  const clip = (el, topPct) => { const v = `inset(${topPct.toFixed(2)}% 0 0 0)`; el.style.webkitClipPath = v; el.style.clipPath = v; };
   const update = () => {
     const r = art.getBoundingClientRect(), vh = innerHeight;
-    const start = vh * .95, end = vh * .42 - r.height / 2;          // begins as it enters, finishes near the middle of the screen
+    const start = vh * .95, end = vh * .42 - r.height / 2;          // starts as it enters, finished near mid-screen
     const p = calm ? 1 : clamp((start - r.top) / Math.max(1, start - end));
     const draw = clamp(p / .45), rise = clamp((p - .3) / .45), aIn = clamp((p - .68) / .32);
     stem.style.strokeDashoffset = L * (1 - draw);
     stem.style.opacity = 1 - rise * .9;
-    grow.setAttribute('y', 242 - H * rise); grow.setAttribute('height', H * rise);
-    // the A's right stroke rises from the baseline to complete the logo's wheat A
-    const aH = 172 * (1 - Math.pow(1 - aIn, 3));
-    riseR.setAttribute('y', 190 - aH); riseR.setAttribute('height', aH);
+    clip(wheat, (1 - rise) * 100);                                   // wheat grows up from its base
+    clip(aImg, (1 - (1 - Math.pow(1 - aIn, 3))) * 74.5);             // A stroke rises from the baseline (74.5% down the box)
   };
-  // the wheat itself comes straight from the logo artwork
-  fetch('assets/a-wheat.svg').then(r => r.text()).then(txt => {
-    const g = new DOMParser().parseFromString(txt, 'image/svg+xml').querySelector('g');
-    if (!g) return;
-    g.removeAttribute('id'); g.removeAttribute('fill');
-    // first shape is the A's right stroke; the rest is the wheat
-    const a = g.cloneNode(false), body = g.querySelector('path');
-    a.append(body);
-    wheat.append(document.importNode(g, true)); aG.append(document.importNode(a, true)); update();
-  }).catch(() => {});
   let tick = false;
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { update(); tick = false; }); } }, { passive: true });
   addEventListener('resize', update);
+  addEventListener('load', update);
   update();
 })();
 </script>
