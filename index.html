@@ -39,7 +39,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 .label{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--tan-deep)}
-.label::before{content:"";display:inline-block;width:28px;height:1px;background:currentColor;vertical-align:middle;margin-right:12px;transform:translateY(-2px)}
 h1,h2,h3{font-weight:400;line-height:1.05;letter-spacing:-.01em}
 h2{font-size:clamp(44px,6.4vw,96px)}
 
@@ -223,7 +222,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
 .b3,.b4,.b5,.b6{grid-column:span 3;grid-row:span 2}
 .order{margin-top:clamp(44px,6vw,72px);display:flex;flex-wrap:wrap;gap:18px 40px;align-items:center;justify-content:space-between;padding:26px 30px;border:1px solid rgba(244,239,231,.16);border-radius:16px}
 .order p{font-size:clamp(18px,1.6vw,22px);max-width:40ch}
-.order p a{color:var(--tan)}
+.order p .order__toast{color:var(--tan)}
 .order ul{display:flex;flex-wrap:wrap;gap:10px;list-style:none}
 .order li a,.order li span{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid rgba(244,239,231,.22);font-size:12px;letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
 .order li a:hover{background:var(--tan);color:var(--ink);border-color:var(--tan)}
@@ -372,7 +371,6 @@ h2{font-size:clamp(44px,6.4vw,96px)}
       <span class="label reveal">Asaro</span>
       <div>
         <p class="big reveal">Our journey at Asaro Bakery &amp; Cafe is built on <em>passion, community,</em> and a love for great food.</p>
-        <p class="sub reveal" data-d="1">Explore our menu or reach out to us for any questions or special requests.</p>
       </div>
     </div>
   </section>
@@ -381,8 +379,8 @@ h2{font-size:clamp(44px,6.4vw,96px)}
   <section class="story" id="story" data-nav="light">
     <div class="wrap story__grid">
       <div class="story__photos reveal">
-        <img class="p1" src="assets/AsaroBakery-35.jpg" alt="Matcha latte with leaf art on an Asaro paper placemat" loading="lazy">
-        <img class="p2" src="assets/Asaro2-25.jpg" alt="Building a sandwich on fresh bread" loading="lazy">
+        <img class="p1" src="assets/shoot/a2-63.jpg" alt="A baker in an Asaro apron shaping sourdough" loading="lazy">
+        <img class="p2" src="assets/shoot/ab-44.jpg" alt="A barista in an Asaro apron pouring latte art" loading="lazy">
       </div>
       <div class="story__text">
         <span class="label reveal">About</span>
@@ -411,20 +409,16 @@ h2{font-size:clamp(44px,6.4vw,96px)}
       </div>
     </div>
     <div class="rail" id="rail">
-      <figure><img src="assets/shoot/asaro4-28.jpg" alt="Pastry case with croissants and handwritten price cards" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s3-05.jpg" alt="A baker weighing dough in the kitchen" loading="lazy" style="object-position:70% 50%"></figure>
+      <figure><img src="assets/shoot/asaro4-28.jpg" alt="The pastry case with croissants and handwritten price cards" loading="lazy"></figure>
+      <figure><img src="assets/shoot/s3-01.jpg" alt="The pastry display case at the counter" loading="lazy"></figure>
       <figure><img src="assets/shoot/s3-03.jpg" alt="Butter croissants on a cake stand" loading="lazy"></figure>
-      <figure><img src="assets/shoot/asaro4-15.jpg" alt="A powdered jam donut held over an Asaro apron" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s3-29.jpg" alt="Chocolate ganache poured over a cake" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s3-40.jpg" alt="Crumble scattered over a cheesecake in an Asaro band" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s3-46.jpg" alt="Fresh mint tea on an Asaro paper placemat" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s5-13.jpg" alt="Latte with heart art on a rustic wooden table with pies" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s5-18.jpg" alt="Pies and tarts on a wooden table" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s5-11.jpg" alt="Sugar dusted over a tart, in black and white" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s5-24.jpg" alt="Pastry dough cut into triangles" loading="lazy"></figure>
-      <figure><img src="assets/shoot/s3-16.jpg" alt="A baker smiling by the oven" loading="lazy"></figure>
-      <figure><img src="assets/shoot/asaro4-31.jpg" alt="Pistachio and almond croissants" loading="lazy"></figure>
       <figure><img src="assets/shoot/s3-51.jpg" alt="The coffee counter with Asaro coffee bags" loading="lazy"></figure>
+      <figure><img src="assets/shoot/ab-52.jpg" alt="An espresso shot pulling at the coffee bar" loading="lazy"></figure>
+      <figure><img src="assets/shoot/ab-37.jpg" alt="Espresso pouring into a cup at the coffee bar" loading="lazy"></figure>
+      <figure><img src="assets/shoot/s5-13.jpg" alt="Latte on a rustic wooden table with pies" loading="lazy"></figure>
+      <figure><img src="assets/shoot/s3-46.jpg" alt="Fresh mint tea on an Asaro paper placemat" loading="lazy"></figure>
+      <figure><img src="assets/shoot/s5-18.jpg" alt="Pies and tarts on a wooden table" loading="lazy"></figure>
+      <figure><img src="assets/shoot/asaro4-31.jpg" alt="Pistachio and almond croissants" loading="lazy"></figure>
     </div>
     <div class="rail-progress"><div><span id="railBar"></span></div></div>
   </section>
@@ -455,21 +449,17 @@ h2{font-size:clamp(44px,6.4vw,96px)}
       </div>
 
       <div class="bento">
-        <figure class="b1 reveal"><img src="assets/AsaroBakery-06.jpg" alt="Kale salad with sourdough on an Asaro placemat" loading="lazy"></figure>
+        <figure class="b1 reveal"><img src="assets/shoot/asaro4-27.jpg" alt="Pistachio croissants with handwritten price cards" loading="lazy"></figure>
         <figure class="b2 reveal" data-d="1"><img src="assets/AsaroBakery-60.jpg" alt="Latte with rosetta art" loading="lazy" style="object-position:50% 60%"></figure>
-        <figure class="b3 reveal"><img src="assets/Asaro2-34.jpg" alt="Meatball sandwiches on a tray" loading="lazy"></figure>
-        <figure class="b4 reveal" data-d="1"><img src="assets/Asaro2-33.jpg" alt="Finishing a sandwich with grated cheese" loading="lazy"></figure>
-        <figure class="b5 reveal" data-d="2"><img src="assets/AsaroBakery-19.jpg" alt="Green salad with goat cheese and radish" loading="lazy"></figure>
-        <figure class="b6 reveal" data-d="3"><img src="assets/AsaroBakery-Coffee.jpg" alt="Black coffee on an Asaro placemat" loading="lazy"></figure>
+        <figure class="b3 reveal"><img src="assets/shoot/asaro4-15.jpg" alt="A powdered jam donut" loading="lazy" style="object-position:50% 72%"></figure>
+        <figure class="b4 reveal" data-d="1"><img src="assets/shoot/s3-40.jpg" alt="Cheesecake with crumble in an Asaro band" loading="lazy" style="object-position:50% 78%"></figure>
+        <figure class="b5 reveal" data-d="2"><img src="assets/AsaroBakery-06.jpg" alt="Kale salad with sourdough on an Asaro placemat" loading="lazy"></figure>
+        <figure class="b6 reveal" data-d="3"><img src="assets/Asaro2-34.jpg" alt="Meatball sandwiches on a tray" loading="lazy"></figure>
       </div>
 
       <div class="order reveal">
-        <p>You can place an order through the phone <a href="tel:+16173953132">(617) 395-3132</a>, or online through Toast, Grub Hub, and Uber Eats.</p>
-        <ul>
-          <li><a href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Toast</a></li>
-          <li><span>Grub Hub</span></li>
-          <li><span>Uber Eats</span></li>
-        </ul>
+        <p>Order online through <span class="order__toast">Toast</span>.</p>
+        <a class="btn btn--tan" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order on Toast <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
       </div>
     </div>
   </section>
@@ -478,7 +468,7 @@ h2{font-size:clamp(44px,6.4vw,96px)}
   <section class="hiring" id="hiring" data-nav="light">
     <div class="wrap">
       <div class="hiring__card reveal">
-        <img src="assets/AsaroBakery-23.jpg" alt="Salads lined up on the counter" loading="lazy">
+        <img src="assets/shoot/s3-16.jpg" alt="An Asaro baker smiling by the oven" loading="lazy" style="object-position:50% 30%">
         <div class="hiring__body">
           <span class="label">We're hiring!</span>
           <h2>Come, be part of the <em>Asaro family.</em></h2>
