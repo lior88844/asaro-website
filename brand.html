@@ -7,23 +7,21 @@
 <meta name="description" content="The Asaro Bakery & Cafe color palette, with hex and RGB values, roles and contrast checks.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#120E0B">
-<link rel="preload" href="assets/4820Cycles-Thirtysix.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:"Cycles";src:url("assets/4820Cycles-Thirtysix.woff2") format("woff2");font-weight:400;font-display:swap}
 :root{
   --espresso:#120E0B; --cream:#F5EFE6; --tan:#C9B193; --deep-tan:#A58762; --taupe:#A8998A; --oak:#2B2016; --ink:#141210;
   --line:rgba(245,239,230,.12); --cream-2:rgba(245,239,230,.82);
-  --serif:"Cycles",Georgia,"Times New Roman",serif; --gutter:clamp(16px,4vw,56px); --ease:cubic-bezier(.22,.61,.36,1);
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif; --gutter:clamp(16px,4vw,56px); --ease:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--espresso);color:var(--cream);font-family:var(--serif);font-size:clamp(16px,1.1vw,18px);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:var(--espresso);color:var(--cream);font-family:var(--sans);font-size:clamp(15px,1vw,17px);line-height:1.65;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) var(--gutter)}
 header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;padding-bottom:clamp(32px,5vw,56px);border-bottom:1px solid var(--line)}
 header img{width:min(280px,60vw);height:auto}
 .kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--tan)}
-h1{font-weight:400;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.01em;margin-top:14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.01em;margin-top:14px}
 .lede{color:var(--cream-2);max-width:56ch;margin-top:clamp(28px,4vw,40px)}
-h2{font-weight:400;font-size:clamp(26px,2.6vw,36px);margin:clamp(56px,7vw,88px) 0 24px}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(26px,2.6vw,36px);margin:clamp(56px,7vw,88px) 0 24px}
 
 /* swatches */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
@@ -31,7 +29,7 @@ h2{font-weight:400;font-size:clamp(26px,2.6vw,36px);margin:clamp(56px,7vw,88px) 
 .sw:hover{transform:translateY(-3px);border-color:rgba(245,239,230,.3)}
 .chip{height:170px;display:flex;align-items:flex-end;justify-content:space-between;padding:16px 18px;font-size:13px;letter-spacing:.06em}
 .meta{padding:16px 18px 18px}
-.meta b{display:block;font-weight:400;font-size:22px;line-height:1.2}
+.meta b{display:block;font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.2}
 .meta code{font-family:inherit;font-size:14px;letter-spacing:.06em;color:var(--cream-2)}
 .meta p{color:var(--taupe);font-size:14.5px;line-height:1.5;margin-top:10px}
 .copied{font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .3s}
@@ -66,7 +64,7 @@ a{color:inherit;text-decoration:none}
 @media (max-width:760px){.type{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrap">
@@ -124,8 +122,8 @@ a{color:inherit;text-decoration:none}
 
   <h2>Type that goes with it</h2>
   <div class="type">
-    <div><span class="kicker">Website text</span><div class="big">Cycles</div><p>Cycles Thirty-Six, for all text on the website. Its license covers web use only, so don't use it for print.</p></div>
-    <div><span class="kicker">Logo lettering</span><div class="big logo-type">ASARO</div><p>Cormorant Garamond Bold, spaced wide (about 0.12em), for anything set next to the logo, like merch and signage.</p></div>
+    <div><span class="kicker">Display · headings, names, quotes</span><div class="big logo-type" style="letter-spacing:0">Cormorant Garamond Bold</div><p>The logo's own typeface. Use it for headings, dish names and short quotes. Next to the logo, space it wide (about 0.12em). Free on Google Fonts.</p></div>
+    <div><span class="kicker">Text · body, labels, buttons</span><div class="big" style="font-family:var(--sans);font-weight:400">Jost</div><p>A clean sans-serif for paragraphs, descriptions, prices, and small capital labels and buttons (spaced 0.2em). Regular for small text, Light for larger paragraphs. Free on Google Fonts.</p></div>
   </div>
 
   <h2>A few rules</h2>
