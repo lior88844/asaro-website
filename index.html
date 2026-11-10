@@ -429,7 +429,7 @@ p.reveal,.family.reveal,.info.reveal,.order.reveal{filter:blur(5px);transition:o
 p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 /* headlines: letter by letter, rising 20px and fading in (Zimmerl-style), replaying on each entry */
 .chars .word{display:inline-block;white-space:nowrap}
-.chars .ch{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.25,.46,.45,.94),transform 1s cubic-bezier(.25,.46,.45,.94);transition-delay:calc(var(--i,0) * 50ms)}
+.chars .ch{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94);transition-delay:calc(var(--i,0) * 22ms)}
 .chars.in .ch{opacity:1;transform:none}
 /* headings rise word by word from behind a mask */
 .reveal.split,.reveal.soft{opacity:1;transform:none;filter:none}
@@ -968,7 +968,7 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
       walk(el);
       el.classList.add('reveal', cls);
     };
-    // headlines: letters rise 20px and fade in, 50ms apart, replaying each time they enter (as on restaurantzimmerl.at)
+    // headlines: letters rise 20px and fade in, 22ms apart, replaying each time they enter (as on restaurantzimmerl.at)
     const chars = el => {
       let i = 0;
       el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
