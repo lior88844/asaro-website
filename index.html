@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=9">
+<link rel="stylesheet" href="assets/site.css?v=10">
 <script src="assets/transition.js?v=1" data-enter="no"></script>
 </head>
 <body>
@@ -206,16 +206,15 @@
     </div>
   </section>
 
-  <!-- THE CAFE: six tall strips; the one you hover or tap opens to show the whole photo -->
-  <section class="cafe strips" id="cafe" data-nav="light" aria-label="Photos of the cafe">
-    <div class="wrap"><h2 class="reveal">The Cafe</h2></div>
-    <div class="strips__row" id="strips">
-      <button class="strip on" type="button" aria-label="A slice of pecan pie dipped into a latte"><img src="assets/best/cafe-pie-latte.jpg" alt="A slice of pecan pie dipped into a latte" loading="lazy"></button>
-      <button class="strip" type="button" aria-label="Butter croissants on a cake stand"><img src="assets/best/cafe-croissants.jpg" alt="Butter croissants on a cake stand" loading="lazy"></button>
-      <button class="strip" type="button" aria-label="An espresso shot pulling into a cup"><img src="assets/best/cafe-espresso.jpg" alt="An espresso shot pulling into a cup" loading="lazy"></button>
-      <button class="strip" type="button" aria-label="Pie slices and a latte on a wooden table"><img src="assets/best/cafe-pies.jpg" alt="Pie slices and a latte on a wooden table" loading="lazy"></button>
-      <button class="strip" type="button" aria-label="A cappuccino on Asaro paper"><img src="assets/best/cafe-cappuccino.jpg" alt="A cappuccino on Asaro paper" loading="lazy"></button>
-      <button class="strip" type="button" aria-label="An almond tart on a wooden stool"><img src="assets/best/cafe-almond-tart.jpg" alt="An almond tart on a wooden stool" loading="lazy"></button>
+  <!-- THE CAFE: full-screen photos that slide by themselves -->
+  <section class="cafe slides" id="cafe" data-nav="dark" aria-label="Photos of the cafe" aria-roledescription="carousel">
+    <div class="slides__track" id="slides">
+      <div class="slide"><img src="assets/best/cafe-pie-latte.jpg" alt="A slice of pecan pie dipped into a latte" loading="lazy"></div>
+      <div class="slide"><img src="assets/best/cafe-croissants.jpg" alt="Butter croissants on a cake stand" loading="lazy"></div>
+      <div class="slide"><img src="assets/best/cafe-espresso.jpg" alt="An espresso shot pulling into a cup" loading="lazy"></div>
+      <div class="slide"><img src="assets/best/cafe-pies.jpg" alt="Pie slices and a latte on a wooden table" loading="lazy"></div>
+      <div class="slide"><img src="assets/best/cafe-cappuccino.jpg" alt="A cappuccino on Asaro paper" loading="lazy"></div>
+      <div class="slide"><img src="assets/best/cafe-almond-tart.jpg" alt="An almond tart on a wooden stool" loading="lazy"></div>
     </div>
   </section>
 
@@ -364,21 +363,34 @@
   };
   update(); setInterval(update, 60000);
 
-  // cafe gallery: hover (or tap) a strip to open it; it moves on by itself until someone interacts
-  const strips = document.getElementById('strips');
-  if (strips) {
-    const items = [...strips.children]; let hold = false;
-    const pick = el => items.forEach(i => i.classList.toggle('on', i === el));
-    items.forEach(el => {
-      el.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover)').matches) { hold = true; pick(el); } });
-      el.addEventListener('click', () => { hold = true; pick(el); });
-    });
-    strips.addEventListener('mouseleave', () => { hold = false; });
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => {
-      if (hold || document.hidden) return;
-      const r = strips.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
-      const i = items.findIndex(x => x.classList.contains('on')); pick(items[(i + 1) % items.length]);
-    }, 3800);
+  // cafe gallery: full-screen photos slide left by themselves, in an endless loop (swipe works too)
+  const track = document.getElementById('slides');
+  if (track) {
+    const real = [...track.children];
+    track.appendChild(real[0].cloneNode(true));                   // a copy of the first photo makes the loop seamless
+    let i = 0, busy = false;
+    const go = (n, anim = true) => {
+      i = n; track.style.transition = anim ? '' : 'none';
+      track.style.transform = `translate3d(${-100 * i}%,0,0)`;
+      if (!anim) track.getBoundingClientRect();
+    };
+    const settle = () => {
+      busy = false;
+      if (i === real.length) go(0, false);                          // jumped past the last photo: quietly back to the first
+    };
+    track.addEventListener('transitionend', e => { if (e.target === track) settle(); });
+    const guard = () => setTimeout(() => { if (busy) settle(); }, 1400);   // never get stuck if a transition is skipped
+    const next = () => { if (busy) return; busy = true; go(i + 1); guard(); };
+    const prev = () => { if (busy) return; busy = true; if (i === 0) { go(real.length, false); requestAnimationFrame(() => go(real.length - 1)); } else go(i - 1); guard(); };
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer = setInterval(() => { if (!document.hidden) next(); }, calm ? 7000 : 4500);
+    let sx = null;
+    track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) < 40) return; clearInterval(timer); dx < 0 ? next() : prev();
+      timer = setInterval(() => { if (!document.hidden) next(); }, calm ? 7000 : 4500);
+    }, { passive: true });
   }
 
   // ── Instagram live feed ──

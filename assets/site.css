@@ -733,3 +733,9 @@ main > section.cafe.strips{padding:var(--section) 0 var(--section)!important;bor
   .strip{flex:none;height:64px;transition:height .8s cubic-bezier(.7,0,.2,1)}
   .strip.on{flex:none;height:58vh}
 }
+
+/* cafe gallery: full-screen photos, no title, sliding left by themselves */
+main > section.cafe.slides{padding:0!important;border-top:0;height:100svh;overflow:hidden;position:relative;background:#111111}
+.slides__track{display:flex;height:100%;transition:transform 1.1s cubic-bezier(.77,0,.18,1);will-change:transform}
+.slide{flex:0 0 100%;height:100%;position:relative}
+.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
