@@ -627,7 +627,7 @@ main > section.hx{padding:0!important;position:relative}
 /* floating "Order on Toast" badge, bottom right, on every screen */
 .toastfab{position:fixed;right:clamp(14px,2.2vw,28px);bottom:clamp(14px,2.2vw,28px);z-index:57;width:clamp(78px,7vw,104px);aspect-ratio:1;border-radius:50%;
   background:#111111;color:#f5efe6;display:grid;place-items:center;box-shadow:0 8px 24px rgba(17,17,17,.22);
-  opacity:0;transform:scale(.6);animation:fabIn .7s 1.8s cubic-bezier(.2,.75,.15,1) forwards;transition:background .35s var(--ease),color .35s var(--ease)}
+  opacity:0;transform:translateY(10px);animation:fabIn 1s 1.8s var(--ease) forwards;transition:background .35s var(--ease),color .35s var(--ease)}
 @keyframes fabIn{to{opacity:1;transform:none}}
 .toastfab__ring{position:absolute;inset:0;width:100%;height:100%;animation:fabSpin 14s linear infinite}
 .toastfab__ring text{font-family:var(--sans);font-weight:500;font-size:10.5px;letter-spacing:.06em;fill:currentColor}
