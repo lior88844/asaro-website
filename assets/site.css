@@ -692,3 +692,7 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 @media (max-width:860px){.story .half__media,.menu .half__media{order:2}}
 
 .hiring .half__media > img{object-position:50% 16%}
+
+/* hours + address sit in the kraft top section under the logo, not on the photo */
+.hx__head .hx__bar{position:static;left:auto;right:auto;bottom:auto;max-width:var(--max);margin:clamp(22px,3vw,40px) auto 0;color:var(--paper);border-top:1px solid var(--line);text-align:left}
+.hx__over{padding-bottom:var(--navh)}
