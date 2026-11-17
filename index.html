@@ -690,6 +690,18 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 .sfg__card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,0) 55%,rgba(17,17,17,.45));pointer-events:none}
 .sfg__cta{position:absolute;left:50%;bottom:clamp(18px,4vw,28px);transform:translateX(-50%);z-index:2;margin:0;white-space:nowrap}
 @media (max-width:700px){.sfg__photo{aspect-ratio:auto}}
+
+/* popup: bigger, with the Hanukkah line over the photo */
+.sfg__card{width:min(980px,calc(100vw - 32px));max-height:calc(100svh - 32px)}
+.sfg__card::after{background:linear-gradient(180deg,rgba(17,17,17,.55),rgba(17,17,17,0) 32%,rgba(17,17,17,0) 60%,rgba(17,17,17,.5))}
+.sfg__head{position:absolute;left:0;right:0;top:clamp(22px,4vw,44px);z-index:2;text-align:center;color:#f5efe6;font-family:var(--serif);font-weight:700;font-size:clamp(30px,5vw,64px);line-height:1;letter-spacing:.03em;padding:0 56px;text-shadow:0 2px 18px rgba(17,17,17,.35)}
+.sfg__cta{bottom:clamp(20px,4vw,40px);font-size:14px;padding:18px 30px}
+@media (max-width:700px){.sfg__card{aspect-ratio:4/5}.sfg__head{font-size:clamp(28px,8.5vw,40px);padding:0 52px}}
+
+.sfg__head{font-size:clamp(26px,4.2vw,54px);white-space:nowrap;top:clamp(20px,3.4vw,38px)}
+.sfg__card::after{background:linear-gradient(180deg,rgba(17,17,17,.7),rgba(17,17,17,.15) 26%,rgba(17,17,17,0) 55%,rgba(17,17,17,.5))}
+@media (max-width:700px){.sfg__head{white-space:normal;font-size:clamp(26px,7.6vw,34px);line-height:1.05}.sfg__br{display:block}
+  .sfg__card::after{background:linear-gradient(180deg,rgba(17,17,17,.75),rgba(17,17,17,.2) 30%,rgba(17,17,17,0) 55%,rgba(17,17,17,.5))}}
 </style>
 </head>
 <body>
@@ -942,11 +954,12 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 </main>
 
 <!-- Sufganiyot pre-order popup (Hanukkah 2026). It stops showing after Dec 12, 2026, and once closed it stays closed for that visitor for a day. -->
-<div class="sfg" id="sfg" role="dialog" aria-modal="true" aria-label="Pre-order sufganiyot" hidden>
+<div class="sfg" id="sfg" role="dialog" aria-modal="true" aria-labelledby="sfgHead" hidden>
   <div class="sfg__backdrop" data-close></div>
   <div class="sfg__card">
     <button class="sfg__x" type="button" aria-label="Close" data-close><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
     <div class="sfg__photo"><img src="assets/sufganiyot.jpg" alt="Sufganiyot from Asaro" width="1200" height="956"></div>
+    <p class="sfg__head" id="sfgHead">Hanukkah <span class="sfg__br">at Asaro Cafe</span></p>
     <a class="btn btn--cream sfg__cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdQCaWjwf6Q4Gjp4kuBgOPGejc_CL1FAL5AIW7qmjRxiqLWUg/viewform" target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
   </div>
 </div>
