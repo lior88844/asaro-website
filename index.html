@@ -465,7 +465,7 @@ main > .hero + section.half{border-top:0}
 .half__media{position:relative;min-width:0;overflow:clip;min-height:clamp(360px,40vw,620px)}
 .half__media > img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
 .half--flip .half__media{order:2}
-main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every photo takes the site tint: black, kraft, cream */
+
 .half__text{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,6vw,104px) clamp(24px,5vw,88px)}
 .half h2{font-size:clamp(40px,4.6vw,78px)}
 .half__text > .btn{align-self:flex-start}
@@ -542,11 +542,12 @@ main > section.intro{padding:var(--section) 0!important}
 
 /* sticky photo beside long text */
 .half__media > img.stick{position:sticky;inset:auto;top:var(--navh);height:calc(100svh - var(--navh))}
-main .half__media img,.cafe .rail img{filter:url(#espresso-tone)}
+main .half__media img,.cafe .rail img{filter:none}
+main img[src*="/bw-"]{filter:url(#espresso-tone)}
 
 /* the cafe: full-width photos, title over them */
 main > section.cafe{padding:0!important;border-top:1px solid var(--line)}
-.cafe__stage{position:relative;height:min(86svh,820px);overflow:hidden;background:var(--oak-2)}
+.cafe__stage{position:relative;height:100svh;overflow:hidden;background:var(--oak-2)}
 .cafe .rail{position:absolute;inset:0;height:100%;padding:0;gap:0;scroll-padding:0}
 .cafe .rail figure{flex:0 0 100%;width:100%;height:100%;aspect-ratio:auto;border-radius:0}
 .cafe__stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(17,17,17,0) 50%,rgba(17,17,17,.72))}
@@ -585,8 +586,8 @@ main > section.toast{padding:0!important;background:#111111;color:#f5efe6;--pape
 .info h3{font-family:var(--sans);font-weight:500;letter-spacing:.22em}
 
 /* motion: photos open from a soft inset, the hero breathes, a thin line tracks the scroll */
-.clip{clip-path:inset(7% 6% 7% 6%);transition:clip-path 1.3s cubic-bezier(.7,0,.2,1)}
-.clip.in{clip-path:inset(0 0 0 0)}
+.clip img:not(.drift){transform:scale(1.08);transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+.clip.in img:not(.drift){transform:scale(1)}
 .hero__img{animation:settle 2.4s var(--ease) forwards,breathe 26s ease-in-out 2.4s infinite alternate}
 @keyframes breathe{from{transform:scale(1)}to{transform:scale(1.08) translate3d(-1.2%,-1%,0)}}
 .half__media > img.drift{will-change:transform;transform:scale(1.14)}
@@ -594,16 +595,46 @@ main > section.toast{padding:0!important;background:#111111;color:#f5efe6;--pape
 .nav.is-menu::after,.nav[data-on="dark"]:not(.is-scrolled)::after{opacity:0}
 
 @media (max-width:860px){
-  .cafe__stage{height:72svh}
   .visit__map{min-height:0;aspect-ratio:4/3}
   .half__media > img.stick{position:relative;top:0;height:auto;aspect-ratio:4/5}
   .toast__links{margin-left:0}
   .nav__menu-word{display:none}
 }
-@media (prefers-reduced-motion:reduce){.toast__track{animation:none}.clip{clip-path:none}}
+@media (prefers-reduced-motion:reduce){.toast__track{animation:none}}
+
+
+/* ═════════ HERO (after the Agrumea reference): curtain, big name, framed photo opening to full screen ═════════ */
+.curtain{position:fixed;inset:0;z-index:200;background:#111111;display:grid;place-items:center;transition:transform 1s cubic-bezier(.77,0,.18,1) .15s}
+.curtain img{width:min(180px,40vw);height:auto;opacity:0;animation:fade .6s .1s var(--ease) forwards}
+.curtain.is-off{transform:translateY(-100%)}
+.curtain.is-gone{display:none}
+main > section.hx{padding:0!important;position:relative}
+.hx__head{padding:calc(var(--navh) + clamp(24px,4vw,56px)) var(--gutter) clamp(28px,4vw,56px);text-align:center}
+.hx__title{display:flex;flex-direction:column;align-items:center;gap:clamp(6px,1vw,14px);line-height:.86}
+.hx__word{display:flex;justify-content:center;font-family:var(--serif);font-weight:700;font-size:clamp(92px,21vw,330px);letter-spacing:.06em;margin-right:-.06em}
+.hx__ch{display:inline-block;overflow:hidden;padding-bottom:.04em}
+.hx__ch > span{display:inline-block;transform:translateY(105%);transition:transform 1.15s cubic-bezier(.2,.75,.15,1);transition-delay:calc(.05s + var(--i) * .07s)}
+.hx__sub{overflow:hidden;display:block;font-family:var(--serif);font-weight:700;font-size:clamp(13px,1.4vw,20px);letter-spacing:.42em;margin-right:-.42em}
+.hx__sub > span{display:inline-block;transform:translateY(110%);transition:transform 1s cubic-bezier(.2,.75,.15,1) .45s}
+.is-ready .hx__ch > span,.is-ready .hx__sub > span{transform:none}
+.hx__cover{position:relative;height:100svh;background:#111111;color:#f5efe6;--paper:#f5efe6;--tan:#f5efe6;--line:rgba(245,239,230,.3);
+  clip-path:inset(0 var(--hx-in,24px) 0 var(--hx-in,24px) round var(--hx-r,18px));overflow:hidden}
+.hx__media{position:absolute;inset:-8% 0;}
+.hx__img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;filter:url(#espresso-tone);transform:translate3d(0,var(--hx-y,0),0) scale(1.06)}
+.hx__cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.15),rgba(17,17,17,.42) 60%,rgba(17,17,17,.7));pointer-events:none}
+.hx__over{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:var(--navh);padding-bottom:clamp(90px,12vh,140px)}
+.hx__line{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.4vw,72px);line-height:1.04;max-width:24ch;text-wrap:balance}
+.hx__bar{position:absolute;left:var(--gutter);right:var(--gutter);bottom:clamp(22px,4vh,40px);margin:0;opacity:1;animation:none}
+@media (max-width:760px){
+  .hx__word{font-size:23vw}
+  .hx__cover{--hx-in:12px}
+  .hx__line{font-size:clamp(28px,8.4vw,40px)}
+}
+@media (prefers-reduced-motion:reduce){.curtain{display:none}.hx__ch > span,.hx__sub > span{transform:none}.hx__cover{clip-path:none}}
 </style>
 </head>
 <body>
+<div class="curtain" id="curtain" aria-hidden="true"><img src="assets/logo-light.svg" alt="" width="180" height="54"></div>
 <!-- tints the black-and-white photos in the site colours: shadows = black, mid-tones = kraft, highlights = cream -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <filter id="espresso-tone" color-interpolation-filters="sRGB">
@@ -653,14 +684,22 @@ main > section.toast{padding:0!important;background:#111111;color:#f5efe6;--pape
 
 <main id="top">
 
-  <!-- HERO -->
-  <section class="hero" data-nav="dark">
-    <img class="hero__img" src="assets/homepage.jpg" alt="A baker dusting flour over a proofing basket" fetchpriority="high">
-    <div class="hero__inner wrap">
-      <h1><img class="hero__logo" src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" width="760" height="226"></h1>
-      <div class="hero__bar">
+  <!-- HERO: big name, then a framed photo that opens to full screen as you scroll -->
+  <section class="hx">
+    <div class="hx__head" data-nav="light">
+      <h1 class="hx__title" aria-label="Asaro Bakery &amp; Cafe">
+        <span class="hx__word" aria-hidden="true"><span class="hx__ch" style="--i:0"><span>A</span></span><span class="hx__ch" style="--i:1"><span>S</span></span><span class="hx__ch" style="--i:2"><span>A</span></span><span class="hx__ch" style="--i:3"><span>R</span></span><span class="hx__ch" style="--i:4"><span>O</span></span></span>
+        <span class="hx__sub" aria-hidden="true"><span>Bakery &amp; Cafe</span></span>
+      </h1>
+    </div>
+    <div class="hx__cover" id="hxCover" data-nav="dark">
+      <div class="hx__media"><img class="hx__img" src="assets/homepage.jpg" alt="A baker dusting flour over a proofing basket" fetchpriority="high"></div>
+      <div class="hx__over wrap">
+        <p class="hx__line">Family-run, small-batch bakery near Harvard Square.</p>
+      <div class="hero__bar hx__bar">
         <span class="status" id="status"><span id="statusText">Open 7am – 5pm everyday</span></span>
         <a class="hero__addr" href="https://maps.google.com/?q=1629+Cambridge+St,+Cambridge,+MA+02138" target="_blank" rel="noopener">1629 Cambridge St, Cambridge, MA</a>
+      </div>
       </div>
     </div>
   </section>
@@ -1166,6 +1205,31 @@ main > section.toast{padding:0!important;background:#111111;color:#f5efe6;--pape
       rail.scrollTo({ left: end ? 0 : rail.scrollLeft + w, behavior: 'smooth' });
     }, 5000);
   }
+})();
+</script>
+<script>
+/* ── hero: curtain lifts, the name rises, the framed photo opens to full screen as you scroll ── */
+(() => {
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const curtain = document.getElementById('curtain'), cover = document.getElementById('hxCover');
+  const go = () => {
+    if (calm) { curtain?.classList.add('is-gone'); document.documentElement.classList.add('is-ready'); return; }
+    setTimeout(() => { curtain.classList.add('is-off'); setTimeout(() => document.documentElement.classList.add('is-ready'), 450); setTimeout(() => curtain.classList.add('is-gone'), 1300); }, 700);
+  };
+  if (document.readyState === 'complete') go(); else addEventListener('load', go);
+  setTimeout(() => { curtain?.classList.add('is-gone'); document.documentElement.classList.add('is-ready'); }, 4000);   // never get stuck behind the curtain
+  if (!cover || calm) return;
+  const gutter = () => innerWidth < 760 ? 12 : 24;
+  const frame = () => {
+    const vh = innerHeight, top = cover.getBoundingClientRect().top;
+    const start = vh * .62, p = Math.max(0, Math.min(1, (start - top) / start));   // 0 = framed, 1 = edge to edge
+    cover.style.setProperty('--hx-in', ((1 - p) * gutter()).toFixed(2) + 'px');
+    cover.style.setProperty('--hx-r', ((1 - p) * 18).toFixed(2) + 'px');
+    cover.style.setProperty('--hx-y', (Math.max(-1, Math.min(1, top / vh)) * -6).toFixed(2) + '%');
+  };
+  let t = false;
+  addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(() => { frame(); t = false; }); } }, { passive: true });
+  addEventListener('resize', frame); frame();
 })();
 </script>
 </body>
