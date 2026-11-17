@@ -655,6 +655,34 @@ main > section.hx{padding:0!important;position:relative}
 .toastfab:hover .toastfab__ring{animation-duration:6s}
 body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.toastfab{opacity:1;transform:none}.toastfab__ring{animation:none}}
+
+/* sufganiyot pre-order popup */
+.sfg{position:fixed;inset:0;z-index:150;display:grid;place-items:center;padding:16px}
+.sfg[hidden]{display:none}
+.sfg__backdrop{position:absolute;inset:0;background:rgba(17,17,17,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .5s var(--ease)}
+.sfg__card{position:relative;width:min(860px,100%);max-height:calc(100svh - 32px);overflow:auto;display:grid;grid-template-columns:1fr 1.05fr;background:var(--bg);color:#111111;border-radius:6px;box-shadow:0 30px 80px rgba(17,17,17,.35);
+  opacity:0;transform:translateY(24px) scale(.98);transition:opacity .55s var(--ease),transform .7s cubic-bezier(.2,.75,.15,1)}
+.sfg.is-on .sfg__backdrop{opacity:1}
+.sfg.is-on .sfg__card{opacity:1;transform:none}
+.sfg__photo{position:relative;min-height:100%}
+.sfg__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sfg__body{padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;gap:14px}
+.sfg__kicker{font-size:11px;letter-spacing:.24em;color:#333333}
+.sfg__title{font-family:var(--serif);font-weight:700;font-size:clamp(44px,6vw,72px);line-height:.9;letter-spacing:.03em;margin:0}
+.sfg__menu{list-style:none;margin-top:6px;border-top:1px solid rgba(17,17,17,.25);padding-top:14px;font-size:12.5px;letter-spacing:.1em;line-height:1.55}
+.sfg__menu li{display:flex;align-items:baseline;gap:10px;padding:3px 0}
+.sfg__menu i{flex:1;min-width:16px;border-bottom:1px dotted rgba(17,17,17,.45);transform:translateY(-.3em)}
+.sfg__menu .sfg__all span:first-child{max-width:78%}
+.sfg__pick{font-size:11.5px;letter-spacing:.14em;line-height:1.7;color:#333333;border-top:1px solid rgba(17,17,17,.25);padding-top:14px}
+.sfg__cta{align-self:flex-start;margin-top:6px}
+.sfg__x{position:absolute;top:10px;right:10px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:#f5efe6;color:#111111;display:grid;place-items:center;cursor:pointer;transition:transform .35s var(--ease)}
+.sfg__x:hover{transform:rotate(90deg)}
+.sfg__x svg{width:14px;height:14px}
+@media (max-width:700px){
+  .sfg__card{grid-template-columns:1fr}
+  .sfg__photo{min-height:0;aspect-ratio:16/10}
+  .sfg__body{padding:24px 20px 26px;gap:12px}
+}
 </style>
 </head>
 <body>
@@ -906,6 +934,25 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
   </section>
 </main>
 
+<!-- Sufganiyot pre-order popup (Hanukkah 2026). It stops showing after Dec 12, 2026, and once closed it stays closed for that visitor for a day. -->
+<div class="sfg" id="sfg" role="dialog" aria-modal="true" aria-labelledby="sfgTitle" hidden>
+  <div class="sfg__backdrop" data-close></div>
+  <div class="sfg__card">
+    <button class="sfg__x" type="button" aria-label="Close" data-close><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+    <div class="sfg__photo"><img src="assets/sufganiyot.jpg" alt="Sufganiyot from Asaro" width="1200" height="956"></div>
+    <div class="sfg__body">
+      <p class="sfg__kicker">Asaro’s Hanukkah pre-order</p>
+      <h2 class="sfg__title" id="sfgTitle">Sufganiyot</h2>
+      <ul class="sfg__menu">
+        <li><span>Plain</span><i></i><span>$5</span></li>
+        <li><span>Classic Jam</span><i></i><span>$5</span></li>
+        <li class="sfg__all"><span>Double Chocolate · Dulce de leche · Halva Kadaif · Pistachio crunch · Creamy Tiramisu · Passion Fruit Bliss · Pink Guava</span><i></i><span>$6.50</span></li>
+      </ul>
+      <p class="sfg__pick">Pickup only · December 4th to 12th · 7am – 5pm · 1629 Cambridge St</p>
+      <a class="btn btn--ink sfg__cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdQCaWjwf6Q4Gjp4kuBgOPGejc_CL1FAL5AIW7qmjRxiqLWUg/viewform" target="_blank" rel="noopener">Pre-order now <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</div>
 <a class="toastfab" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener" aria-label="Order on Toast">
   <svg class="toastfab__ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="fabCircle" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
     <text><textPath href="#fabCircle" textLength="230">ORDER ON TOAST ✳ ORDER ON TOAST ✳</textPath></text></svg>
@@ -1256,6 +1303,33 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
   let t = false;
   addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(() => { frame(); t = false; }); } }, { passive: true });
   addEventListener('resize', frame); frame();
+})();
+</script>
+<script>
+/* ── sufganiyot popup: shows a few seconds after the page opens, until Dec 12, 2026; closing it hides it for a day ── */
+(() => {
+  const box = document.getElementById('sfg'); if (!box) return;
+  const KEY = 'asaro-sfg-closed', DAY = 864e5;
+  const end = new Date('2026-12-13T00:00:00-05:00');                  // pickup ends Dec 12 (Cambridge time)
+  if (Date.now() >= end) { box.remove(); return; }
+  let closedAt = 0; try { closedAt = +localStorage.getItem(KEY) || 0; } catch (e) {}
+  if (Date.now() - closedAt < DAY) return;
+  let last = null;
+  const open = () => {
+    last = document.activeElement; box.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('is-on')));
+    box.querySelector('.sfg__cta').focus({ preventScroll: true });
+    document.addEventListener('keydown', onKey);
+  };
+  const close = () => {
+    box.classList.remove('is-on'); try { localStorage.setItem(KEY, Date.now()); } catch (e) {}
+    document.removeEventListener('keydown', onKey);
+    setTimeout(() => { box.hidden = true; last?.focus?.({ preventScroll: true }); }, 500);
+  };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+  box.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', close));
+  box.querySelector('.sfg__cta').addEventListener('click', () => { try { localStorage.setItem(KEY, Date.now()); } catch (e) {} setTimeout(close, 300); });
+  setTimeout(open, 3200);                                              // after the opening curtain and logo
 })();
 </script>
 </body>
