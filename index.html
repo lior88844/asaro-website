@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=8">
+<link rel="stylesheet" href="assets/site.css?v=9">
 <script src="assets/transition.js?v=1" data-enter="no"></script>
 </head>
 <body>
@@ -206,27 +206,16 @@
     </div>
   </section>
 
-  <!-- THE CAFE: one wide photo at a time, title over it -->
-  <section class="cafe" id="cafe" data-nav="light" aria-label="Photos of the cafe">
-    <div class="cafe__stage">
-      <div class="rail" id="rail">
-        <figure><img src="assets/best/cafe-pie-latte.jpg" alt="A slice of pecan pie dipped into a latte" loading="lazy"></figure>
-        <figure><img src="assets/best/cafe-croissants.jpg" alt="Butter croissants on a cake stand" loading="lazy"></figure>
-        <figure><img src="assets/best/cafe-espresso.jpg" alt="An espresso shot pulling into a cup" loading="lazy"></figure>
-        <figure><img src="assets/best/cafe-pies.jpg" alt="Pie slices and a latte on a wooden table" loading="lazy"></figure>
-        <figure><img src="assets/best/cafe-cappuccino.jpg" alt="A cappuccino on Asaro paper" loading="lazy"></figure>
-        <figure><img src="assets/best/cafe-almond-tart.jpg" alt="An almond tart on a wooden stool" loading="lazy"></figure>
-      </div>
-      <div class="cafe__over wrap">
-        <h2 class="reveal">The Cafe</h2>
-        <div class="cafe__ctrl">
-          <div class="rail-progress"><div><span id="railBar"></span></div></div>
-          <div class="rail-btns reveal">
-        <button type="button" id="railPrev" aria-label="Previous photos"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 8H2M7 3 2 8l5 5"/></svg></button>
-        <button type="button" id="railNext" aria-label="Next photos"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></button>
-          </div>
-        </div>
-      </div>
+  <!-- THE CAFE: six tall strips; the one you hover or tap opens to show the whole photo -->
+  <section class="cafe strips" id="cafe" data-nav="light" aria-label="Photos of the cafe">
+    <div class="wrap"><h2 class="reveal">The Cafe</h2></div>
+    <div class="strips__row" id="strips">
+      <button class="strip on" type="button" aria-label="A slice of pecan pie dipped into a latte"><img src="assets/best/cafe-pie-latte.jpg" alt="A slice of pecan pie dipped into a latte" loading="lazy"></button>
+      <button class="strip" type="button" aria-label="Butter croissants on a cake stand"><img src="assets/best/cafe-croissants.jpg" alt="Butter croissants on a cake stand" loading="lazy"></button>
+      <button class="strip" type="button" aria-label="An espresso shot pulling into a cup"><img src="assets/best/cafe-espresso.jpg" alt="An espresso shot pulling into a cup" loading="lazy"></button>
+      <button class="strip" type="button" aria-label="Pie slices and a latte on a wooden table"><img src="assets/best/cafe-pies.jpg" alt="Pie slices and a latte on a wooden table" loading="lazy"></button>
+      <button class="strip" type="button" aria-label="A cappuccino on Asaro paper"><img src="assets/best/cafe-cappuccino.jpg" alt="A cappuccino on Asaro paper" loading="lazy"></button>
+      <button class="strip" type="button" aria-label="An almond tart on a wooden stool"><img src="assets/best/cafe-almond-tart.jpg" alt="An almond tart on a wooden stool" loading="lazy"></button>
     </div>
   </section>
 
@@ -375,22 +364,22 @@
   };
   update(); setInterval(update, 60000);
 
-  // photo rail: buttons, drag, progress
-  const rail = document.getElementById('rail'), bar = document.getElementById('railBar');
-  const step = () => rail.querySelector('figure').getBoundingClientRect().width + (parseFloat(getComputedStyle(rail).columnGap) || 0);
-  document.getElementById('railPrev').onclick = () => rail.scrollBy({ left: -step(), behavior: 'smooth' });
-  document.getElementById('railNext').onclick = () => rail.scrollBy({ left: step(), behavior: 'smooth' });
-  const prog = () => {
-    const max = rail.scrollWidth - rail.clientWidth;
-    const vis = rail.clientWidth / rail.scrollWidth;
-    bar.style.width = (vis * 100) + '%';
-    bar.style.transform = `translateX(${max ? (rail.scrollLeft / max) * (1 / vis - 1) * 100 : 0}%)`;
-  };
-  rail.addEventListener('scroll', prog, { passive: true }); addEventListener('resize', prog); prog();
-  let down = false, sx = 0, sl = 0;
-  rail.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = rail.scrollLeft; rail.classList.add('dragging'); });
-  addEventListener('pointermove', e => { if (down) rail.scrollLeft = sl - (e.clientX - sx); });
-  addEventListener('pointerup', () => { if (down) { down = false; rail.classList.remove('dragging'); } });
+  // cafe gallery: hover (or tap) a strip to open it; it moves on by itself until someone interacts
+  const strips = document.getElementById('strips');
+  if (strips) {
+    const items = [...strips.children]; let hold = false;
+    const pick = el => items.forEach(i => i.classList.toggle('on', i === el));
+    items.forEach(el => {
+      el.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover)').matches) { hold = true; pick(el); } });
+      el.addEventListener('click', () => { hold = true; pick(el); });
+    });
+    strips.addEventListener('mouseleave', () => { hold = false; });
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => {
+      if (hold || document.hidden) return;
+      const r = strips.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const i = items.findIndex(x => x.classList.contains('on')); pick(items[(i + 1) % items.length]);
+    }, 3800);
+  }
 
   // ── Instagram live feed ──
   // Paste your Behold.so JSON feed URL between the quotes, e.g. 'https://feeds.behold.so/AbC123'.

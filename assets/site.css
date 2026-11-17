@@ -718,3 +718,18 @@ main > section.toast{padding-bottom:0!important}
 .hx__head .hx__bar{opacity:0;transition:opacity 1s ease .7s}
 .is-ready .hx__head .hx__bar{opacity:1}
 @media (prefers-reduced-motion:reduce){.hx__logo img,.hx__head .hx__bar{opacity:1}}
+
+/* cafe gallery: six tall strips, the open one shows the whole photo (no zoom, no captions) */
+main > section.cafe.strips{padding:var(--section) 0 var(--section)!important;border-top:0}
+.strips h2{margin:0 0 clamp(22px,3vw,36px)}
+.strips__row{display:flex;gap:10px;height:76vh;min-height:420px;padding:0 var(--gutter)}
+.strip{position:relative;flex:1;min-width:0;border:0;padding:0;border-radius:6px;overflow:hidden;cursor:pointer;background:var(--oak-2);transition:flex .8s cubic-bezier(.7,0,.2,1)}
+.strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.75) brightness(.82);transition:filter .8s ease}
+.strip.on{flex:6}
+.strip.on img{filter:none}
+.strip:focus-visible{outline:2px solid #111;outline-offset:3px}
+@media (max-width:760px){
+  .strips__row{flex-direction:column;height:auto;min-height:0;gap:8px}
+  .strip{flex:none;height:64px;transition:height .8s cubic-bezier(.7,0,.2,1)}
+  .strip.on{flex:none;height:58vh}
+}
