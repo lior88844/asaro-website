@@ -459,30 +459,21 @@ p.reveal.in,.family.reveal.in,.info.reveal.in,.order.reveal.in{filter:none}
 }
 /* ───────── HALVES: every section is a photo half and a text half, swapping sides ───────── */
 :root{--navh:72px}
-.nav:not(.is-open):not(.is-menu){background:var(--bg)}
-main > section.half{display:grid;grid-template-columns:1fr 1fr;padding:0!important;margin:0!important;min-height:calc(100svh - var(--navh));border-top:1px solid var(--line)}
-main > section.half.hero{border-top:0}
-.half__media{position:relative;min-width:0;overflow:clip}
-.half__media > img{position:sticky;top:var(--navh);display:block;width:100%;height:calc(100svh - var(--navh));object-fit:cover}
+.nav[data-on="light"]:not(.is-open):not(.is-menu){background:var(--bg)}
+main > section.half{display:grid;grid-template-columns:1fr 1fr;padding:0!important;margin:0!important;border-top:1px solid var(--line)}
+main > .hero + section.half{border-top:0}
+.half__media{position:relative;min-width:0;overflow:clip;min-height:clamp(360px,40vw,620px)}
+.half__media > img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
 .half--flip .half__media{order:2}
 .half__text{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,6vw,104px) clamp(24px,5vw,88px)}
 .half h2{font-size:clamp(40px,4.6vw,78px)}
 .half__text > .btn{align-self:flex-start}
-/* hero: photo left, logo right */
-main > section.hero.half{height:auto;min-height:100svh;padding-top:var(--navh)!important;overflow:visible;background:none;--paper:#111111;--tan:#111111;--ink:#f5efe6;color:var(--paper)}
-.hero.half::before{display:none}
-.hero .half__media{min-height:calc(100svh - var(--navh))}
-.hero .half__media > .hero__img{position:absolute;inset:0;top:0;height:100%}
-.hero .hero__inner{height:auto;padding-bottom:clamp(48px,6vw,104px)}
-.hero .hero__logo{width:100%;max-width:560px}
-.hero .hero__bar{border-top-color:var(--line)}
 /* intro: art above the quote */
 .intro.half .intro__grid{display:flex;flex-direction:column;align-items:flex-start;gap:28px}
 .intro.half .intro__grid > .intro__art{justify-self:auto;height:clamp(120px,11vw,180px)}
 .intro.half p.big{font-size:clamp(26px,2.8vw,46px)}
 /* cafe: one photo at a time fills the half */
-.cafe .half__media{height:calc(100svh - var(--navh));position:sticky;top:var(--navh)}
-.cafe .rail{height:100%;padding:0;gap:0;scroll-padding:0}
+.cafe .rail{position:absolute;inset:0;height:100%;padding:0;gap:0;scroll-padding:0}
 .cafe .rail figure{flex:0 0 100%;width:100%;height:100%;aspect-ratio:auto;border-radius:0}
 .cafe .rail-btns{margin-top:28px}
 .cafe .rail-progress{margin:28px 0 0;padding:0;max-width:260px;width:100%}
@@ -502,9 +493,9 @@ main > section.hero.half{height:auto;min-height:100svh;padding-top:var(--navh)!i
 @media (max-width:860px){
   main > section.half{grid-template-columns:1fr;min-height:0}
   .half--flip .half__media{order:0}
-  .half__media > img{position:relative;top:0;height:auto;aspect-ratio:4/5}
-  .hero .half__media{min-height:0;aspect-ratio:4/5}
-  .cafe .half__media{position:relative;top:0;height:auto;aspect-ratio:4/5}
+  .half__media{min-height:0}
+  .half__media > img{position:relative;height:auto;aspect-ratio:4/5}
+  .cafe .half__media{aspect-ratio:4/5}
   .menu .half__media .bento{height:auto;grid-auto-rows:auto}
   .menu .half__media .bento figure{aspect-ratio:3/4}
   .insta .insta__grid,.insta .insta__grid a{height:auto}
@@ -525,7 +516,7 @@ main > section.hero.half{height:auto;min-height:100svh;padding-top:var(--navh)!i
   </filter>
 </svg>
 
-<header class="nav" id="nav" data-on="light">
+<header class="nav" id="nav" data-on="dark">
   <nav class="nav__left" aria-label="Main">
     <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
     <div class="nav__item">
@@ -580,10 +571,10 @@ main > section.hero.half{height:auto;min-height:100svh;padding-top:var(--navh)!i
 <main id="top">
 
   <!-- HERO -->
-  <section class="half hero" data-nav="light">
-    <div class="half__media"><img class="hero__img" src="assets/homepage.jpg" alt="A baker dusting flour over a proofing basket" fetchpriority="high"></div>
-    <div class="half__text hero__inner">
-      <h1><img class="hero__logo" src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" width="760" height="226"></h1>
+  <section class="hero" data-nav="dark">
+    <img class="hero__img" src="assets/homepage.jpg" alt="A baker dusting flour over a proofing basket" fetchpriority="high">
+    <div class="hero__inner wrap">
+      <h1><img class="hero__logo" src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" width="760" height="226"></h1>
       <div class="hero__bar">
         <span class="status" id="status"><span id="statusText">Open 7am – 5pm everyday</span></span>
         <a class="hero__addr" href="https://maps.google.com/?q=1629+Cambridge+St,+Cambridge,+MA+02138" target="_blank" rel="noopener">1629 Cambridge St, Cambridge, MA</a>
