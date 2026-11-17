@@ -31,10 +31,10 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--kraft);color:var(--black);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{text-transform:uppercase;background:var(--kraft);color:var(--black);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit}
-button,input,select,textarea{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit;text-transform:inherit}
 
 /* top bar */
 .top{display:flex;align-items:center;justify-content:space-between;padding:18px var(--gutter);border-bottom:1px solid var(--line)}
@@ -75,7 +75,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .qty button:hover{background:var(--black);color:var(--cream)}
 .qty button:disabled{opacity:.3;cursor:default;background:none;color:inherit}
 .qty output{min-width:34px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums}
-.item.has .item__name::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--black);margin-left:10px;vertical-align:middle}
 
 /* pickup */
 .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
@@ -156,7 +155,26 @@ footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.
   .item{gap:12px}
   .item__img{width:84px;height:84px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ── micro animations ── */
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.45)}100%{transform:scale(1)}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.07) rotate(-1.5deg)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes tick{0%{transform:scale(.6)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+.bump{display:inline-block;animation:bump .32s var(--ease)}
+.item__img{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.item:hover .item__img{transform:translateY(-3px);box-shadow:0 12px 26px rgba(17,17,17,.28)}
+.item__img.pop{animation:pop .45s var(--ease)}
+.qty button,.day,.seg button,.btn{transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
+.qty button:active:not(:disabled),.day:active:not(:disabled),.seg button:active,.btn:active:not(:disabled){transform:scale(.94)}
+.day[aria-pressed="true"]{transform:translateY(-2px);box-shadow:0 6px 14px rgba(17,17,17,.25)}
+.err.shake{animation:shake .4s var(--ease)}
+.check input:checked{animation:tick .3s var(--ease)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.done.in h2,.done.in p,.done.in .receipt li,.done.in .done__actions{opacity:0;animation:rise .6s var(--ease) forwards}
+.done.in p{animation-delay:.12s}.done.in .receipt li{animation-delay:calc(.2s + var(--i,0) * .06s)}.done.in .done__actions{animation-delay:.55s}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}.done.in *{opacity:1!important}}
 </style>
 <script src="assets/transition.js?v=1"></script>
 </head>
@@ -289,6 +307,8 @@ ITEMS.forEach((it, i) => {
     li.querySelector('output').textContent = qty[i];
     li.querySelector('[data-d="-1"]').disabled = qty[i] === 0;
     li.classList.toggle('has', qty[i] > 0);
+    replay(li.querySelector('output'), 'bump');
+    if (Number(b.dataset.d) > 0) replay(li.querySelector('.item__img'), 'pop');
     setErr('errItems', '');
     render();
   }));
@@ -341,6 +361,9 @@ document.querySelectorAll('#type button').forEach(b => b.addEventListener('click
 
 /* --- summary --- */
 function chosen() { return ITEMS.map((it, i) => ({...it, q: qty[i]})).filter(x => x.q > 0); }
+/* restart a one-shot CSS animation */
+function replay(el, cls) { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+let lastTotal = 0;
 function render() {
   const list = chosen();
   const count = list.reduce((s, x) => s + x.q, 0);
@@ -351,13 +374,14 @@ function render() {
                              : '<li class="empty">Nothing yet</li>';
   document.getElementById('sumTotal').textContent = money(total);
   document.getElementById('barTotal').textContent = money(total);
+  if (total !== lastTotal) { replay(document.getElementById('sumTotal'), 'bump'); replay(document.getElementById('barTotal'), 'bump'); lastTotal = total; }
   document.getElementById('barCount').textContent = count + (count === 1 ? ' item' : ' items');
   document.getElementById('sumNote').textContent = hasVariety ? 'Variety packs are not included in this total. Paid at pickup.' : 'Paid at pickup.';
   document.getElementById('sumPick').textContent = day ? 'Pickup: ' + day + (timeEl.value ? ', ' + timeEl.value : '') : '';
 }
 
 /* --- validation + submit --- */
-function setErr(id, msg) { document.getElementById(id).textContent = msg; }
+function setErr(id, msg) { const el = document.getElementById(id); el.textContent = msg; if (msg) replay(el, 'shake'); }
 function check() {
   let first = null;
   const fail = (id, msg, el) => { setErr(id, msg); if (el) el.classList.add('invalid'); first = first || el || document.getElementById(id); };
@@ -429,8 +453,15 @@ function showDone(serverTotal) {
   document.getElementById('calLink').href = calendarLink(list, total);
   document.getElementById('orderView').hidden = true;
   document.getElementById('doneView').hidden = false;
+  document.querySelectorAll('#receipt li').forEach((li, n) => li.style.setProperty('--i', n));
+  replay(document.getElementById('doneView'), 'in');
   window.scrollTo({top:0});
 }
+/* sections fade up as they scroll into view */
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12}) : null;
+document.querySelectorAll('.hero__text > *, .step, .sum').forEach((el, n) => {
+  if (!io) return; el.classList.add('reveal'); el.style.transitionDelay = (el.closest('.hero__text') ? n * 90 : 0) + 'ms'; io.observe(el);
+});
 render();
 </script>
 </body>
