@@ -130,6 +130,10 @@ select{appearance:none;-webkit-appearance:none;background-image:url("data:image/
 .done .receipt li{list-style:none;display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
 .done a.btn{width:auto;margin-top:34px;background:var(--black);color:var(--cream);text-decoration:none}
 .done a.btn:hover{background:#2a2621}
+.done__actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px}
+.done__actions a.btn{margin-top:0}
+.done a.btn--cal{background:var(--cream);color:var(--black);white-space:nowrap}
+.done a.btn--cal:hover{background:#fffaf2}
 
 footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.5px;letter-spacing:.06em;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
@@ -241,7 +245,10 @@ footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.
   <p id="doneLine">Your sufganiyot pre-order is in.</p>
   <p>Pick up at 1629 Cambridge St on the day and time you chose. Payment is at pickup.</p>
   <ul class="receipt" id="receipt"></ul>
-  <a class="btn" href="index.html">Back to Asaro</a>
+  <div class="done__actions">
+    <a class="btn btn--cal" id="calLink" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="12" rx="1.5"/><path d="M1.5 6.5h13M5 1v3M11 1v3"/></svg> Add to Google Calendar</a>
+    <a class="btn" href="index.html">Back to Asaro</a>
+  </div>
 </section>
 
 <footer>
@@ -395,6 +402,22 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
   }
 });
 
+/* Google Calendar "add event" link for the pickup: a 30-minute slot at the chosen time, Cambridge time */
+function calendarLink(list, total) {
+  const d = Number(day.replace(/\D/g, ''));
+  const [, h12, mm, ap] = timeEl.value.match(/(\d+):(\d+) (AM|PM)/);
+  let h = Number(h12) % 12 + (ap === 'PM' ? 12 : 0);
+  const pad = n => String(n).padStart(2, '0');
+  const start = `202612${pad(d)}T${pad(h)}${mm}00`;
+  const endMin = Number(mm) + 30, endH = h + Math.floor(endMin / 60);
+  const end = `202612${pad(d)}T${pad(endH)}${pad(endMin % 60)}00`;
+  const details = 'Sufganiyot pre-order:\n' + list.map(x => `${x.q} × ${x.name}`).join('\n') +
+                  `\n\nTotal ${money(total)}, paid at pickup.\nAsaro Bakery & Cafe · (617) 395-3132`;
+  const p = new URLSearchParams({action:'TEMPLATE', text:'Pick up sufganiyot at Asaro Bakery & Cafe',
+    dates:`${start}/${end}`, ctz:'America/New_York', details, location:'Asaro Bakery & Cafe, 1629 Cambridge St, Cambridge, MA 02138'});
+  return 'https://calendar.google.com/calendar/render?' + p.toString();
+}
+
 function showDone(serverTotal) {
   const list = chosen();
   const total = typeof serverTotal === 'number' ? serverTotal : list.reduce((s, x) => s + x.price * x.q, 0);
@@ -403,6 +426,7 @@ function showDone(serverTotal) {
     `<li><span>Pickup</span><span>${day}, ${timeEl.value}</span></li>` +
     `<li><span><b>Total, paid at pickup</b></span><span><b>${money(total)}</b></span></li>`;
   document.getElementById('doneLine').textContent = 'Your sufganiyot pre-order is in, ' + document.getElementById('name').value.trim().split(' ')[0] + '.';
+  document.getElementById('calLink').href = calendarLink(list, total);
   document.getElementById('orderView').hidden = true;
   document.getElementById('doneView').hidden = false;
   window.scrollTo({top:0});
