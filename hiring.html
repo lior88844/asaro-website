@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hiring — Asaro Bakery &amp; Cafe</title>
+<meta name="description" content="Join the Asaro Bakery &amp; Cafe team in Cambridge, MA. We’re looking for bakery staff, baristas, cashiers and cooks.">
+<meta name="theme-color" content="#c39769">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=1">
+<style>
+/* hiring page: a fixed kraft bar on top, then the photo and the text side by side */
+.nav{background:var(--bg)}
+.nav__brand{opacity:1;pointer-events:auto}
+.hire__back{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:12px;letter-spacing:.24em}
+.hire__back svg{width:14px;height:14px;transition:transform .3s var(--ease)}
+.hire__back:hover svg{transform:translateX(-4px)}
+main{padding-top:72px}
+main > section.half.hiring{min-height:calc(100svh - 72px);border-top:0}
+.hire__title{font-size:clamp(40px,4.6vw,76px);line-height:1;margin:0 0 26px}
+.hire__title em{font-style:italic}
+.half__media > img.drift{transform:none}
+.hiring .half__text > p{color:var(--cream-2);max-width:44ch}
+@media (max-width:860px){main > section.half.hiring{min-height:0}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav" data-on="light">
+  <nav class="nav__left" aria-label="Main">
+    <a class="hire__back" href="./"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 8H2M7 3 2 8l5 5"/></svg>Home</a>
+  </nav>
+  <a href="./" class="nav__brand" aria-label="Asaro Bakery &amp; Cafe — home">
+    <img class="dark" src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" width="114" height="34" style="display:block">
+  </a>
+  <div class="nav__right">
+    <a class="nav__btn" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order</a>
+  </div>
+</header>
+<main id="top">
+  <!-- HIRING (own page) -->
+  <section class="half hiring" id="hiring" data-nav="light">
+    <div class="half__media"><img class="drift" src="assets/best/hiring-oven.jpg" alt="An Asaro baker smiling by the oven" fetchpriority="high"></div>
+    <div class="half__text hiring__body">
+          <h1 class="hire__title">Come, be part of the <em>Asaro family.</em></h1>
+          <p>Experience is important, but not a must. We value enthusiasm, great attitude, and excitement of being part of a small team! We’re looking for:</p>
+          <ul class="roles">
+            <li>Bakery staff</li><li>Baristas</li><li>Cashiers</li><li>Cooks</li>
+          </ul>
+          <a class="btn btn--ink" href="mailto:info@asarocafe.com?subject=Resume">Send us your resume <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" data-nav="light">
+  <div class="wrap">
+    <div class="footer__brand"><div class="footer__logo" id="footerLogo"><img src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" loading="lazy" width="1000" height="298"></div></div>
+    <div class="footer__bottom">
+      <span>© <span id="yr">2026</span> Lior Doron. All rights reserved.</span>
+      <nav>
+        <a href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:info@asarocafe.com">info@asarocafe.com</a>
+        <a href="./">Back to home</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
