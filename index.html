@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=6">
 </head>
 <body>
 <div class="curtain" id="curtain" aria-hidden="true"><img src="assets/logo-light.svg" alt="" width="180" height="54"></div>
@@ -588,12 +588,14 @@
   if (document.readyState === 'complete') go(); else addEventListener('load', go);
   setTimeout(() => { curtain?.classList.add('is-gone'); document.documentElement.classList.add('is-ready'); }, 4000);   // never get stuck behind the curtain
   if (!cover || calm) return;
-  const gutter = () => innerWidth < 760 ? 12 : 24;
+  const gutter = () => innerWidth < 760 ? 14 : 36;
   const frame = () => {
     const vh = innerHeight, top = cover.getBoundingClientRect().top;
-    const start = vh * .62, p = Math.max(0, Math.min(1, (start - top) / start));   // 0 = framed, 1 = edge to edge
+    const navH = (document.getElementById('nav')?.offsetHeight || 72);
+    const docTop = top + scrollY, run = Math.max(1, docTop - navH);
+    const p = Math.max(0, Math.min(1, scrollY / run));   // 0 = framed (as the page opens), 1 = edge to edge once it reaches the top bar
     cover.style.setProperty('--hx-in', ((1 - p) * gutter()).toFixed(2) + 'px');
-    cover.style.setProperty('--hx-r', ((1 - p) * 18).toFixed(2) + 'px');
+    cover.style.setProperty('--hx-r', ((1 - p) * 22).toFixed(2) + 'px');
     cover.style.setProperty('--hx-y', (Math.max(-1, Math.min(1, top / vh)) * -6).toFixed(2) + '%');
   };
   let t = false;

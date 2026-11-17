@@ -623,8 +623,6 @@ main > section.hx{padding:0!important;position:relative}
 .is-ready .hx__logo img{transform:none}
 @media (prefers-reduced-motion:reduce){.hx__logo img{transform:none}}
 
-/* hero photo: edge to edge from the start, no side margins or rounded corners */
-.hx__cover{clip-path:none!important;border-radius:0}
 
 /* floating "Order on Toast" badge, bottom right, on every screen */
 .toastfab{position:fixed;right:clamp(14px,2.2vw,28px);bottom:clamp(14px,2.2vw,28px);z-index:57;width:clamp(78px,7vw,104px);aspect-ratio:1;border-radius:50%;
