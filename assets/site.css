@@ -689,7 +689,8 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 /* phones: a photo never sits directly on another photo, so Story and Menu put their text first */
 @media (max-width:860px){.story .half__media,.menu .half__media{order:2}}
 
-.hiring .half__media > img{object-position:50% 16%}
+.story .half__media > img{object-position:50% 16%}
+.hiring .half__media > img{object-position:50% 50%}
 
 /* hours + address sit in the kraft top section under the logo, not on the photo */
 .hx__head .hx__bar{position:static;left:auto;right:auto;bottom:auto;max-width:var(--max);margin:clamp(22px,3vw,40px) auto 0;color:var(--paper);border-top:1px solid var(--line);text-align:left}
