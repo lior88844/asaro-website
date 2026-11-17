@@ -683,6 +683,13 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
   .sfg__photo{min-height:0;aspect-ratio:16/10}
   .sfg__body{padding:24px 20px 26px;gap:12px}
 }
+
+/* popup, simplified: just the donut photo and the button */
+.sfg__card{display:block;width:min(560px,100%);aspect-ratio:1200/956;max-height:none;overflow:hidden;background:#111111}
+.sfg__photo{position:absolute;inset:0}
+.sfg__card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,0) 55%,rgba(17,17,17,.45));pointer-events:none}
+.sfg__cta{position:absolute;left:50%;bottom:clamp(18px,4vw,28px);transform:translateX(-50%);z-index:2;margin:0;white-space:nowrap}
+@media (max-width:700px){.sfg__photo{aspect-ratio:auto}}
 </style>
 </head>
 <body>
@@ -935,22 +942,12 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 </main>
 
 <!-- Sufganiyot pre-order popup (Hanukkah 2026). It stops showing after Dec 12, 2026, and once closed it stays closed for that visitor for a day. -->
-<div class="sfg" id="sfg" role="dialog" aria-modal="true" aria-labelledby="sfgTitle" hidden>
+<div class="sfg" id="sfg" role="dialog" aria-modal="true" aria-label="Pre-order sufganiyot" hidden>
   <div class="sfg__backdrop" data-close></div>
   <div class="sfg__card">
     <button class="sfg__x" type="button" aria-label="Close" data-close><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
     <div class="sfg__photo"><img src="assets/sufganiyot.jpg" alt="Sufganiyot from Asaro" width="1200" height="956"></div>
-    <div class="sfg__body">
-      <p class="sfg__kicker">Asaro’s Hanukkah pre-order</p>
-      <h2 class="sfg__title" id="sfgTitle">Sufganiyot</h2>
-      <ul class="sfg__menu">
-        <li><span>Plain</span><i></i><span>$5</span></li>
-        <li><span>Classic Jam</span><i></i><span>$5</span></li>
-        <li class="sfg__all"><span>Double Chocolate · Dulce de leche · Halva Kadaif · Pistachio crunch · Creamy Tiramisu · Passion Fruit Bliss · Pink Guava</span><i></i><span>$6.50</span></li>
-      </ul>
-      <p class="sfg__pick">Pickup only · December 4th to 12th · 7am – 5pm · 1629 Cambridge St</p>
-      <a class="btn btn--ink sfg__cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdQCaWjwf6Q4Gjp4kuBgOPGejc_CL1FAL5AIW7qmjRxiqLWUg/viewform" target="_blank" rel="noopener">Pre-order now <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
-    </div>
+    <a class="btn btn--cream sfg__cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdQCaWjwf6Q4Gjp4kuBgOPGejc_CL1FAL5AIW7qmjRxiqLWUg/viewform" target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
   </div>
 </div>
 <a class="toastfab" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener" aria-label="Order on Toast">
