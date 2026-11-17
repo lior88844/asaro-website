@@ -711,3 +711,10 @@ main > section.toast{padding-bottom:0!important}
 /* the line over the hero photo fades in and rises as you scroll */
 .hx__line{opacity:var(--hx-t,0);transform:translateY(calc((1 - var(--hx-t,0)) * 28px));will-change:opacity,transform}
 @media (prefers-reduced-motion:reduce){.hx__line{opacity:1;transform:none}}
+
+/* the logo fades in as it rises when the page opens; the hours line follows a moment later */
+.hx__logo img{opacity:0;transition:transform 1.3s cubic-bezier(.2,.75,.15,1) .05s,opacity 1.4s ease .1s}
+.is-ready .hx__logo img{opacity:1}
+.hx__head .hx__bar{opacity:0;transition:opacity 1s ease .7s}
+.is-ready .hx__head .hx__bar{opacity:1}
+@media (prefers-reduced-motion:reduce){.hx__logo img,.hx__head .hx__bar{opacity:1}}
