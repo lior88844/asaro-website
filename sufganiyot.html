@@ -155,25 +155,21 @@ footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.
   .item{gap:12px}
   .item__img{width:84px;height:84px}
 }
-/* ── micro animations ── */
-@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.45)}100%{transform:scale(1)}}
-@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.07) rotate(-1.5deg)}100%{transform:scale(1)}}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes tick{0%{transform:scale(.6)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
-.bump{display:inline-block;animation:bump .32s var(--ease)}
-.item__img{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-.item:hover .item__img{transform:translateY(-3px);box-shadow:0 12px 26px rgba(17,17,17,.28)}
-.item__img.pop{animation:pop .45s var(--ease)}
-.qty button,.day,.seg button,.btn{transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
-.qty button:active:not(:disabled),.day:active:not(:disabled),.seg button:active,.btn:active:not(:disabled){transform:scale(.94)}
-.day[aria-pressed="true"]{transform:translateY(-2px);box-shadow:0 6px 14px rgba(17,17,17,.25)}
+/* ── micro animations: soft and quiet ── */
+@keyframes bump{from{opacity:.35;transform:translateY(3px)}to{opacity:1;transform:none}}
+@keyframes shake{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.bump{display:inline-block;animation:bump .45s cubic-bezier(.25,.46,.45,.94)}
+.item__img{transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.item:hover .item__img{transform:translateY(-2px);box-shadow:0 10px 22px rgba(17,17,17,.22)}
+.qty button,.day,.seg button,.btn{transition:background .3s var(--ease),color .3s var(--ease),transform .25s var(--ease),box-shadow .3s var(--ease)}
+.qty button:active:not(:disabled),.day:active:not(:disabled),.seg button:active,.btn:active:not(:disabled){transform:scale(.98)}
+.day[aria-pressed="true"]{box-shadow:0 4px 10px rgba(17,17,17,.18)}
 .err.shake{animation:shake .4s var(--ease)}
-.check input:checked{animation:tick .3s var(--ease)}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.in{opacity:1;transform:none}
-.done.in h2,.done.in p,.done.in .receipt li,.done.in .done__actions{opacity:0;animation:rise .6s var(--ease) forwards}
-.done.in p{animation-delay:.12s}.done.in .receipt li{animation-delay:calc(.2s + var(--i,0) * .06s)}.done.in .done__actions{animation-delay:.55s}
+.done.in h2,.done.in p,.done.in .receipt li,.done.in .done__actions{opacity:0;animation:rise .8s var(--ease) forwards}
+.done.in p{animation-delay:.12s}.done.in .receipt li{animation-delay:calc(.22s + var(--i,0) * .06s)}.done.in .done__actions{animation-delay:.6s}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}.done.in *{opacity:1!important}}
 </style>
 <script src="assets/transition.js?v=1"></script>
@@ -308,7 +304,6 @@ ITEMS.forEach((it, i) => {
     li.querySelector('[data-d="-1"]').disabled = qty[i] === 0;
     li.classList.toggle('has', qty[i] > 0);
     replay(li.querySelector('output'), 'bump');
-    if (Number(b.dataset.d) > 0) replay(li.querySelector('.item__img'), 'pop');
     setErr('errItems', '');
     render();
   }));
