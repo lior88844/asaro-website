@@ -65,7 +65,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* flavors */
 .menu{list-style:none}
-.item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:14px 0;border-bottom:1px dotted rgba(17,17,17,.4)}
+.item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;padding:14px 0;border-bottom:1px dotted rgba(17,17,17,.4)}
+.item__img{width:100px;height:100px;border-radius:50%;object-fit:cover;background:#111;box-shadow:0 6px 18px rgba(17,17,17,.22)}
 .item:first-child{border-top:1px dotted rgba(17,17,17,.4)}
 .item__name{font-family:var(--serif);font-weight:700;font-size:clamp(22px,2.6vw,27px);line-height:1.1}
 .item__price{font-size:13px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
@@ -148,6 +149,8 @@ footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.
   .facts li{flex-direction:column;gap:2px}
   .facts span{text-align:left}
   .qty button{width:40px;height:40px}
+  .item{gap:12px}
+  .item__img{width:72px;height:72px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -251,16 +254,16 @@ footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.
    web app (sufganiyot-form/web-orders.gs). It checks the order again and works out the total. */
 const ORDERS_URL = 'https://script.google.com/macros/s/AKfycbxiVm43uAYuR7OYqtGU3_y6mN00qaiAszDJkZ0QfX5GNHLlTYCWb7EOVU-TicFSHrxxzQ/exec';
 const ITEMS = [
-  {name:'Plain',               price:5},
-  {name:'Classic Jam',         price:5},
-  {name:'Double Chocolate',    price:6.5},
-  {name:'Dulce de leche',      price:6.5},
-  {name:'Halva Kadaif',        price:6.5},
-  {name:'Pistachio crunch',    price:6.5},
-  {name:'Creamy Tiramisu',     price:6.5},
-  {name:'Passion Fruit Bliss', price:6.5},
-  {name:'Pink Guava',          price:6.5},
-  {name:'Variety pack',        price:55.5, note:'9 sufganiyot, one of each flavor'}
+  {name:'Plain',               price:5, img:'assets/hanukkah/flavors/plain.jpg'},
+  {name:'Classic Jam',         price:5, img:'assets/hanukkah/flavors/classic-jam.jpg'},
+  {name:'Double Chocolate',    price:6.5, img:'assets/hanukkah/flavors/double-chocolate.jpg'},
+  {name:'Dulce de leche',      price:6.5, img:'assets/hanukkah/flavors/dulce-de-leche.jpg'},
+  {name:'Halva Kadaif',        price:6.5, img:'assets/hanukkah/flavors/halva-kadaif.jpg'},
+  {name:'Pistachio crunch',    price:6.5, img:'assets/hanukkah/flavors/pistachio-crunch.jpg'},
+  {name:'Creamy Tiramisu',     price:6.5, img:'assets/hanukkah/flavors/creamy-tiramisu.jpg'},
+  {name:'Passion Fruit Bliss', price:6.5, img:'assets/hanukkah/flavors/passion-fruit-bliss.jpg'},
+  {name:'Pink Guava',          price:6.5, img:'assets/hanukkah/flavors/pink-guava.jpg'},
+  {name:'Variety pack',        price:55.5, img:'assets/hanukkah/box.jpg', note:'9 sufganiyot, one of each flavor'}
 ];
 const qty = ITEMS.map(() => 0);
 const MAX = 200;
@@ -271,7 +274,7 @@ const menu = document.getElementById('menu');
 ITEMS.forEach((it, i) => {
   const li = document.createElement('li');
   li.className = 'item';
-  li.innerHTML = `<div><div class="item__name">${it.name}</div><div class="item__price">${money(it.price)}${it.note ? ' · ' + it.note : ''}</div></div>
+  li.innerHTML = `<img class="item__img" src="${it.img}" alt="${it.name}" width="480" height="480" loading="lazy"><div><div class="item__name">${it.name}</div><div class="item__price">${money(it.price)}${it.note ? ' · ' + it.note : ''}</div></div>
     <div class="qty"><button type="button" aria-label="One less ${it.name}" data-d="-1" disabled>−</button><output aria-live="polite">0</output><button type="button" aria-label="One more ${it.name}" data-d="1">+</button></div>`;
   li.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     qty[i] = Math.max(0, Math.min(MAX, qty[i] + Number(b.dataset.d)));
