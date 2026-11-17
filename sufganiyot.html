@@ -262,7 +262,7 @@ const ITEMS = [
   {name:'Creamy Tiramisu',     price:6.5,  id:'1999939687'},
   {name:'Passion Fruit Bliss', price:6.5,  id:'119404676'},
   {name:'Pink Guava',          price:6.5,  id:'472776074'},
-  {name:'Variety pack',        price:null, id:'1052505520', note:'9 sufganiyot, one of each flavor'}
+  {name:'Variety pack',        price:55.5, id:'1052505520', note:'9 sufganiyot, one of each flavor'}
 ];
 const qty = ITEMS.map(() => 0);
 const MAX = 200;
@@ -273,7 +273,7 @@ const menu = document.getElementById('menu');
 ITEMS.forEach((it, i) => {
   const li = document.createElement('li');
   li.className = 'item';
-  li.innerHTML = `<div><div class="item__name">${it.name}</div><div class="item__price">${it.price ? money(it.price) : it.note}</div></div>
+  li.innerHTML = `<div><div class="item__name">${it.name}</div><div class="item__price">${money(it.price)}${it.note ? ' · ' + it.note : ''}</div></div>
     <div class="qty"><button type="button" aria-label="One less ${it.name}" data-d="-1" disabled>−</button><output aria-live="polite">0</output><button type="button" aria-label="One more ${it.name}" data-d="1">+</button></div>`;
   li.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     qty[i] = Math.max(0, Math.min(MAX, qty[i] + Number(b.dataset.d)));
