@@ -246,23 +246,21 @@ footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.
 </footer>
 
 <script>
-/* Orders are sent to the Asaro sufganiyot Google Form, so every order lands in the
-   "Asaro Sufganiyot Orders · Hanukkah 2026" Google Sheet. Field numbers come from that form. */
-const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdQCaWjwf6Q4Gjp4kuBgOPGejc_CL1FAL5AIW7qmjRxiqLWUg/formResponse';
-const F = {name:'365245961', phone:'958231947', email:'2065806424', type:'942266718', org:'1002686414',
-           day:'228854342', time:'431949085', notes:'511759220', confirm:'701120047'};
-const CONFIRM = 'I understand payment is at pickup and orders must be placed by 10am the day before pickup.';
+/* Orders go straight to the "Website orders" tab of the
+   "Asaro Sufganiyot Orders · Hanukkah 2026" Google Sheet, through a small Google Apps Script
+   web app (sufganiyot-form/web-orders.gs). It checks the order again and works out the total. */
+const ORDERS_URL = 'https://script.google.com/macros/s/AKfycbxiVm43uAYuR7OYqtGU3_y6mN00qaiAszDJkZ0QfX5GNHLlTYCWb7EOVU-TicFSHrxxzQ/exec';
 const ITEMS = [
-  {name:'Plain',               price:5,    id:'1828565369'},
-  {name:'Classic Jam',         price:5,    id:'1648551846'},
-  {name:'Double Chocolate',    price:6.5,  id:'718217046'},
-  {name:'Dulce de leche',      price:6.5,  id:'1653630544'},
-  {name:'Halva Kadaif',        price:6.5,  id:'338726746'},
-  {name:'Pistachio crunch',    price:6.5,  id:'1112543677'},
-  {name:'Creamy Tiramisu',     price:6.5,  id:'1999939687'},
-  {name:'Passion Fruit Bliss', price:6.5,  id:'119404676'},
-  {name:'Pink Guava',          price:6.5,  id:'472776074'},
-  {name:'Variety pack',        price:55.5, id:'1052505520', note:'9 sufganiyot, one of each flavor'}
+  {name:'Plain',               price:5},
+  {name:'Classic Jam',         price:5},
+  {name:'Double Chocolate',    price:6.5},
+  {name:'Dulce de leche',      price:6.5},
+  {name:'Halva Kadaif',        price:6.5},
+  {name:'Pistachio crunch',    price:6.5},
+  {name:'Creamy Tiramisu',     price:6.5},
+  {name:'Passion Fruit Bliss', price:6.5},
+  {name:'Pink Guava',          price:6.5},
+  {name:'Variety pack',        price:55.5, note:'9 sufganiyot, one of each flavor'}
 ];
 const qty = ITEMS.map(() => 0);
 const MAX = 200;
@@ -373,31 +371,29 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
   if (!check()) return;
   const btns = document.querySelectorAll('button[type=submit]');
   btns.forEach(b => b.disabled = true);
-  const body = new URLSearchParams();
   const v = id => document.getElementById(id).value.trim();
-  body.append('entry.' + F.name, v('name'));
-  body.append('entry.' + F.phone, v('phone'));
-  body.append('entry.' + F.email, v('email'));
-  body.append('entry.' + F.type, type);
-  if (type === 'Event / bulk order' && v('org')) body.append('entry.' + F.org, v('org'));
-  chosen().forEach(x => body.append('entry.' + x.id, String(x.q)));
-  body.append('entry.' + F.day, day);
-  body.append('entry.' + F.time, timeEl.value);
-  if (v('notes')) body.append('entry.' + F.notes, v('notes'));
-  body.append('entry.' + F.confirm, CONFIRM);
-  body.append('pageHistory', '0,1,2');
-  try {
-    await fetch(FORM, {method:'POST', mode:'no-cors', body});
-    showDone();
-  } catch (err) {
-    setErr('errSubmit', 'We couldn’t send your order. Please check your connection and try again.');
+  const items = {};
+  chosen().forEach(x => { items[x.name] = x.q; });
+  const order = {name:v('name'), phone:v('phone'), email:v('email'), type,
+                 org: type === 'Event / bulk order' ? v('org') : '', items, day, time: timeEl.value, notes:v('notes')};
+  const fail = msg => {
+    setErr('errSubmit', msg); setErr('errConfirm', msg);   /* errSubmit is in the desktop summary, errConfirm shows on phones */
     btns.forEach(b => b.disabled = false);
+  };
+  try {
+    /* text/plain keeps this a "simple" request, which Google Apps Script accepts from any website */
+    const res = await fetch(ORDERS_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(order)});
+    const out = await res.json();
+    if (out.ok) showDone(out.total);
+    else fail(out.error || 'We couldn’t place your order. Please try again.');
+  } catch (err) {
+    fail('We couldn’t send your order. Please check your connection and try again, or call the café.');
   }
 });
 
-function showDone() {
+function showDone(serverTotal) {
   const list = chosen();
-  const total = list.reduce((s, x) => s + (x.price ? x.price * x.q : 0), 0);
+  const total = typeof serverTotal === 'number' ? serverTotal : list.reduce((s, x) => s + x.price * x.q, 0);
   document.getElementById('receipt').innerHTML =
     list.map(x => `<li><span>${x.q} × ${x.name}</span><span>${x.price ? money(x.price * x.q) : '—'}</span></li>`).join('') +
     `<li><span>Pickup</span><span>${day}, ${timeEl.value}</span></li>` +
