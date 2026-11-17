@@ -640,6 +640,21 @@ main > section.hx{padding:0!important;position:relative}
 
 /* hero photo: edge to edge from the start, no side margins or rounded corners */
 .hx__cover{clip-path:none!important;border-radius:0}
+
+/* floating "Order on Toast" badge, bottom right, on every screen */
+.toastfab{position:fixed;right:clamp(14px,2.2vw,28px);bottom:clamp(14px,2.2vw,28px);z-index:57;width:clamp(78px,7vw,104px);aspect-ratio:1;border-radius:50%;
+  background:#111111;color:#f5efe6;display:grid;place-items:center;box-shadow:0 8px 24px rgba(17,17,17,.22);
+  opacity:0;transform:scale(.6);animation:fabIn .7s 1.8s cubic-bezier(.2,.75,.15,1) forwards;transition:background .35s var(--ease),color .35s var(--ease)}
+@keyframes fabIn{to{opacity:1;transform:none}}
+.toastfab__ring{position:absolute;inset:0;width:100%;height:100%;animation:fabSpin 14s linear infinite}
+.toastfab__ring text{font-family:var(--sans);font-weight:500;font-size:10.5px;letter-spacing:.06em;fill:currentColor}
+@keyframes fabSpin{to{transform:rotate(360deg)}}
+.toastfab__arrow{width:26%;height:26%;transform:rotate(-45deg);transition:transform .45s var(--ease)}
+.toastfab:hover{background:#c39769;color:#111111}
+.toastfab:hover .toastfab__arrow{transform:rotate(0deg)}
+.toastfab:hover .toastfab__ring{animation-duration:6s}
+body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.toastfab{opacity:1;transform:none}.toastfab__ring{animation:none}}
 </style>
 </head>
 <body>
@@ -891,6 +906,11 @@ main > section.hx{padding:0!important;position:relative}
   </section>
 </main>
 
+<a class="toastfab" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener" aria-label="Order on Toast">
+  <svg class="toastfab__ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="fabCircle" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+    <text><textPath href="#fabCircle" textLength="230">ORDER ON TOAST ✳ ORDER ON TOAST ✳</textPath></text></svg>
+  <svg class="toastfab__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg>
+</a>
 <footer class="footer" data-nav="light">
   <div class="wrap">
     <div class="footer__brand"><div class="footer__logo" id="footerLogo"><img src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" loading="lazy" width="1000" height="298"></div></div>
