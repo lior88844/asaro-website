@@ -696,3 +696,10 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 /* hours + address sit in the kraft top section under the logo, not on the photo */
 .hx__head .hx__bar{position:static;left:auto;right:auto;bottom:auto;max-width:var(--max);margin:clamp(22px,3vw,40px) auto 0;color:var(--paper);border-top:1px solid var(--line);text-align:left}
 .hx__over{padding-bottom:var(--navh)}
+
+/* the Toast band is the last thing on the page: it carries hours, directions, phone, email */
+.toast__foot a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--ease),color .3s}
+.toast__foot a:hover{background-size:100% 1px;color:#f5efe6}
+.toast__foot .toast__links a{background-image:none}
+main > section.toast{padding-bottom:0!important}
+.toast__body{padding-bottom:clamp(40px,5vw,72px)}
