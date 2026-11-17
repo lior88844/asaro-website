@@ -741,3 +741,6 @@ main > section.cafe.slides{padding:0!important;border-top:0;height:100svh;overfl
 .slides__track{display:flex;height:100%;transition:transform 1.1s cubic-bezier(.77,0,.18,1);will-change:transform}
 .slide{flex:0 0 100%;height:100%;position:relative}
 .slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* the menu section now opens straight on the full menu */
+.menu .half__text > .fullmenu:first-of-type{margin-top:0;padding-top:0;border-top:0}
