@@ -631,6 +631,12 @@ main > section.hx{padding:0!important;position:relative}
   .hx__line{font-size:clamp(28px,8.4vw,40px)}
 }
 @media (prefers-reduced-motion:reduce){.curtain{display:none}.hx__ch > span,.hx__sub > span{transform:none}.hx__cover{clip-path:none}}
+
+/* the logo itself is the title */
+.hx__logo{display:block;overflow:hidden;width:min(1040px,84vw);margin:0 auto}
+.hx__logo img{display:block;width:100%;height:auto;transform:translateY(102%);transition:transform 1.3s cubic-bezier(.2,.75,.15,1) .05s}
+.is-ready .hx__logo img{transform:none}
+@media (prefers-reduced-motion:reduce){.hx__logo img{transform:none}}
 </style>
 </head>
 <body>
@@ -687,10 +693,7 @@ main > section.hx{padding:0!important;position:relative}
   <!-- HERO: big name, then a framed photo that opens to full screen as you scroll -->
   <section class="hx">
     <div class="hx__head" data-nav="light">
-      <h1 class="hx__title" aria-label="Asaro Bakery &amp; Cafe">
-        <span class="hx__word" aria-hidden="true"><span class="hx__ch" style="--i:0"><span>A</span></span><span class="hx__ch" style="--i:1"><span>S</span></span><span class="hx__ch" style="--i:2"><span>A</span></span><span class="hx__ch" style="--i:3"><span>R</span></span><span class="hx__ch" style="--i:4"><span>O</span></span></span>
-        <span class="hx__sub" aria-hidden="true"><span>Bakery &amp; Cafe</span></span>
-      </h1>
+      <h1 class="hx__title"><span class="hx__logo"><img src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" width="1000" height="298"></span></h1>
     </div>
     <div class="hx__cover" id="hxCover" data-nav="dark">
       <div class="hx__media"><img class="hx__img" src="assets/homepage.jpg" alt="A baker dusting flour over a proofing basket" fetchpriority="high"></div>
