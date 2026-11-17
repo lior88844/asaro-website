@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Gallery option 4 · Expanding strips</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=8">
+<style>
+.demo-note{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;background:#111;color:#f5efe6;font-size:11px;letter-spacing:.22em;padding:9px 16px;border-radius:999px}
+.demo-pad{height:60vh;display:grid;place-items:center;text-align:center;font-size:12px;letter-spacing:.24em;color:#333}
+.demo-h{font-family:var(--serif);font-weight:700;font-size:clamp(40px,4.6vw,76px);line-height:1;margin:0}
+
+.strips{padding:var(--section) var(--gutter)}
+.strips__head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}
+.strips__hint{font-size:11px;letter-spacing:.22em;color:#333}
+.strips__row{display:flex;gap:10px;height:76vh}
+.strip{position:relative;flex:1;min-width:0;border-radius:6px;overflow:hidden;cursor:pointer;transition:flex .8s cubic-bezier(.7,0,.2,1);background:#111;border:0;padding:0}
+.strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.7) brightness(.8);transition:filter .8s,transform 1.2s cubic-bezier(.2,.75,.15,1);transform:scale(1.08)}
+.strip.on{flex:6}
+.strip.on img{filter:none;transform:scale(1)}
+.strip__n{position:absolute;left:50%;top:16px;transform:translateX(-50%);color:#f5efe6;font-family:var(--serif);font-weight:700;font-size:18px;transition:opacity .4s}
+.strip__cap{position:absolute;left:18px;bottom:16px;right:18px;color:#f5efe6;font-size:11px;letter-spacing:.2em;text-align:left;opacity:0;transform:translateY(10px);transition:opacity .5s .25s,transform .6s .25s;text-shadow:0 1px 8px rgba(0,0,0,.55)}
+.strip.on .strip__cap{opacity:1;transform:none}
+.strip.on .strip__n{opacity:0}
+@media (max-width:760px){
+  .strips__row{flex-direction:column;height:auto;gap:8px}
+  .strip{flex:none;height:64px;transition:height .8s cubic-bezier(.7,0,.2,1)}
+  .strip.on{flex:none;height:58vh}
+  .strip__n{top:50%;transform:translate(-50%,-50%)}
+}
+
+</style>
+</head>
+<body>
+<div class="demo-note">OPTION 4 · EXPANDING STRIPS</div>
+<div class="demo-pad">↓ scroll ↓</div>
+<section class="strips">
+  <div class="strips__head"><h2 class="demo-h">The Cafe</h2><span class="strips__hint">Hover or tap a photo</span></div>
+  <div class="strips__row" id="sr">
+      <button class="strip on" type="button" aria-label="A slice of pecan pie dipped into a latte"><img src="assets/best/cafe-pie-latte.jpg" alt=""><span class="strip__n">01</span><span class="strip__cap">A slice of pecan pie dipped into a latte</span></button>
+      <button class="strip" type="button" aria-label="Butter croissants on a cake stand"><img src="assets/best/cafe-croissants.jpg" alt=""><span class="strip__n">02</span><span class="strip__cap">Butter croissants on a cake stand</span></button>
+      <button class="strip" type="button" aria-label="An espresso shot pulling into a cup"><img src="assets/best/cafe-espresso.jpg" alt=""><span class="strip__n">03</span><span class="strip__cap">An espresso shot pulling into a cup</span></button>
+      <button class="strip" type="button" aria-label="Pie slices and a latte on a wooden table"><img src="assets/best/cafe-pies.jpg" alt=""><span class="strip__n">04</span><span class="strip__cap">Pie slices and a latte on a wooden table</span></button>
+      <button class="strip" type="button" aria-label="A cappuccino on Asaro paper"><img src="assets/best/cafe-cappuccino.jpg" alt=""><span class="strip__n">05</span><span class="strip__cap">A cappuccino on Asaro paper</span></button>
+      <button class="strip" type="button" aria-label="An almond tart on a wooden stool"><img src="assets/best/cafe-almond-tart.jpg" alt=""><span class="strip__n">06</span><span class="strip__cap">An almond tart on a wooden stool</span></button>
+  </div>
+</section>
+<div class="demo-pad">end of gallery</div>
+<script>
+(() => {
+  const row=document.getElementById('sr'), items=[...row.children];
+  let hold=false;
+  const pick=el=>items.forEach(i=>i.classList.toggle('on',i===el));
+  items.forEach(el=>{ el.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover)').matches){hold=true;pick(el)}}); el.addEventListener('click',()=>{hold=true;pick(el)}); });
+  row.addEventListener('mouseleave',()=>hold=false);
+  setInterval(()=>{ if(hold||document.hidden) return; const i=items.findIndex(x=>x.classList.contains('on')); pick(items[(i+1)%items.length]); },3500);   // moves on by itself until someone interacts
+})();
+</script>
+</body></html>

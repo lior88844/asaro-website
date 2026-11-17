@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Gallery option 1 · Film strip</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=8">
+<style>
+.demo-note{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;background:#111;color:#f5efe6;font-size:11px;letter-spacing:.22em;padding:9px 16px;border-radius:999px}
+.demo-pad{height:60vh;display:grid;place-items:center;text-align:center;font-size:12px;letter-spacing:.24em;color:#333}
+.demo-h{font-family:var(--serif);font-weight:700;font-size:clamp(40px,4.6vw,76px);line-height:1;margin:0}
+
+.film{position:relative;height:calc(100vh + var(--run,2400px))}
+.film__pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.film__top{display:flex;justify-content:space-between;align-items:end;padding:0 var(--gutter)}
+.film__count{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3vw,44px);font-variant-numeric:tabular-nums}
+.film__count span{color:#6b5236}
+.film__track{display:flex;gap:clamp(14px,2vw,28px);padding:0 var(--gutter);will-change:transform}
+.film__track figure{flex:0 0 auto;height:62vh;border-radius:6px;overflow:hidden;position:relative}
+.film__track img{height:100%;width:auto;display:block;transform:scale(1.12);transition:transform 1.4s cubic-bezier(.2,.75,.15,1)}
+.film__track figure.on img{transform:scale(1)}
+.film__track figcaption{position:absolute;left:14px;bottom:12px;color:#f5efe6;font-size:11px;letter-spacing:.2em;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.film__bar{margin:0 var(--gutter);height:1px;background:rgba(17,17,17,.2);position:relative}
+.film__bar i{position:absolute;left:0;top:0;bottom:0;background:#111;width:0}
+@media (max-width:760px){
+  .film{height:auto}.film__pin{position:relative;height:auto;padding:40px 0}
+  .film__track{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;transform:none!important}
+  .film__track::-webkit-scrollbar{display:none}
+  .film__track figure{height:56vh;scroll-snap-align:center}
+  .film__track img{transform:none}
+}
+
+</style>
+</head>
+<body>
+<div class="demo-note">OPTION 1 · FILM STRIP ON SCROLL</div>
+<div class="demo-pad">↓ scroll ↓</div>
+<section class="film" id="film">
+  <div class="film__pin">
+    <div class="film__top"><h2 class="demo-h">The Cafe</h2><div class="film__count"><b id="fc">01</b> <span>/ 06</span></div></div>
+    <div class="film__track" id="ft">
+      <figure><img src="assets/best/cafe-pie-latte.jpg" alt="A slice of pecan pie dipped into a latte"><figcaption>A slice of pecan pie dipped into a latte</figcaption></figure>
+      <figure><img src="assets/best/cafe-croissants.jpg" alt="Butter croissants on a cake stand"><figcaption>Butter croissants on a cake stand</figcaption></figure>
+      <figure><img src="assets/best/cafe-espresso.jpg" alt="An espresso shot pulling into a cup"><figcaption>An espresso shot pulling into a cup</figcaption></figure>
+      <figure><img src="assets/best/cafe-pies.jpg" alt="Pie slices and a latte on a wooden table"><figcaption>Pie slices and a latte on a wooden table</figcaption></figure>
+      <figure><img src="assets/best/cafe-cappuccino.jpg" alt="A cappuccino on Asaro paper"><figcaption>A cappuccino on Asaro paper</figcaption></figure>
+      <figure><img src="assets/best/cafe-almond-tart.jpg" alt="An almond tart on a wooden stool"><figcaption>An almond tart on a wooden stool</figcaption></figure>
+    </div>
+    <div class="film__bar"><i id="fb"></i></div>
+  </div>
+</section>
+<div class="demo-pad">end of gallery</div>
+<script>
+(() => {
+  const sec=document.getElementById('film'), tr=document.getElementById('ft'), fc=document.getElementById('fc'), fb=document.getElementById('fb');
+  const figs=[...tr.children], phone=()=>innerWidth<=760;
+  const size=()=>{ if(phone()) return; sec.style.setProperty('--run',Math.max(0,tr.scrollWidth-innerWidth)+'px'); };
+  const tick=()=>{
+    let p;
+    if(phone()){ p=tr.scrollLeft/Math.max(1,tr.scrollWidth-tr.clientWidth); }
+    else { const r=sec.getBoundingClientRect(), run=Math.max(1,sec.offsetHeight-innerHeight); p=Math.min(1,Math.max(0,-r.top/run)); tr.style.transform='translate3d('+(-p*Math.max(0,tr.scrollWidth-innerWidth))+'px,0,0)'; }
+    fb.style.width=(p*100)+'%';
+    let best=0,bd=1e9; figs.forEach((f,i)=>{const b=f.getBoundingClientRect();const d=Math.abs(b.left+b.width/2-innerWidth/2);if(d<bd){bd=d;best=i}; f.classList.toggle('on',b.left<innerWidth*.9&&b.right>innerWidth*.1)});
+    fc.textContent=String(best+1).padStart(2,'0');
+  };
+  addEventListener('scroll',()=>requestAnimationFrame(tick),{passive:true}); tr.addEventListener('scroll',()=>requestAnimationFrame(tick),{passive:true});
+  addEventListener('resize',()=>{size();tick()}); Promise.all(figs.map(f=>f.querySelector('img').decode().catch(()=>{}))).then(()=>{size();tick()}); size(); tick();
+})();
+</script>
+</body></html>
