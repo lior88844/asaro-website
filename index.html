@@ -502,6 +502,105 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
   .insta .insta__grid,.insta .insta__grid a{height:auto}
   .half__text{padding:44px 20px 52px}
 }
+
+/* ═════════ ROUND 3 (owner feedback) ═════════ */
+/* type: running text is Jost everywhere; every section title is one serif size */
+.visit__lede,.info p,.info a,.insta__bio,.order p{font-family:var(--sans);font-weight:400}
+.story__text p,.hiring p,.menu__head p,.visit__lede,.mi p{font-family:var(--sans);font-weight:400;font-size:clamp(14.5px,1vw,16.5px);line-height:1.75;letter-spacing:.045em}
+.info p,.info a{font-size:clamp(15px,1.1vw,17px);line-height:1.6;letter-spacing:.05em}
+main h2,.half h2,.hiring h2{font-size:clamp(40px,4.6vw,76px);line-height:1;margin:0 0 26px}
+.fullmenu h3{font-size:clamp(26px,2.4vw,36px)}
+.half__text > .btn,.half__text > .actions{align-self:flex-start}
+
+/* side menu: the burger opens a panel that slides in from the left on every screen */
+.nav__item{display:none!important}
+.nav__burger{display:block}
+.nav__left{align-items:center;gap:4px}
+.nav__menu-word{background:none;border:0;color:inherit;font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;padding:6px 4px}
+.nav.is-menu .nav__brand{opacity:0;pointer-events:none}
+.mnav{inset:0 auto 0 0;width:min(460px,100vw);align-items:flex-start;justify-content:flex-start;gap:0;padding:calc(var(--navh) + 36px) clamp(28px,4vw,56px) 36px;
+  opacity:1;visibility:hidden;transform:translateX(-101%);transition:transform .75s cubic-bezier(.7,0,.2,1),visibility 0s .75s;border-right:1px solid var(--line);overflow-y:auto}
+.mnav.is-on{visibility:visible;transform:none;transition:transform .75s cubic-bezier(.7,0,.2,1)}
+.mnav__list{margin:0;text-align:left;font-size:clamp(34px,3.6vw,50px);line-height:1.1}
+.mnav__list > li{transform:translateX(-28px)}
+.mnav__list > li > a{padding:4px 0;display:inline-block}
+.mnav__list > li > a:hover,.mnav__list > li > a:focus-visible{font-style:italic}
+.mnav.is-on .mnav__list > li:nth-child(1){transition-delay:.18s}.mnav.is-on .mnav__list > li:nth-child(2){transition-delay:.23s}
+.mnav.is-on .mnav__list > li:nth-child(3){transition-delay:.28s}.mnav.is-on .mnav__list > li:nth-child(4){transition-delay:.33s}
+.mnav.is-on .mnav__list > li:nth-child(5){transition-delay:.38s}
+.mnav__ext{list-style:none;display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:34px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;letter-spacing:.22em;width:100%}
+.mnav__ext a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--ease)}
+.mnav__ext a:hover{background-size:100% 1px}
+.mnav__foot{margin-top:auto;padding-top:40px;align-items:flex-start;gap:20px}
+.mnav__foot p{font-size:12px;letter-spacing:.2em;line-height:1.9;color:var(--muted)}
+
+/* intro: one centred statement, no photo */
+main > section.intro{padding:var(--section) 0!important}
+.intro__wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:26px;max-width:960px}
+.intro__wrap .intro__art{position:relative;height:clamp(104px,9vw,150px);aspect-ratio:178/254}
+.intro p.big{font-size:clamp(21px,2.2vw,34px);line-height:1.3;max-width:32ch}
+
+/* sticky photo beside long text */
+.half__media > img.stick{position:sticky;inset:auto;top:var(--navh);height:calc(100svh - var(--navh))}
+main .half__media img,.cafe .rail img{filter:url(#espresso-tone)}
+
+/* the cafe: full-width photos, title over them */
+main > section.cafe{padding:0!important;border-top:1px solid var(--line)}
+.cafe__stage{position:relative;height:min(86svh,820px);overflow:hidden;background:var(--oak-2)}
+.cafe .rail{position:absolute;inset:0;height:100%;padding:0;gap:0;scroll-padding:0}
+.cafe .rail figure{flex:0 0 100%;width:100%;height:100%;aspect-ratio:auto;border-radius:0}
+.cafe__stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(17,17,17,0) 50%,rgba(17,17,17,.72))}
+.cafe__over{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 24px;padding-bottom:clamp(26px,4vw,56px);color:#f5efe6;pointer-events:none;--tan:#f5efe6;--ink:#111111;--line:rgba(245,239,230,.35)}
+.cafe__over h2{margin:0}
+.cafe__ctrl{display:flex;align-items:center;gap:22px;pointer-events:auto}
+.cafe .rail-btns{margin:0}
+.cafe .rail-progress{margin:0;padding:0;width:clamp(90px,14vw,200px)}
+
+/* Toast: a black band with the menu running across it */
+main > section.toast{padding:0!important;background:#111111;color:#f5efe6;--paper:#f5efe6;--tan:#f5efe6;--ink:#111111;--line:rgba(245,239,230,.18);--muted:rgba(245,239,230,.66)}
+.toast__marquee{border-bottom:1px solid var(--line);padding:16px 0;overflow:hidden;white-space:nowrap;font-family:var(--serif);font-weight:700;font-size:clamp(17px,1.5vw,22px)}
+.toast__track{display:inline-flex;animation:marq 70s linear infinite}
+.toast__track > span{padding-right:.6em}
+.toast__track span span{color:#c39769;margin:0 .55em}
+@keyframes marq{to{transform:translateX(-50%)}}
+.toast__body{padding-top:clamp(56px,8vw,120px);padding-bottom:clamp(48px,6vw,90px)}
+.toast__kicker{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:14px}
+.toast__big{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 .26em;font-family:var(--serif);font-weight:700;font-size:clamp(44px,8.6vw,150px);line-height:.92;color:#f5efe6}
+.toast__word{display:inline-block;transition:color .45s var(--ease),transform .6s var(--ease)}
+.toast__big:hover .toast__word{color:#c39769;transform:translateY(-.04em)}
+.toast__big:hover .toast__word:nth-child(2){transition-delay:.05s}.toast__big:hover .toast__word:nth-child(3){transition-delay:.1s}
+.toast__arrow{display:inline-grid;place-items:center;width:.62em;height:.62em;border-radius:50%;border:1px solid currentColor;transition:background .45s var(--ease),color .45s var(--ease)}
+.toast__arrow svg{width:.28em;height:.28em;transition:transform .5s var(--ease)}
+.toast__big:hover .toast__arrow{background:#c39769;color:#111111;border-color:#c39769}
+.toast__big:hover .toast__arrow svg{transform:translateX(.06em)}
+.toast__foot{margin-top:clamp(36px,5vw,64px);padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px 40px;align-items:center;font-size:12px;letter-spacing:.2em;color:var(--muted)}
+.toast__links{margin-left:auto;display:flex;gap:12px;flex-wrap:wrap}
+.btn--cream{background:#f5efe6;color:#111111}.btn--cream:hover{background:#c39769}
+.btn--ghost{border:1px solid rgba(245,239,230,.5);color:#f5efe6}.btn--ghost:hover{background:#f5efe6;color:#111111;border-color:#f5efe6}
+
+/* visit: details beside the map — nothing else */
+.visit__map{min-height:clamp(420px,44vw,680px)}
+.visit.half .visit__map .map{position:absolute;inset:0;margin:0;aspect-ratio:auto;min-height:0;border-radius:0}
+.visit .info{margin-top:8px}
+.info h3{font-family:var(--sans);font-weight:500;letter-spacing:.22em}
+
+/* motion: photos open from a soft inset, the hero breathes, a thin line tracks the scroll */
+.clip{clip-path:inset(7% 6% 7% 6%);transition:clip-path 1.3s cubic-bezier(.7,0,.2,1)}
+.clip.in{clip-path:inset(0 0 0 0)}
+.hero__img{animation:settle 2.4s var(--ease) forwards,breathe 26s ease-in-out 2.4s infinite alternate}
+@keyframes breathe{from{transform:scale(1)}to{transform:scale(1.08) translate3d(-1.2%,-1%,0)}}
+.half__media > img.drift{will-change:transform;transform:scale(1.14)}
+.nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;opacity:.5;transform-origin:0 50%;transform:scaleX(var(--prog,0));pointer-events:none}
+.nav.is-menu::after,.nav[data-on="dark"]:not(.is-scrolled)::after{opacity:0}
+
+@media (max-width:860px){
+  .cafe__stage{height:72svh}
+  .visit__map{min-height:0;aspect-ratio:4/3}
+  .half__media > img.stick{position:relative;top:0;height:auto;aspect-ratio:4/5}
+  .toast__links{margin-left:0}
+  .nav__menu-word{display:none}
+}
+@media (prefers-reduced-motion:reduce){.toast__track{animation:none}.clip{clip-path:none}}
 </style>
 </head>
 <body>
@@ -520,26 +619,7 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
 <header class="nav" id="nav" data-on="dark">
   <nav class="nav__left" aria-label="Main">
     <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
-    <div class="nav__item">
-      <button class="nav__trigger" aria-expanded="false" aria-controls="sub-about">About <svg viewBox="0 0 10 10" fill="none" stroke="currentColor"><path d="M1 3l4 4 4-4"/></svg></button>
-      <span class="nav__line"></span>
-      <ul class="nav__sub" id="sub-about">
-        <li><a href="#story">Our Story</a></li>
-        <li><a href="#cafe">The Cafe</a></li>
-        <li><a href="#hiring">Hiring</a></li>
-        <li><a href="#instagram">Instagram</a></li>
-        <li><a href="#visit">Contact</a></li>
-      </ul>
-    </div>
-    <div class="nav__item">
-      <button class="nav__trigger" aria-expanded="false" aria-controls="sub-eat">Eat &amp; Order <svg viewBox="0 0 10 10" fill="none" stroke="currentColor"><path d="M1 3l4 4 4-4"/></svg></button>
-      <span class="nav__line"></span>
-      <ul class="nav__sub" id="sub-eat">
-        <li><a href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order</a></li>
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="https://www.toasttab.com/asaro-cafe-bakery-1629-cambridge-street/giftcards" target="_blank" rel="noopener">Gift Cards</a></li>
-      </ul>
-    </div>
+    <button class="nav__menu-word" type="button" aria-controls="mnav" id="burgerWord">Menu</button>
   </nav>
   <a href="#top" class="nav__brand" aria-label="Asaro Bakery &amp; Cafe — back to top">
     <img class="light" src="assets/logo-light.svg" alt="Asaro Bakery &amp; Cafe" width="114" height="34">
@@ -552,22 +632,24 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
 </header>
 <div class="scrim" id="scrim"></div>
 
-<div class="mnav" id="mnav" aria-hidden="true">
+<aside class="mnav" id="mnav" aria-hidden="true" aria-label="Menu">
   <ul class="mnav__list">
-    <li><button type="button">About <svg viewBox="0 0 10 10" fill="none" stroke="currentColor"><path d="M1 3l4 4 4-4"/></svg></button>
-      <div class="mnav__sub"><div>
-        <a href="#story">Our Story</a><a href="#cafe">The Cafe</a><a href="#hiring">Hiring</a><a href="#instagram">Instagram</a><a href="#visit">Contact</a>
-      </div></div></li>
-    <li><button type="button">Eat &amp; Order <svg viewBox="0 0 10 10" fill="none" stroke="currentColor"><path d="M1 3l4 4 4-4"/></svg></button>
-      <div class="mnav__sub"><div>
-        <a href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order</a><a href="#menu">Menu</a><a href="https://www.toasttab.com/asaro-cafe-bakery-1629-cambridge-street/giftcards" target="_blank" rel="noopener">Gift Cards</a>
-      </div></div></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#cafe">The Cafe</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#hiring">Hiring</a></li>
+    <li><a href="#visit">Contact</a></li>
+  </ul>
+  <ul class="mnav__ext">
+    <li><a href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order</a></li>
+    <li><a href="https://www.toasttab.com/asaro-cafe-bakery-1629-cambridge-street/giftcards" target="_blank" rel="noopener">Gift Cards</a></li>
+    <li><a href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener">Instagram</a></li>
   </ul>
   <div class="mnav__foot">
-    <a class="nav__ig" style="display:grid" href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></a>
-    <a class="nav__btn" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order Online</a>
+    <p>Open 7am – 5pm everyday<br>1629 Cambridge St, Cambridge, MA</p>
+    <a class="btn btn--ink" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order Online <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
   </div>
-</div>
+</aside>
 
 <main id="top">
 
@@ -583,23 +665,20 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
     </div>
   </section>
 
-  <!-- INTRO -->
-  <section class="half half--flip intro" id="intro" data-nav="light">
-    <div class="half__media"><img src="assets/shoot/ab-44.jpg" alt="A barista in an Asaro apron pouring latte art" loading="lazy"></div>
-    <div class="half__text intro__grid">
+  <!-- INTRO: one statement, no photo -->
+  <section class="intro" id="intro" data-nav="light">
+    <div class="wrap intro__wrap">
       <div class="intro__art" id="introArt" aria-hidden="true">
         <svg id="introSvg" viewBox="392 -12 178 254" focusable="false"></svg>
       </div>
-      <div>
-        <p class="big reveal">Our journey at <span class="w"><span><img class="wheat-a" src="assets/a-wheat-oak.svg" alt="" width="154" height="230"><span class="sr-only">A</span>saro</span></span> Bakery &amp; Cafe is built on <em>passion, community,</em> and a love for great food.</p>
-      </div>
+      <p class="big reveal">Our journey at Asaro Bakery &amp; Cafe is built on <em>passion, community,</em> and a love for great food.</p>
     </div>
   </section>
 
-  <!-- STORY -->
+  <!-- STORY: photo stays put while the story scrolls -->
   <section class="half story" id="story" data-nav="light">
-    <div class="half__media"><img src="assets/shoot/a2-63.jpg" alt="A baker in an Asaro apron shaping sourdough" loading="lazy"></div>
-      <div class="half__text story__text">
+    <div class="half__media"><img class="stick" src="assets/shoot/a2-63.jpg" alt="A baker in an Asaro apron shaping sourdough" loading="lazy"></div>
+    <div class="half__text story__text">
         <h2 class="reveal">Our Story</h2>
         <p class="reveal">Tzion and Jessica Barsheshet began their culinary adventure over 30 years ago in Israel, owning multiple restaurants, bars, and pubs. Asaro Bakery and Cafe is the continuation of their journey, but this time, it is accompanied by their children, Timna and Jason.</p>
         <div class="family reveal">
@@ -608,63 +687,42 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
         </div>
         <p class="reveal">The heart of Asaro Bakery &amp; Cafe lies in our talented team of baristas and bakers, who bring expertise, creativity, and warmth to everything they do. Our menu, inspired by both local flavors and global trends, features a variety of baked goods, from classic croissants to innovative seasonal specialties. Sustainability is at the forefront of our operations, as we strive to minimize our environmental impact and support local producers.</p>
         <p class="reveal">Our cafe is not just a business; it’s a community hub, where we host events, workshops, and support local artists. We invite you to visit Asaro, where every visit is an opportunity to indulge in the simple pleasures of great coffee and delicious treats.</p>
-      </div>
+    </div>
   </section>
 
-  <!-- THE CAFE -->
-  <section class="half half--flip cafe" id="cafe" data-nav="light" aria-label="Photos of the cafe">
-    <div class="half__media cafe__media">
+  <!-- THE CAFE: one wide photo at a time, title over it -->
+  <section class="cafe" id="cafe" data-nav="light" aria-label="Photos of the cafe">
+    <div class="cafe__stage">
       <div class="rail" id="rail">
         <figure><img src="assets/shoot/asaro4-28.jpg" alt="The pastry case with croissants and handwritten price cards" loading="lazy"></figure>
-        <figure><img src="assets/shoot/s3-01.jpg" alt="The pastry display case at the counter" loading="lazy"></figure>
-        <figure><img src="assets/shoot/s3-03.jpg" alt="Butter croissants on a cake stand" loading="lazy"></figure>
         <figure><img src="assets/shoot/s3-51.jpg" alt="The coffee counter with Asaro coffee bags" loading="lazy"></figure>
         <figure><img src="assets/shoot/ab-52.jpg" alt="An espresso shot pulling at the coffee bar" loading="lazy"></figure>
-        <figure><img src="assets/shoot/ab-37.jpg" alt="Espresso pouring into a cup at the coffee bar" loading="lazy"></figure>
         <figure><img src="assets/shoot/s5-13.jpg" alt="Latte on a rustic wooden table with pies" loading="lazy"></figure>
-        <figure><img src="assets/shoot/s3-46.jpg" alt="Fresh mint tea on an Asaro paper placemat" loading="lazy"></figure>
-        <figure><img src="assets/shoot/s5-18.jpg" alt="Pies and tarts on a wooden table" loading="lazy"></figure>
         <figure><img src="assets/shoot/asaro4-31.jpg" alt="Pistachio and almond croissants" loading="lazy"></figure>
       </div>
-    </div>
-    <div class="half__text">
-      <h2 class="reveal">The Cafe</h2>
-      <div class="rail-btns reveal">
+      <div class="cafe__over wrap">
+        <h2 class="reveal">The Cafe</h2>
+        <div class="cafe__ctrl">
+          <div class="rail-progress"><div><span id="railBar"></span></div></div>
+          <div class="rail-btns reveal">
         <button type="button" id="railPrev" aria-label="Previous photos"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 8H2M7 3 2 8l5 5"/></svg></button>
         <button type="button" id="railNext" aria-label="Next photos"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></button>
-      </div>
-      <div class="rail-progress"><div><span id="railBar"></span></div></div>
-    </div>
-  </section>
-
-
-  <!-- MENU -->
-  <section class="half menu" id="menu" data-nav="light">
-    <div class="half__media">
-      <div class="bento">
-        <figure class="b1 reveal"><img src="assets/shoot/asaro4-27.jpg" alt="Pistachio croissants with handwritten price cards" loading="lazy"></figure>
-        <figure class="b2 reveal" data-d="1"><img src="assets/AsaroBakery-60.jpg" alt="Latte with rosetta art" loading="lazy" style="object-position:50% 60%"></figure>
-        <figure class="b3 reveal"><img src="assets/shoot/asaro4-15.jpg" alt="A powdered jam donut" loading="lazy" style="object-position:50% 72%"></figure>
-        <figure class="b4 reveal" data-d="1"><img src="assets/shoot/s3-40.jpg" alt="Cheesecake with crumble in an Asaro band" loading="lazy" style="object-position:50% 78%"></figure>
-        <figure class="b5 reveal" data-d="2"><img src="assets/AsaroBakery-06.jpg" alt="Kale salad with sourdough on an Asaro placemat" loading="lazy"></figure>
-        <figure class="b6 reveal" data-d="3"><img src="assets/Asaro2-34.jpg" alt="Meatball sandwiches on a tray" loading="lazy"></figure>
-      </div>
-    </div>
-    <div class="half__text">
-      <div class="menu__head">
-        <div>
-          <h2 class="reveal">Our Menu</h2>
-        </div>
-        <div class="reveal" data-d="1">
-          <p>Start your day with our freshly baked pastries, including buttery croissants, flaky danishes, and our signature sourdough bread. Pair your treat with a cup of our expertly brewed coffee, made from single-origin beans, roasted to perfection.</p>
-          <div class="actions">
-            <a class="btn btn--tan" href="#full-menu">View full menu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
-            <a class="btn btn--line" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order</a>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-
+  <!-- MENU: the menu as text, one photo beside it -->
+  <section class="half half--flip menu" id="menu" data-nav="light">
+    <div class="half__media"><img class="stick" src="assets/shoot/asaro4-27.jpg" alt="Pistachio croissants with handwritten price cards" loading="lazy"></div>
+    <div class="half__text">
+      <div class="menu__head">
+        <h2 class="reveal">Our Menu</h2>
+        <div class="reveal" data-d="1">
+          <p>Start your day with our freshly baked pastries, including buttery croissants, flaky danishes, and our signature sourdough bread. Pair your treat with a cup of our expertly brewed coffee, made from single-origin beans, roasted to perfection.</p>
+        </div>
+      </div>
       <!-- FULL MENU — the real menu as text (from Menu.pdf), so it reads, zooms and searches on any device -->
       <div class="fullmenu" id="full-menu">
         <div class="fullmenu__head">
@@ -737,57 +795,39 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
           <p class="mnote">Milk options: whole, low fat, oat, almond, pistachio.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="order reveal">
-        <p>Order online through <span class="order__toast">Toast</span>.</p>
-        <a class="btn btn--tan" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order on Toast <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+  <!-- ORDER: Toast banner -->
+  <section class="toast" id="order" data-nav="dark" aria-label="Order online">
+    <div class="toast__marquee" aria-hidden="true"><div class="toast__track"><span>Not So Classic Breakfast Sandwich <span aria-hidden="true">✳</span> Avocado Toast <span aria-hidden="true">✳</span> Smoked Salmon <span aria-hidden="true">✳</span> Jerusalem Bagel Platter <span aria-hidden="true">✳</span> Granola Bowl <span aria-hidden="true">✳</span> Greek Salad <span aria-hidden="true">✳</span> Beet Salad <span aria-hidden="true">✳</span> Mediterranean <span aria-hidden="true">✳</span> Luna <span aria-hidden="true">✳</span> Egg Salad Sandwich <span aria-hidden="true">✳</span> Tuna Salad Sandwich <span aria-hidden="true">✳</span> Crispy Schnitzel Sandwich <span aria-hidden="true">✳</span> Dried Fruit Chicken Thigh Sandwich <span aria-hidden="true">✳</span> Meatball Sandwich <span>✳</span> </span><span>Not So Classic Breakfast Sandwich <span aria-hidden="true">✳</span> Avocado Toast <span aria-hidden="true">✳</span> Smoked Salmon <span aria-hidden="true">✳</span> Jerusalem Bagel Platter <span aria-hidden="true">✳</span> Granola Bowl <span aria-hidden="true">✳</span> Greek Salad <span aria-hidden="true">✳</span> Beet Salad <span aria-hidden="true">✳</span> Mediterranean <span aria-hidden="true">✳</span> Luna <span aria-hidden="true">✳</span> Egg Salad Sandwich <span aria-hidden="true">✳</span> Tuna Salad Sandwich <span aria-hidden="true">✳</span> Crispy Schnitzel Sandwich <span aria-hidden="true">✳</span> Dried Fruit Chicken Thigh Sandwich <span aria-hidden="true">✳</span> Meatball Sandwich <span>✳</span> </span></div></div>
+    <div class="wrap toast__body">
+      <p class="toast__kicker reveal">Order online through Toast.</p>
+      <a class="toast__big" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener"><span class="toast__word">Order</span> <span class="toast__word">on</span> <span class="toast__word">Toast</span> <span class="toast__arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></span></a>
+      <div class="toast__foot reveal">
+        <span>Open 7am – 5pm everyday</span>
+        <span>1629 Cambridge St, Cambridge, MA</span>
+        <span class="toast__links"><a class="btn btn--cream" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener">Order on Toast <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a><a class="btn btn--ghost" href="https://www.toasttab.com/asaro-cafe-bakery-1629-cambridge-street/giftcards" target="_blank" rel="noopener">Gift Cards</a></span>
       </div>
     </div>
   </section>
 
   <!-- HIRING -->
-  <section class="half half--flip hiring" id="hiring" data-nav="light">
-    <div class="half__media"><img src="assets/shoot/bw-s3-3.jpg" alt="An Asaro baker smiling by the oven" loading="lazy"></div>
-        <div class="half__text hiring__body">
+  <section class="half hiring" id="hiring" data-nav="light">
+    <div class="half__media"><img class="drift" src="assets/shoot/bw-s3-3.jpg" alt="An Asaro baker smiling by the oven" loading="lazy"></div>
+    <div class="half__text hiring__body">
           <h2>Come, be part of the <em>Asaro family.</em></h2>
           <p>Experience is important, but not a must. We value enthusiasm, great attitude, and excitement of being part of a small team! We’re looking for:</p>
           <ul class="roles">
             <li>Bakery staff</li><li>Baristas</li><li>Cashiers</li><li>Cooks</li>
           </ul>
           <a class="btn btn--ink" href="mailto:info@asarocafe.com?subject=Resume">Send us your resume <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
-        </div>
-  </section>
-
-  <!-- INSTAGRAM — latest posts; set IG_FEED_URL in the script to make this update by itself -->
-  <section class="half insta" id="instagram" data-nav="light">
-    <div class="half__media insta__media">
-      <ul class="insta__grid reveal" id="igGrid">
-      <li><a href="https://www.instagram.com/asarocafe/reel/DfhrH7Jtd0_/" target="_blank" rel="noopener" aria-label="Reel on Instagram"><img src="assets/instagram/DfhrH7Jtd0_.jpg" alt="Instagram reel by @asarocafe" loading="lazy"><svg class="ig-reel" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DfaOAieNu3h/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DfaOAieNu3h.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/reel/DfSK7h8Na32/" target="_blank" rel="noopener" aria-label="Reel on Instagram"><img src="assets/instagram/DfSK7h8Na32.jpg" alt="Instagram reel by @asarocafe" loading="lazy"><svg class="ig-reel" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/De9Oh_4t3Wa/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/De9Oh_4t3Wa.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/reel/De64mcFNgvf/" target="_blank" rel="noopener" aria-label="Reel on Instagram"><img src="assets/instagram/De64mcFNgvf.jpg" alt="Instagram reel by @asarocafe" loading="lazy"><svg class="ig-reel" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DezArletMyJ/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DezArletMyJ.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DeZlbQPN7gn/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DeZlbQPN7gn.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DcZGvG9Nyxw/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DcZGvG9Nyxw.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DcYnlhkFhd1/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DcYnlhkFhd1.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DbQTR9GNk6v/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DbQTR9GNk6v.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DanWQpgNcEC/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DanWQpgNcEC.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      <li><a href="https://www.instagram.com/asarocafe/p/DZ7jIZlFtSL/" target="_blank" rel="noopener" aria-label="Post on Instagram"><img src="assets/instagram/DZ7jIZlFtSL.jpg" alt="Instagram post by @asarocafe" loading="lazy"><span class="ig-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="currentColor"/></svg></span></a></li>
-      </ul>
     </div>
-      <div class="half__text insta__head">
-        <div>
-          <h2 class="reveal"><a href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener">@asarocafe</a></h2>
-          <p class="insta__bio reveal">Family-run, small-batch bakery near Harvard Square.</p>
-        </div>
-        <a class="btn btn--line reveal" href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener">Follow on Instagram <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
-      </div>
   </section>
 
-  <!-- VISIT / CONTACT -->
+  <!-- VISIT: details beside the map, nothing else -->
   <section class="half half--flip visit" id="visit" data-nav="light">
-    <div class="half__media"><img src="assets/shoot/bw-s3-1.jpg" alt="" loading="lazy" style="object-position:50% 45%"></div>
+    <div class="half__media visit__map"><div class="map"><iframe title="Map to Asaro Bakery &amp; Cafe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Asaro+Bakery+%26+Cafe,+1629+Cambridge+St,+Cambridge,+MA+02138&z=16&output=embed"></iframe></div></div>
     <div class="half__text">
         <h2 class="reveal">Visit us</h2>
         <p class="visit__lede reveal">We’d love to hear from you! Whether you have a question about our coffee, need assistance with an order, or just want to share your feedback, we’re here for you.</p>
@@ -802,7 +842,6 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
           <a class="btn btn--line" href="https://www.toasttab.com/asaro-cafe-bakery-1629-cambridge-street/giftcards" target="_blank" rel="noopener">Gift Cards</a>
           <a class="btn btn--line" href="https://www.instagram.com/asarocafe/" target="_blank" rel="noopener">Instagram</a>
         </div>
-        <div class="reveal" data-d="1"><div class="map"><iframe title="Map to Asaro Bakery &amp; Cafe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Asaro+Bakery+%26+Cafe,+1629+Cambridge+St,+Cambridge,+MA+02138&z=16&output=embed"></iframe></div></div>
     </div>
   </section>
 </main>
@@ -837,9 +876,15 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const id = a.getAttribute('href');
     const target = id === '#top' ? 0 : document.querySelector(id);
-    if (target === null || !lenis) return;
+    if (target === null) return;
     e.preventDefault();
-    lenis.scrollTo(target, { offset: id === '#top' ? 0 : -80, force: true, duration: 1.6, easing: x => 1 - Math.pow(1 - x, 4) });
+    document.dispatchEvent(new Event('asaro:close'));
+    const nv = document.getElementById('nav'), h = nv ? nv.offsetHeight - (nv.classList.contains('is-scrolled') ? 0 : 20) : 72;
+    const off = id === '#top' ? 0 : -(h - 1);
+    requestAnimationFrame(() => {
+      if (lenis) lenis.scrollTo(target, { offset: off, force: true, duration: 1.6, easing: x => 1 - Math.pow(1 - x, 4) });
+      else scrollTo({ top: id === '#top' ? 0 : target.getBoundingClientRect().top + scrollY + off, behavior: 'smooth' });
+    });
     history.replaceState(null, '', id);
   }));
 
@@ -874,13 +919,15 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
   // phone panel
   const burger = document.getElementById('burger'), mnav = document.getElementById('mnav');
   const setMenu = on => {
-    nav.classList.toggle('is-menu', on); mnav.classList.toggle('is-on', on);
+    nav.classList.toggle('is-menu', on); mnav.classList.toggle('is-on', on); scrim.classList.toggle('is-on', on);
     mnav.setAttribute('aria-hidden', !on); burger.setAttribute('aria-expanded', on);
     burger.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-    document.body.style.overflow = on ? 'hidden' : '';
     if (lenis) on ? lenis.stop() : lenis.start();
   };
   burger.addEventListener('click', () => setMenu(!mnav.classList.contains('is-on')));
+  document.getElementById('burgerWord').addEventListener('click', () => setMenu(!mnav.classList.contains('is-on')));
+  document.addEventListener('asaro:close', () => { closeDrop(); setMenu(false); });
+  scrim.addEventListener('click', () => setMenu(false));
   mnav.querySelectorAll('.mnav__list > li > button').forEach(b => b.addEventListener('click', () => {
     const li = b.parentElement, was = li.classList.contains('is-active');
     mnav.querySelectorAll('.mnav__list > li').forEach(x => x.classList.remove('is-active'));
@@ -941,7 +988,7 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
   // The newest posts from the feed go first; any empty spots are filled with the saved posts,
   // so the grid always shows 12 (Behold's free plan sends 6). Left empty, only saved posts show.
   const IG_FEED_URL = '';
-  if (IG_FEED_URL) {
+  if (IG_FEED_URL && document.getElementById('igGrid')) {
     fetch(IG_FEED_URL).then(r => r.json()).then(d => {
       const live = (Array.isArray(d) ? d : d.posts || []);
       if (!live.length) return;
@@ -1082,6 +1129,43 @@ main .half__media img,.insta__grid img{filter:url(#espresso-tone)}   /* every ph
   let tick = false;
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { update(); tick = false; }); } }, { passive: true });
   addEventListener('resize', update);
+})();
+</script>
+<script>
+/* ── motion: photos open as they arrive, gentle drift, scroll line, the cafe photos move on by themselves ── */
+(() => {
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const media = [...document.querySelectorAll('.half__media:not(.visit__map), .cafe__stage')];
+  if (!calm) {
+    media.forEach(m => m.classList.add('clip'));
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+    media.forEach(m => io.observe(m));
+  }
+  const drift = [...document.querySelectorAll('img.drift')], nav = document.getElementById('nav');
+  const tick = () => {
+    const vh = innerHeight;
+    if (!calm) drift.forEach(img => {
+      const r = img.parentElement.getBoundingClientRect();
+      const p = (r.top + r.height / 2 - vh / 2) / (vh + r.height);
+      img.style.transform = `translate3d(0,${(p * -14).toFixed(2)}%,0) scale(1.14)`;
+    });
+    const max = document.documentElement.scrollHeight - vh;
+    nav.style.setProperty('--prog', max > 0 ? (scrollY / max).toFixed(4) : 0);
+  };
+  let t = false;
+  addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(() => { tick(); t = false; }); } }, { passive: true });
+  addEventListener('resize', tick); tick();
+  const rail = document.getElementById('rail');
+  if (rail && !calm) {
+    let vis = false, hold = false;
+    new IntersectionObserver(es => { vis = es[0].isIntersecting; }, { threshold: .4 }).observe(rail);
+    rail.addEventListener('pointerenter', () => hold = true); rail.addEventListener('pointerleave', () => hold = false);
+    setInterval(() => {
+      if (!vis || hold || document.hidden) return;
+      const w = rail.clientWidth, end = rail.scrollLeft + w >= rail.scrollWidth - 4;
+      rail.scrollTo({ left: end ? 0 : rail.scrollLeft + w, behavior: 'smooth' });
+    }, 5000);
+  }
 })();
 </script>
 </body>
