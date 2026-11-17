@@ -704,7 +704,8 @@ main > section.toast{padding-bottom:0!important}
 
 /* footer: the contact details in four columns between the logo and the bottom row */
 .footer__info{grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding:30px 0 34px;margin:0}
-.footer__info a,.footer__info p{display:block}
+.footer__info p{display:block}
+.footer__info a{display:table}   /* each link on its own line, but only as wide as its text, so the hover line stays under the words */
 .footer__info .footer__dir{margin-top:8px;font-family:var(--sans);font-size:12px;letter-spacing:.2em}
 @media (max-width:760px){.footer__info{grid-template-columns:1fr 1fr}.footer__info a,.footer__info p{overflow-wrap:normal}.footer__info > div:nth-child(4){grid-column:1 / -1}}
 
