@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sufganiyot Pre-Order — Asaro Bakery &amp; Cafe</title>
+<meta name="description" content="Pre-order sufganiyot from Asaro Bakery & Cafe, 1629 Cambridge St, Cambridge, MA. Pickup in store December 4–12, 7am – 5pm. Pay at pickup.">
+<meta name="theme-color" content="#c39769">
+<meta property="og:title" content="Sufganiyot Pre-Order — Asaro Bakery & Cafe">
+<meta property="og:description" content="Pickup in store December 4–12, 7am – 5pm. Pay at pickup.">
+<meta property="og:image" content="assets/hanukkah/box.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kraft:#c39769;
+  --kraft-2:#b98c5d;
+  --black:#111111;
+  --cream:#f5efe6;
+  --muted:#3a3229;
+  --line:rgba(17,17,17,.22);
+  --err:#7a1d10;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --gutter:clamp(16px,4vw,48px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--kraft);color:var(--black);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px var(--gutter);border-bottom:1px solid var(--line)}
+.top img{height:32px;width:auto}
+.top a.back{font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.top a.back:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:0;border-bottom:1px solid var(--line)}
+.hero__photo{position:relative;min-height:420px;background:#111}
+.hero__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__text{padding:clamp(32px,6vw,80px) var(--gutter);display:flex;flex-direction:column;justify-content:center;gap:22px}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(46px,7vw,92px);line-height:.92;letter-spacing:.01em}
+.hero h1 em{font-style:italic;display:block}
+.facts{list-style:none;border-top:1px solid var(--line)}
+.facts li{display:flex;justify-content:space-between;gap:18px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;letter-spacing:.04em}
+.facts b{font-weight:500;letter-spacing:.16em;text-transform:uppercase;font-size:11.5px;padding-top:2px;white-space:nowrap}
+.facts span{text-align:right}
+
+/* layout */
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(40px,6vw,80px) var(--gutter) 140px;display:grid;grid-template-columns:1fr 340px;gap:clamp(28px,5vw,64px);align-items:start}
+.step{padding-bottom:clamp(36px,5vw,56px);margin-bottom:clamp(36px,5vw,56px);border-bottom:1px solid var(--line)}
+.step:last-of-type{border-bottom:0;margin-bottom:0}
+.step__head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.step__n{font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px}
+.step h2{font-family:var(--serif);font-weight:700;font-size:clamp(32px,4vw,44px);line-height:1}
+.step__note{font-size:14px;color:var(--muted);margin:-8px 0 20px}
+
+/* flavors */
+.menu{list-style:none}
+.item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:14px 0;border-bottom:1px dotted rgba(17,17,17,.4)}
+.item:first-child{border-top:1px dotted rgba(17,17,17,.4)}
+.item__name{font-family:var(--serif);font-weight:700;font-size:clamp(22px,2.6vw,27px);line-height:1.1}
+.item__price{font-size:13px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+.qty{display:flex;align-items:center;border:1px solid var(--black);border-radius:999px;overflow:hidden;background:rgba(245,239,230,.0)}
+.qty button{width:44px;height:44px;border:0;background:none;cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center;transition:background .2s var(--ease),color .2s var(--ease)}
+.qty button:hover{background:var(--black);color:var(--cream)}
+.qty button:disabled{opacity:.3;cursor:default;background:none;color:inherit}
+.qty output{min-width:34px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums}
+.item.has .item__name::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--black);margin-left:10px;vertical-align:middle}
+
+/* pickup */
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.day{border:1px solid var(--black);border-radius:6px;background:none;padding:10px 6px;cursor:pointer;text-align:center;line-height:1.15;transition:background .2s var(--ease),color .2s var(--ease)}
+.day small{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.day strong{display:block;font-family:var(--serif);font-weight:700;font-size:26px}
+.day:hover:not(:disabled){background:rgba(17,17,17,.08)}
+.day[aria-pressed="true"]{background:var(--black);color:var(--cream)}
+.day:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.field{display:flex;flex-direction:column;gap:6px;margin-top:18px}
+.field label,.label{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.field .opt{text-transform:none;letter-spacing:.02em;font-weight:400;color:var(--muted)}
+input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;background:rgba(245,239,230,.35);border:1px solid rgba(17,17,17,.55);border-radius:6px;padding:13px 14px;font-size:16px;transition:border-color .2s var(--ease),background .2s var(--ease)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--black);background:rgba(245,239,230,.6)}
+textarea{min-height:96px;resize:vertical}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23111' stroke-width='1.5'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px;padding-right:40px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.seg{display:inline-flex;border:1px solid var(--black);border-radius:999px;overflow:hidden;margin-top:6px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:11px 18px;cursor:pointer;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--black);color:var(--cream)}
+.check{display:flex;gap:12px;align-items:flex-start;margin-top:22px;font-size:14.5px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:#111;margin-top:2px;flex:none}
+.err{color:var(--err);font-size:13.5px;margin-top:6px;min-height:0}
+.err:empty{display:none}
+.invalid{border-color:var(--err)!important}
+
+/* summary */
+.sum{position:sticky;top:20px;background:var(--black);color:var(--cream);border-radius:8px;padding:26px 24px}
+.sum h3{font-family:var(--serif);font-weight:700;font-size:30px;line-height:1;margin-bottom:16px}
+.sum ul{list-style:none;font-size:14px;border-top:1px solid rgba(245,239,230,.2)}
+.sum li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(245,239,230,.12)}
+.sum .empty{color:rgba(245,239,230,.6);font-style:italic}
+.sum__pick{font-size:13.5px;margin-top:14px;color:rgba(245,239,230,.8)}
+.sum__total{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:14px;border-top:1px solid rgba(245,239,230,.35)}
+.sum__total span{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase}
+.sum__total strong{font-family:var(--serif);font-size:38px;line-height:1}
+.sum__note{font-size:12.5px;color:rgba(245,239,230,.65);margin-top:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;width:100%;margin-top:20px;padding:17px 24px;border-radius:999px;border:0;background:var(--cream);color:var(--black);font-size:13px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .3s var(--ease)}
+.btn:hover{background:var(--kraft)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn svg{width:14px;height:14px}
+
+/* mobile bottom bar */
+.bar{display:none}
+
+/* thank you */
+.done{max-width:720px;margin:0 auto;padding:clamp(48px,8vw,110px) var(--gutter) 120px;text-align:center}
+.done[hidden]{display:none}
+.done h2{font-family:var(--serif);font-weight:700;font-size:clamp(48px,8vw,88px);line-height:.95}
+.done p{margin-top:16px;font-size:16px}
+.done .receipt{margin:30px auto 0;max-width:440px;text-align:left;border-top:1px solid var(--line)}
+.done .receipt li{list-style:none;display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.done a.btn{width:auto;margin-top:34px;background:var(--black);color:var(--cream);text-decoration:none}
+.done a.btn:hover{background:#2a2621}
+
+footer{border-top:1px solid var(--line);padding:26px var(--gutter);font-size:12.5px;letter-spacing:.06em;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero__photo{min-height:0;aspect-ratio:4/3}
+  .wrap{grid-template-columns:1fr;padding-bottom:150px}
+  .sum{display:none}
+  .bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--black);color:var(--cream);padding:12px 16px calc(12px + env(safe-area-inset-bottom));align-items:center;gap:14px}
+  .bar__info{flex:1;line-height:1.2}
+  .bar__info small{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,239,230,.7)}
+  .bar__info strong{font-family:var(--serif);font-size:28px}
+  .bar .btn{width:auto;margin:0;padding:15px 22px}
+}
+@media (max-width:520px){
+  .grid2{grid-template-columns:1fr}
+  .facts li{flex-direction:column;gap:2px}
+  .facts span{text-align:left}
+  .qty button{width:40px;height:40px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="index.html" aria-label="Asaro Bakery &amp; Cafe — home"><img src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" width="108" height="32"></a>
+  <a class="back" href="index.html">← Back to site</a>
+</header>
+
+<main id="orderView">
+  <section class="hero">
+    <div class="hero__photo"><img src="assets/hanukkah/box.jpg" alt="A box of Asaro sufganiyot" width="1400" height="1400"></div>
+    <div class="hero__text">
+      <h1>Hanukkah <em>sufganiyot</em></h1>
+      <ul class="facts">
+        <li><b>Pickup</b><span>In store, December 4–12<br>7am – 5pm</span></li>
+        <li><b>Order by</b><span>10am the day before pickup</span></li>
+        <li><b>Payment</b><span>At pickup</span></li>
+        <li><b>Where</b><span>1629 Cambridge St, Cambridge, MA</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <form class="wrap" id="orderForm" novalidate>
+    <div>
+      <section class="step" aria-labelledby="h1">
+        <div class="step__head"><span class="step__n">01</span><h2 id="h1">Choose your sufganiyot</h2></div>
+        <ul class="menu" id="menu"></ul>
+        <p class="err" id="errItems"></p>
+      </section>
+
+      <section class="step" aria-labelledby="h2">
+        <div class="step__head"><span class="step__n">02</span><h2 id="h2">Pickup</h2></div>
+        <p class="step__note">Orders close at 10am the day before pickup.</p>
+        <span class="label" id="dayLabel">Day</span>
+        <div class="days" id="days" role="group" aria-labelledby="dayLabel"></div>
+        <p class="err" id="errDay"></p>
+        <div class="field">
+          <label for="time">Time</label>
+          <select id="time" required><option value="">Choose a time</option></select>
+          <p class="err" id="errTime"></p>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="h3">
+        <div class="step__head"><span class="step__n">03</span><h2 id="h3">Your details</h2></div>
+        <div class="grid2">
+          <div class="field"><label for="name">Full name</label><input type="text" id="name" autocomplete="name" required><p class="err" id="errName"></p></div>
+          <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" autocomplete="tel" required><p class="err" id="errPhone"></p></div>
+        </div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" autocomplete="email" required><p class="err" id="errEmail"></p></div>
+        <div class="field">
+          <span class="label">Order type</span>
+          <div class="seg" id="type" role="group" aria-label="Order type">
+            <button type="button" aria-pressed="true" data-v="Personal pre-order">Personal pre-order</button>
+            <button type="button" aria-pressed="false" data-v="Event / bulk order">Event / bulk order</button>
+          </div>
+        </div>
+        <div class="field" id="orgField" hidden><label for="org">Organization or event name <span class="opt">(optional)</span></label><input type="text" id="org" autocomplete="organization"></div>
+        <div class="field"><label for="notes">Notes or allergies <span class="opt">(optional)</span></label><textarea id="notes"></textarea></div>
+        <label class="check"><input type="checkbox" id="confirm" required><span>I understand payment is at pickup and orders must be placed by 10am the day before pickup.</span></label>
+        <p class="err" id="errConfirm"></p>
+      </section>
+    </div>
+
+    <aside class="sum" aria-live="polite">
+      <h3>Your order</h3>
+      <ul id="sumList"><li class="empty">Nothing yet</li></ul>
+      <p class="sum__pick" id="sumPick"></p>
+      <div class="sum__total"><span>Total</span><strong id="sumTotal">$0</strong></div>
+      <p class="sum__note" id="sumNote">Paid at pickup.</p>
+      <button class="btn" type="submit" id="submitBtn">Place pre-order <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 8h13M9 3l5 5-5 5"/></svg></button>
+      <p class="err" id="errSubmit" style="color:#f0b7a8"></p>
+    </aside>
+
+    <div class="bar">
+      <div class="bar__info"><small id="barCount">0 sufganiyot</small><strong id="barTotal">$0</strong></div>
+      <button class="btn" type="submit">Place pre-order</button>
+    </div>
+  </form>
+</main>
+
+<section class="done" id="doneView" hidden aria-live="polite">
+  <h2>Thank you!</h2>
+  <p id="doneLine">Your sufganiyot pre-order is in.</p>
+  <p>Pick up at 1629 Cambridge St on the day and time you chose. Payment is at pickup.</p>
+  <ul class="receipt" id="receipt"></ul>
+  <a class="btn" href="index.html">Back to Asaro</a>
+</section>
+
+<footer>
+  <span>Asaro Bakery &amp; Cafe · 1629 Cambridge St, Cambridge, MA</span>
+  <span>Open 7am – 5pm everyday</span>
+</footer>
+
+<script>
+/* Orders are sent to the Asaro sufganiyot Google Form, so every order lands in the
+   "Asaro Sufganiyot Orders · Hanukkah 2026" Google Sheet. Field numbers come from that form. */
+const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdQCaWjwf6Q4Gjp4kuBgOPGejc_CL1FAL5AIW7qmjRxiqLWUg/formResponse';
+const F = {name:'365245961', phone:'958231947', email:'2065806424', type:'942266718', org:'1002686414',
+           day:'228854342', time:'431949085', notes:'511759220', confirm:'701120047'};
+const CONFIRM = 'I understand payment is at pickup and orders must be placed by 10am the day before pickup.';
+const ITEMS = [
+  {name:'Plain',               price:5,    id:'1828565369'},
+  {name:'Classic Jam',         price:5,    id:'1648551846'},
+  {name:'Double Chocolate',    price:6.5,  id:'718217046'},
+  {name:'Dulce de leche',      price:6.5,  id:'1653630544'},
+  {name:'Halva Kadaif',        price:6.5,  id:'338726746'},
+  {name:'Pistachio crunch',    price:6.5,  id:'1112543677'},
+  {name:'Creamy Tiramisu',     price:6.5,  id:'1999939687'},
+  {name:'Passion Fruit Bliss', price:6.5,  id:'119404676'},
+  {name:'Pink Guava',          price:6.5,  id:'472776074'},
+  {name:'Variety pack',        price:null, id:'1052505520', note:'A mix of flavors'}
+];
+const qty = ITEMS.map(() => 0);
+const MAX = 200;
+const money = n => '$' + (Number.isInteger(n) ? n : n.toFixed(2));
+
+/* --- menu --- */
+const menu = document.getElementById('menu');
+ITEMS.forEach((it, i) => {
+  const li = document.createElement('li');
+  li.className = 'item';
+  li.innerHTML = `<div><div class="item__name">${it.name}</div><div class="item__price">${it.price ? money(it.price) : it.note}</div></div>
+    <div class="qty"><button type="button" aria-label="One less ${it.name}" data-d="-1" disabled>−</button><output aria-live="polite">0</output><button type="button" aria-label="One more ${it.name}" data-d="1">+</button></div>`;
+  li.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    qty[i] = Math.max(0, Math.min(MAX, qty[i] + Number(b.dataset.d)));
+    li.querySelector('output').textContent = qty[i];
+    li.querySelector('[data-d="-1"]').disabled = qty[i] === 0;
+    li.classList.toggle('has', qty[i] > 0);
+    setErr('errItems', '');
+    render();
+  }));
+  menu.appendChild(li);
+});
+
+/* --- pickup days: Dec 4–12, 2026; a day closes at 10am Cambridge time the day before --- */
+const DAYS = [];
+for (let d = 4; d <= 12; d++) {
+  const date = new Date(Date.UTC(2026, 11, d, 12));
+  DAYS.push({
+    label: date.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', timeZone:'UTC'}),
+    wd: date.toLocaleDateString('en-US', {weekday:'short', timeZone:'UTC'}),
+    d,
+    closes: Date.UTC(2026, 11, d - 1, 15) /* 10am EST = 15:00 UTC */
+  });
+}
+let day = null;
+const daysEl = document.getElementById('days');
+DAYS.forEach(o => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'day'; b.setAttribute('aria-pressed', 'false');
+  b.innerHTML = `<small>${o.wd}</small><strong>${o.d}</strong><small>Dec</small>`;
+  b.setAttribute('aria-label', o.label);
+  if (Date.now() >= o.closes) { b.disabled = true; b.title = 'Orders for this day are closed'; }
+  b.addEventListener('click', () => {
+    day = o.label;
+    daysEl.querySelectorAll('.day').forEach(x => x.setAttribute('aria-pressed', x === b));
+    setErr('errDay', '');
+    render();
+  });
+  daysEl.appendChild(b);
+});
+
+/* --- pickup times, 7:00 AM – 4:30 PM --- */
+const timeEl = document.getElementById('time');
+for (let h = 7; h < 17; h++) for (const m of [0, 30]) {
+  const t = (h > 12 ? h - 12 : h) + ':' + (m ? '30' : '00') + (h < 12 ? ' AM' : ' PM');
+  timeEl.add(new Option(t, t));
+}
+timeEl.addEventListener('change', () => { setErr('errTime', ''); render(); });
+
+/* --- order type --- */
+let type = 'Personal pre-order';
+document.querySelectorAll('#type button').forEach(b => b.addEventListener('click', () => {
+  type = b.dataset.v;
+  document.querySelectorAll('#type button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  document.getElementById('orgField').hidden = type !== 'Event / bulk order';
+}));
+
+/* --- summary --- */
+function chosen() { return ITEMS.map((it, i) => ({...it, q: qty[i]})).filter(x => x.q > 0); }
+function render() {
+  const list = chosen();
+  const count = list.reduce((s, x) => s + x.q, 0);
+  const total = list.reduce((s, x) => s + (x.price ? x.price * x.q : 0), 0);
+  const hasVariety = list.some(x => !x.price);
+  const ul = document.getElementById('sumList');
+  ul.innerHTML = list.length ? list.map(x => `<li><span>${x.q} × ${x.name}</span><span>${x.price ? money(x.price * x.q) : '—'}</span></li>`).join('')
+                             : '<li class="empty">Nothing yet</li>';
+  document.getElementById('sumTotal').textContent = money(total);
+  document.getElementById('barTotal').textContent = money(total);
+  document.getElementById('barCount').textContent = count + (count === 1 ? ' item' : ' items');
+  document.getElementById('sumNote').textContent = hasVariety ? 'Variety packs are not included in this total. Paid at pickup.' : 'Paid at pickup.';
+  document.getElementById('sumPick').textContent = day ? 'Pickup: ' + day + (timeEl.value ? ', ' + timeEl.value : '') : '';
+}
+
+/* --- validation + submit --- */
+function setErr(id, msg) { document.getElementById(id).textContent = msg; }
+function check() {
+  let first = null;
+  const fail = (id, msg, el) => { setErr(id, msg); if (el) el.classList.add('invalid'); first = first || el || document.getElementById(id); };
+  ['name','phone','email'].forEach(k => document.getElementById(k).classList.remove('invalid'));
+  ['errItems','errDay','errTime','errName','errPhone','errEmail','errConfirm','errSubmit'].forEach(id => setErr(id, ''));
+  if (!chosen().length) fail('errItems', 'Add at least one item.', menu);
+  if (!day) fail('errDay', 'Choose a pickup day.', daysEl);
+  if (!timeEl.value) fail('errTime', 'Choose a pickup time.', timeEl);
+  const name = document.getElementById('name'), phone = document.getElementById('phone'), email = document.getElementById('email');
+  if (!name.value.trim()) fail('errName', 'Please enter your name.', name);
+  if (phone.value.replace(/\D/g, '').length < 7) fail('errPhone', 'Please enter a phone number.', phone);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) fail('errEmail', 'Please enter a valid email.', email);
+  if (!document.getElementById('confirm').checked) fail('errConfirm', 'Please confirm to place your order.', document.getElementById('confirm'));
+  const o = DAYS.find(x => x.label === day);
+  if (o && Date.now() >= o.closes) fail('errDay', 'Orders for this day closed at 10am the day before. Please choose another day.', daysEl);
+  if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+  return !first;
+}
+
+document.getElementById('orderForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!check()) return;
+  const btns = document.querySelectorAll('button[type=submit]');
+  btns.forEach(b => b.disabled = true);
+  const body = new URLSearchParams();
+  const v = id => document.getElementById(id).value.trim();
+  body.append('entry.' + F.name, v('name'));
+  body.append('entry.' + F.phone, v('phone'));
+  body.append('entry.' + F.email, v('email'));
+  body.append('entry.' + F.type, type);
+  if (type === 'Event / bulk order' && v('org')) body.append('entry.' + F.org, v('org'));
+  chosen().forEach(x => body.append('entry.' + x.id, String(x.q)));
+  body.append('entry.' + F.day, day);
+  body.append('entry.' + F.time, timeEl.value);
+  if (v('notes')) body.append('entry.' + F.notes, v('notes'));
+  body.append('entry.' + F.confirm, CONFIRM);
+  body.append('pageHistory', '0,1,2');
+  try {
+    await fetch(FORM, {method:'POST', mode:'no-cors', body});
+    showDone();
+  } catch (err) {
+    setErr('errSubmit', 'We couldn’t send your order. Please check your connection and try again.');
+    btns.forEach(b => b.disabled = false);
+  }
+});
+
+function showDone() {
+  const list = chosen();
+  const total = list.reduce((s, x) => s + (x.price ? x.price * x.q : 0), 0);
+  document.getElementById('receipt').innerHTML =
+    list.map(x => `<li><span>${x.q} × ${x.name}</span><span>${x.price ? money(x.price * x.q) : '—'}</span></li>`).join('') +
+    `<li><span>Pickup</span><span>${day}, ${timeEl.value}</span></li>` +
+    `<li><span><b>Total, paid at pickup</b></span><span><b>${money(total)}</b></span></li>`;
+  document.getElementById('doneLine').textContent = 'Your sufganiyot pre-order is in, ' + document.getElementById('name').value.trim().split(' ')[0] + '.';
+  document.getElementById('orderView').hidden = true;
+  document.getElementById('doneView').hidden = false;
+  window.scrollTo({top:0});
+}
+render();
+</script>
+</body>
+</html>

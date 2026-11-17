@@ -702,6 +702,11 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 .sfg__card::after{background:linear-gradient(180deg,rgba(17,17,17,.7),rgba(17,17,17,.15) 26%,rgba(17,17,17,0) 55%,rgba(17,17,17,.5))}
 @media (max-width:700px){.sfg__head{white-space:normal;font-size:clamp(26px,7.6vw,34px);line-height:1.05}.sfg__br{display:block}
   .sfg__card::after{background:linear-gradient(180deg,rgba(17,17,17,.75),rgba(17,17,17,.2) 30%,rgba(17,17,17,0) 55%,rgba(17,17,17,.5))}}
+
+/* phones: a photo never sits directly on another photo, so Story and Menu put their text first */
+@media (max-width:860px){.story .half__media,.menu .half__media{order:2}}
+
+.hiring .half__media > img{object-position:50% 16%}
 </style>
 </head>
 <body>
@@ -761,7 +766,7 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
       <h1 class="hx__title"><span class="hx__logo"><img src="assets/logo-oak.svg" alt="Asaro Bakery &amp; Cafe" width="1000" height="298"></span></h1>
     </div>
     <div class="hx__cover" id="hxCover" data-nav="dark">
-      <div class="hx__media"><img class="hx__img" src="assets/homepage.jpg" alt="A baker dusting flour over a proofing basket" fetchpriority="high"></div>
+      <div class="hx__media"><img class="hx__img" src="assets/best/hero-flour.jpg" alt="Bakers dusting flour over shaped loaves" fetchpriority="high"></div>
       <div class="hx__over wrap">
         <p class="hx__line">Family-run, small-batch bakery near Harvard Square.</p>
       <div class="hero__bar hx__bar">
@@ -786,11 +791,12 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
   <section class="cafe" id="cafe" data-nav="light" aria-label="Photos of the cafe">
     <div class="cafe__stage">
       <div class="rail" id="rail">
-        <figure><img src="assets/shoot/asaro4-28.jpg" alt="The pastry case with croissants and handwritten price cards" loading="lazy"></figure>
-        <figure><img src="assets/shoot/s3-51.jpg" alt="The coffee counter with Asaro coffee bags" loading="lazy"></figure>
-        <figure><img src="assets/shoot/ab-52.jpg" alt="An espresso shot pulling at the coffee bar" loading="lazy"></figure>
-        <figure><img src="assets/shoot/s5-13.jpg" alt="Latte on a rustic wooden table with pies" loading="lazy"></figure>
-        <figure><img src="assets/shoot/asaro4-31.jpg" alt="Pistachio and almond croissants" loading="lazy"></figure>
+        <figure><img src="assets/best/cafe-pie-latte.jpg" alt="A slice of pecan pie dipped into a latte" loading="lazy"></figure>
+        <figure><img src="assets/best/cafe-croissants.jpg" alt="Butter croissants on a cake stand" loading="lazy"></figure>
+        <figure><img src="assets/best/cafe-espresso.jpg" alt="An espresso shot pulling into a cup" loading="lazy"></figure>
+        <figure><img src="assets/best/cafe-pies.jpg" alt="Pie slices and a latte on a wooden table" loading="lazy"></figure>
+        <figure><img src="assets/best/cafe-cappuccino.jpg" alt="A cappuccino on Asaro paper" loading="lazy"></figure>
+        <figure><img src="assets/best/cafe-almond-tart.jpg" alt="An almond tart on a wooden stool" loading="lazy"></figure>
       </div>
       <div class="cafe__over wrap">
         <h2 class="reveal">The Cafe</h2>
@@ -807,7 +813,7 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 
   <!-- STORY: photo stays put while the story scrolls -->
   <section class="half story" id="story" data-nav="light">
-    <div class="half__media"><img class="stick" src="assets/shoot/a2-63.jpg" alt="A baker in an Asaro apron shaping sourdough" loading="lazy"></div>
+    <div class="half__media"><img class="stick" src="assets/best/story-bakers.jpg" alt="Two Asaro bakers working side by side in the kitchen" loading="lazy"></div>
     <div class="half__text story__text">
         <h2 class="reveal">Our Story</h2>
         <p class="reveal">Tzion and Jessica Barsheshet began their culinary adventure over 30 years ago in Israel, owning multiple restaurants, bars, and pubs. Asaro Bakery and Cafe is the continuation of their journey, but this time, it is accompanied by their children, Timna and Jason.</p>
@@ -822,7 +828,7 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 
   <!-- MENU: the menu as text, one photo beside it -->
   <section class="half half--flip menu" id="menu" data-nav="light">
-    <div class="half__media"><img class="stick" src="assets/shoot/asaro4-27.jpg" alt="Pistachio croissants with handwritten price cards" loading="lazy"></div>
+    <div class="half__media"><img class="stick" src="assets/best/menu-challah.jpg" alt="A challah sandwich with slow-cooked brisket" loading="lazy"></div>
     <div class="half__text">
       <div class="menu__head">
         <h2 class="reveal">Our Menu</h2>
@@ -921,7 +927,7 @@ body:has(.mnav.is-on) .toastfab{opacity:0!important;pointer-events:none}
 
   <!-- HIRING -->
   <section class="half hiring" id="hiring" data-nav="light">
-    <div class="half__media"><img class="drift" src="assets/shoot/ab-44.jpg" alt="A barista in an Asaro apron pouring latte art" loading="lazy"></div>
+    <div class="half__media"><img class="drift" src="assets/best/hiring-oven.jpg" alt="An Asaro baker smiling by the oven" loading="lazy"></div>
     <div class="half__text hiring__body">
           <h2>Come, be part of the <em>Asaro family.</em></h2>
           <p>Experience is important, but not a must. We value enthusiasm, great attitude, and excitement of being part of a small team! We’re looking for:</p>
