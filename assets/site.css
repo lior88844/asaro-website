@@ -762,3 +762,11 @@ main > section.cafe.slides{padding:0!important;border-top:0;height:100svh;overfl
 .hx__cta{margin-top:26px;opacity:var(--hx-t,0);transition:visibility 0s}
 .hx__cover:not(.is-hanukkah) .hx__link,.hx__cover:not(.is-hanukkah) .hx__cta{visibility:hidden}
 @media (prefers-reduced-motion:reduce){.hx__cta{opacity:1}}
+/* "Hanukkah at Asaro Cafe" links to the Toast pre-order (only once the link is set) */
+.hx__msg--link{color:inherit;text-decoration:none;pointer-events:none}
+.hx__msg--link[href]{pointer-events:auto;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.14em}
+.hx__msg--link[href]:hover{text-decoration-thickness:2px}
+.hx__cover:not(.is-hanukkah) .hx__msg--link{pointer-events:none}
+/* the filling photo: frame it so the sufganiyah shows below the headline */
+#hxFill{object-position:45% 80%}
+@media (max-width:760px){#hxFill{object-position:45% 64%}}

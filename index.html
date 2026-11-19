@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=16">
+<link rel="stylesheet" href="assets/site.css?v=17">
 <script src="assets/transition.js?v=1" data-enter="no"></script>
 </head>
 <body>
@@ -78,12 +78,12 @@
     <div class="hx__cover" id="hxCover" data-nav="dark" aria-roledescription="carousel" aria-label="Photos">
       <div class="hx__media">
         <img class="hx__img hx__img--natural is-on" data-hanukkah src="assets/best/hero-sufganiyot.jpg" alt="A box of Asaro sufganiyot" fetchpriority="high">
-        <img class="hx__img hx__img--natural" data-hanukkah src="assets/best/sufganiyot-filling.jpg" alt="Filling a sufganiyah at Asaro while it is photographed" style="object-position:40% 45%">
+        <img class="hx__img hx__img--natural" data-hanukkah src="assets/best/sufganiyot-filling.jpg" alt="Filling a sufganiyah at Asaro while it is photographed" id="hxFill">
         <img class="hx__img" src="assets/best/hero-flour.jpg" alt="Bakers dusting flour over shaped loaves">
       </div>
       <a class="hx__link" data-preorder hidden target="_blank" rel="noopener" aria-label="Pre-order sufganiyot on Toast"></a>
       <div class="hx__over wrap">
-        <p class="hx__line"><span class="hx__msg is-on" data-hanukkah>Hanukkah at Asaro Cafe</span><span class="hx__msg">Family-run, small-batch bakery near Harvard Square.</span></p>
+        <p class="hx__line"><a class="hx__msg hx__msg--link is-on" data-hanukkah data-preorder-text target="_blank" rel="noopener">Hanukkah at Asaro Cafe</a><span class="hx__msg">Family-run, small-batch bakery near Harvard Square.</span></p>
         <a class="btn btn--cream hx__cta" data-preorder hidden target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
       </div>
     </div>
@@ -631,6 +631,7 @@
   // The Toast pre-order link for sufganiyot. Leave empty to hide every pre-order button, the popup included.
   const PREORDER = '';
   document.querySelectorAll('[data-preorder]').forEach(a => { if (PREORDER) { a.href = PREORDER; a.hidden = false; } else a.remove(); });
+  document.querySelectorAll('[data-preorder-text]').forEach(a => { if (PREORDER) a.href = PREORDER; });
   const box = document.getElementById('sfg'); if (!box) return;
   if (!PREORDER) { box.remove(); return; }
   box.querySelector('.sfg__cta').href = PREORDER; box.querySelector('.sfg__cta').target = '_blank';
