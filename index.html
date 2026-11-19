@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=15">
+<link rel="stylesheet" href="assets/site.css?v=16">
 <script src="assets/transition.js?v=1" data-enter="no"></script>
 </head>
 <body>
@@ -75,22 +75,17 @@
         <a class="hero__addr" href="https://maps.google.com/?q=1629+Cambridge+St,+Cambridge,+MA+02138" target="_blank" rel="noopener">1629 Cambridge St, Cambridge, MA</a>
       </div>
     </div>
-    <div class="hx__cover" id="hxCover" data-nav="dark">
-      <div class="hx__media"><img class="hx__img hx__img--natural" src="assets/best/hero-sufganiyot.jpg" alt="A box of Asaro sufganiyot" fetchpriority="high"></div>
+    <div class="hx__cover" id="hxCover" data-nav="dark" aria-roledescription="carousel" aria-label="Photos">
+      <div class="hx__media">
+        <img class="hx__img hx__img--natural is-on" data-hanukkah src="assets/best/hero-sufganiyot.jpg" alt="A box of Asaro sufganiyot" fetchpriority="high">
+        <img class="hx__img hx__img--natural" data-hanukkah src="assets/best/sufganiyot-filling.jpg" alt="Filling a sufganiyah at Asaro while it is photographed" style="object-position:40% 45%">
+        <img class="hx__img" src="assets/best/hero-flour.jpg" alt="Bakers dusting flour over shaped loaves">
+      </div>
       <a class="hx__link" data-preorder hidden target="_blank" rel="noopener" aria-label="Pre-order sufganiyot on Toast"></a>
       <div class="hx__over wrap">
-        <p class="hx__line">Hanukkah at Asaro Cafe</p>
+        <p class="hx__line"><span class="hx__msg is-on" data-hanukkah>Hanukkah at Asaro Cafe</span><span class="hx__msg">Family-run, small-batch bakery near Harvard Square.</span></p>
         <a class="btn btn--cream hx__cta" data-preorder hidden target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
       </div>
-    </div>
-  </section>
-
-  <!-- HANUKKAH: the sufganiyot being filled; links to the Toast pre-order once it's set -->
-  <section class="half hanukkah" id="hanukkah" data-nav="light">
-    <div class="half__media"><img class="stick" src="assets/best/sufganiyot-filling.jpg" alt="Filling a sufganiyah at Asaro while it is photographed" loading="lazy"><a class="hanukkah__link" data-preorder hidden target="_blank" rel="noopener" aria-label="Pre-order sufganiyot on Toast"></a></div>
-    <div class="half__text hanukkah__text">
-      <h2 class="reveal">Family-run, small-batch bakery near Harvard Square.</h2>
-      <a class="btn btn--ink reveal" data-preorder hidden target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
     </div>
   </section>
 
@@ -610,6 +605,24 @@
   let t = false;
   addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(() => { frame(); t = false; }); } }, { passive: true });
   addEventListener('resize', frame); frame();
+})();
+</script>
+<script>
+/* ── hero slideshow: sufganiyot box → filling → bakers with flour; the Hanukkah line and pre-order link show on the first two ── */
+(() => {
+  const cover = document.getElementById('hxCover'); if (!cover) return;
+  const imgs = [...cover.querySelectorAll('.hx__img')], msgs = [...cover.querySelectorAll('.hx__msg')];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0;
+  const show = n => {
+    i = n % imgs.length;
+    imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
+    const hk = imgs[i].hasAttribute('data-hanukkah');
+    msgs.forEach(m => m.classList.toggle('is-on', m.hasAttribute('data-hanukkah') === hk));
+    cover.classList.toggle('is-hanukkah', hk);
+  };
+  show(0);
+  setInterval(() => { if (!document.hidden) show(i + 1); }, still ? 8000 : 5000);
 })();
 </script>
 <script>

@@ -749,16 +749,16 @@ main > section.cafe.slides{padding:0!important;border-top:0;height:100svh;overfl
 .toast__last{display:inline-flex;align-items:center;gap:.22em;white-space:nowrap}
 .toast__big:hover .toast__last .toast__word{transition-delay:.1s}
 
-/* Hanukkah 2026: the sufganiyot photo in the hero stays in natural color; pre-order links appear once the Toast link is set */
+/* Hanukkah 2026: the top photo is a 3-photo slideshow; the sufganiyot photos stay in natural color; pre-order links appear once the Toast link is set */
+.hx__media .hx__img{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
+.hx__media .hx__img.is-on{opacity:1}
 .hx__img--natural{filter:none}
+.hx__line{display:grid}
+.hx__msg{grid-area:1/1;opacity:0;transition:opacity 1s ease}
+.hx__msg.is-on{opacity:1}
 .hx__link{position:absolute;inset:0;z-index:2}
 .hx__over{pointer-events:none}
 .hx__over a{pointer-events:auto}
-.hx__cta{margin-top:26px;opacity:var(--hx-t,0)}
-.hanukkah .half__media img{object-position:50% 30%}
-.hanukkah__text{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:30px}
-.hanukkah__text h2{max-width:14ch}
-.hanukkah .half__media{position:relative}
-.hanukkah__link{position:absolute;inset:0;z-index:2}
-@media (max-width:860px){.hanukkah .half__media{order:2}}
+.hx__cta{margin-top:26px;opacity:var(--hx-t,0);transition:visibility 0s}
+.hx__cover:not(.is-hanukkah) .hx__link,.hx__cover:not(.is-hanukkah) .hx__cta{visibility:hidden}
 @media (prefers-reduced-motion:reduce){.hx__cta{opacity:1}}
