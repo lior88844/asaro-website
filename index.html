@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=14">
+<link rel="stylesheet" href="assets/site.css?v=15">
 <script src="assets/transition.js?v=1" data-enter="no"></script>
 </head>
 <body>
@@ -76,10 +76,21 @@
       </div>
     </div>
     <div class="hx__cover" id="hxCover" data-nav="dark">
-      <div class="hx__media"><img class="hx__img" src="assets/best/hero-flour.jpg" alt="Bakers dusting flour over shaped loaves" fetchpriority="high"></div>
+      <div class="hx__media"><img class="hx__img hx__img--natural" src="assets/best/hero-sufganiyot.jpg" alt="A box of Asaro sufganiyot" fetchpriority="high"></div>
+      <a class="hx__link" data-preorder hidden target="_blank" rel="noopener" aria-label="Pre-order sufganiyot on Toast"></a>
       <div class="hx__over wrap">
-        <p class="hx__line">Family-run, small-batch bakery near Harvard Square.</p>
+        <p class="hx__line">Hanukkah at Asaro Cafe</p>
+        <a class="btn btn--cream hx__cta" data-preorder hidden target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
       </div>
+    </div>
+  </section>
+
+  <!-- HANUKKAH: the sufganiyot being filled; links to the Toast pre-order once it's set -->
+  <section class="half hanukkah" id="hanukkah" data-nav="light">
+    <div class="half__media"><img class="stick" src="assets/best/sufganiyot-filling.jpg" alt="Filling a sufganiyah at Asaro while it is photographed" loading="lazy"><a class="hanukkah__link" data-preorder hidden target="_blank" rel="noopener" aria-label="Pre-order sufganiyot on Toast"></a></div>
+    <div class="half__text hanukkah__text">
+      <h2 class="reveal">Family-run, small-batch bakery near Harvard Square.</h2>
+      <a class="btn btn--ink reveal" data-preorder hidden target="_blank" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
     </div>
   </section>
 
@@ -242,7 +253,7 @@
     <button class="sfg__x" type="button" aria-label="Close" data-close><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
     <div class="sfg__photo"><img src="assets/sufganiyot.jpg" alt="Sufganiyot from Asaro" width="1200" height="956"></div>
     <p class="sfg__head" id="sfgHead">Hanukkah <span class="sfg__br">at Asaro Cafe</span></p>
-    <a class="btn btn--cream sfg__cta" href="/sufganiyot">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+    <a class="btn btn--cream sfg__cta" rel="noopener">Pre-order sufganiyot <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
   </div>
 </div>
 <a class="toastfab" href="https://asarobakerycafe.toast.site/order" target="_blank" rel="noopener" aria-label="Order on Toast">
@@ -604,7 +615,12 @@
 <script>
 /* ── sufganiyot popup: shows a few seconds after the page opens, until Dec 12, 2026; closing it hides it for a day ── */
 (() => {
+  // The Toast pre-order link for sufganiyot. Leave empty to hide every pre-order button, the popup included.
+  const PREORDER = '';
+  document.querySelectorAll('[data-preorder]').forEach(a => { if (PREORDER) { a.href = PREORDER; a.hidden = false; } else a.remove(); });
   const box = document.getElementById('sfg'); if (!box) return;
+  if (!PREORDER) { box.remove(); return; }
+  box.querySelector('.sfg__cta').href = PREORDER; box.querySelector('.sfg__cta').target = '_blank';
   const KEY = 'asaro-sfg-closed', DAY = 864e5;
   const end = new Date('2026-12-13T00:00:00-05:00');                  // pickup ends Dec 12 (Cambridge time)
   if (Date.now() >= end) { box.remove(); return; }
